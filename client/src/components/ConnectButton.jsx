@@ -1,13 +1,14 @@
 import { Button } from "antd";
 import { useState } from "react";
 
-const ConnectButton = () => {
+const ConnectButton = ({handleConnect}) => {
 
-    const [account,setAccount] = useState("");
+
 
     
-    const connect = () => {
-        const acc =  window.ethereum.request({ method: "eth_requestAccounts" })
+    
+    const connect = async () => {
+        const acc = await window.ethereum.request({ method: "eth_requestAccounts" })
         .catch((err) => {
             if (err.code === 4001) {
             console.log("Please connect to MetaMask.");
@@ -15,7 +16,7 @@ const ConnectButton = () => {
             console.error(err);
             }
         });
-        setAccount(acc);
+        handleConnect(acc);
 
     };
 
@@ -28,8 +29,6 @@ const ConnectButton = () => {
     return (
         <Button id="connectButton" type="primary" style={style} block onClick={connect}>
         Connect
-        
-        {account}
         </Button>
     );
 }

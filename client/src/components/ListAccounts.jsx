@@ -14,6 +14,7 @@ const ListAccounts = ({accounts}) => {
     }
 
     const h2Style = {
+        marginTop: "2%"
     }
 
     const liStyle = {
