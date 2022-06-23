@@ -5,10 +5,19 @@ Decentralized app to interact with a blockchain network using Truffle, React and
 
 ## Installation
 
-Start the react dev server.
-
+Install all the dependencies:
+```
+$ cd server
+$ npm install
 ```
 
+```
+$ cd client
+$ npm install
+```
+
+Start server:
+```
 $ cd server
 $ npm run dev
   Server starting...
@@ -16,7 +25,7 @@ $ npm run dev
   Server listening to port 8080
 ```
 
-Another bash:
+Another bash, start the react dev server:
 ```
 $ cd client
 $ npm start
