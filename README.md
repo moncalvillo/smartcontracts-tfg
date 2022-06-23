@@ -8,6 +8,16 @@ Decentralized app to interact with a blockchain network using Truffle, React and
 Start the react dev server.
 
 ```
+
+$ cd server
+$ npm run dev
+  Server starting...
+  Enabling CORS...
+  Server listening to port 8080
+```
+
+Another bash:
+```
 $ cd client
 $ npm start
   Starting the development server...
