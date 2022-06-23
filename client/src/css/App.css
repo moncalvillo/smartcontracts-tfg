@@ -2,7 +2,7 @@
 /*  FOOTER   */
 
 body{
-  background-color: #BCEAE0;
+  background-color: #F3F3F3;
 }
 
 .footer-basic{
@@ -11,7 +11,7 @@ body{
   bottom: 0;
   margin-bottom: -10px;
   width: 100%;
-  background-color: #2D7868;
+  background-color: #DCDCDC;
   min-height: 10vh;
   color: black;
   display: flex;
@@ -47,13 +47,14 @@ footer{
   color: inherit;
   opacity: 1;
   text-decoration: none;
+  background-color: white;
 }
 .list-inline-item {
   list-style-type: none;
 }
 .list-inline>a:hover {
   opacity: 0.7;
-  background-color: #215C4F;
+  background-color: white;
 }
 
 

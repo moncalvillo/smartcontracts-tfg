@@ -3,7 +3,7 @@
 const url = 'http://localhost:8080';
 const port = 8080;
 
-const apiPrefix = '/';
+const apiPrefix = '/api';
 
 
 const config = {

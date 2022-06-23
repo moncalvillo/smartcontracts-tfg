@@ -1,6 +1,6 @@
 import express, {Application} from 'express';
-// import BodyParser from '../middlewares/BodyParser';
-// import CORS from '../middlewares/CORS';
+import BodyParser from '../middlewares/BodyParser';
+import CORS from '../middlewares/CORS';
 import config from './Configuration';
 import Routes from './Routes';
 
@@ -13,8 +13,8 @@ class Server {
     }
 
     private initMiddlewares(): void{
-        // BodyParser.add(this.app);
-        // CORS.init(this.app);
+        BodyParser.add(this.app);
+        CORS.init(this.app);
     }
 
     public async init(): Promise<void>{
