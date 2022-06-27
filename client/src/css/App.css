@@ -1,10 +1,15 @@
 @import '~antd/dist/antd.css';
-/*  FOOTER   */
+
 
 body{
   background-color: #F3F3F3;
 }
 
+.container {
+  margin-bottom: 10vw;
+}
+
+/*  FOOTER   */
 .footer-basic{
   position: fixed;
   left:0;
@@ -55,21 +60,4 @@ footer{
 .list-inline>a:hover {
   opacity: 0.7;
   background-color: white;
-}
-
-
-/* METAMASK LOGO */
-
-#metamask-logo{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-}
-
-
-/* BUTTONS */
-
-#connectButton:hover{
-  opacity: 0.8;
 }

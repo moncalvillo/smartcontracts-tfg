@@ -1,6 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
-import { useEffect } from "react";
 
 import {TailSpin} from 'react-loader-spinner';
 
@@ -146,7 +145,7 @@ const Form = () => {
                     </select>
                     </label>
                 </div>
-                <button >Submit</button>
+                <button>Submit</button>
             </form>
         </div>
     );
