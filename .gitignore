@@ -3,3 +3,5 @@
 
 */truffle-config.js
 */tsconfig.json
+
+*/*.id
