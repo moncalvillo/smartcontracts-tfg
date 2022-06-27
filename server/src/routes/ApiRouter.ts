@@ -6,6 +6,9 @@ const router = Router();
 
 
 router.post('/form', /* middlewares, */ controller.submitForm);
+router.post('/enroll', controller.enrollAdmin);
+router.post('/register', controller.registerUser);
+
 router.use('/users', userRouter);
 
 export default router;
