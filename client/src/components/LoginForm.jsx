@@ -18,16 +18,16 @@ const LoginForm = ({onLoginRedirect}) => {
 
     const handleSubmit = async () => {
         setLoader(true)
-        const accessToken = await axios.post("http://localhost:8080/api/users/login", {username: username, password: password}).then((res) => {
+        axios.post("http://localhost:8080/api/users/login", {username: username, password: password}).then((res) => {
             if(res.status === 200) {
                 setAccessToken(res.data.accessToken);
-                window.location.reload()
             }
         }).catch((err) => {
             console.log(err);
+        }).finally(() => {
+            setLoader(false);
         });
         
-        setLoader(false);
     };
 
     return (

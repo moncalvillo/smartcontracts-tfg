@@ -1,9 +1,11 @@
 import {BiLogOutCircle} from 'react-icons/bi';
+import { useUser } from '../hooks/useUser';
+
 const LogoutIcon = () => {
 
+    const { setAccessToken } = useUser();
     const logout = () => {
-        localStorage.removeItem("access_token");
-        window.location.reload();
+        setAccessToken('');
     };
 
     return (

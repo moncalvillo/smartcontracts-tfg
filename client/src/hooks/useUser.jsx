@@ -17,7 +17,7 @@ const UserContext = createContext(initialState);
  
 export function UserProvider({ children }) {
   const [accessToken, setAccessToken] = useState(localStorage.getItem('access_token'));
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
  
   function handleAccessTokenChange() {
     if (accessToken && accessToken !== "") {
@@ -27,13 +27,12 @@ export function UserProvider({ children }) {
     } else if (!accessToken) {
       // Log Out
       localStorage.removeItem('access_token');
-      setUser({});
+      setUser(null);
     }
   }
  
   useEffect(() => {
     handleAccessTokenChange();
-    console.log(user)
     console.log("LOCAL STORAGE: " ,localStorage.getItem('access_token'))
   }, [accessToken]);
  
