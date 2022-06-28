@@ -20,8 +20,8 @@ const LoginForm = ({onLoginRedirect}) => {
         setLoader(true)
         const accessToken = await axios.post("http://localhost:8080/api/users/login", {username: username, password: password}).then((res) => {
             if(res.status === 200) {
-                console.log(res.data.accessToken)
                 setAccessToken(res.data.accessToken);
+                window.location.reload()
             }
         }).catch((err) => {
             console.log(err);
@@ -62,8 +62,6 @@ const LoginForm = ({onLoginRedirect}) => {
                 </button>
 
             </form>
-
-            { localStorage.getItem("accessToken") ? <div>You are logged in</div> : null }
         </div>
     );
 }

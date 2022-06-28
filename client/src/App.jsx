@@ -9,24 +9,26 @@ import ExpenseForm from "./components/ExpenseForm";
 import Login from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
 import { UserProvider, useUser } from "./hooks/useUser";
+import LogoutIcon from "./components/LogoutIcon";
 
 
 const App = () => {
 
   const [toggleForm, setToggleForm] = useState(true);
-  const {user} = useUser(); 
-
+  const accessToken = localStorage.getItem("access_token");
   return (
 
       <div className="App">
         
         <div className="container">
+          
           <UserProvider >
 
 
             {
-              user.name ? (
+              accessToken ? (
                 <>
+                  <LogoutIcon />
                   <ExpenseForm />
                   <Footer />
                 </>

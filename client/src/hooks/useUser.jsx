@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
  
 function getCurrentUser(accessToken) {
-  if (accessToken  === 'accessToken') {
+  if (accessToken  === 'accesToken') {
     return {
       name: 'Thomas',
     };
@@ -20,7 +20,7 @@ export function UserProvider({ children }) {
   const [user, setUser] = useState({});
  
   function handleAccessTokenChange() {
-    if (!user.name && accessToken) {
+    if (accessToken && accessToken !== "") {
       localStorage.setItem('access_token', accessToken);
       const user = getCurrentUser(accessToken);
       setUser(user);
@@ -33,6 +33,8 @@ export function UserProvider({ children }) {
  
   useEffect(() => {
     handleAccessTokenChange();
+    console.log(user)
+    console.log("LOCAL STORAGE: " ,localStorage.getItem('access_token'))
   }, [accessToken]);
  
   return (
