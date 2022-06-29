@@ -10,6 +10,9 @@ const RegisterForm = ({onRegisterRedirect}) => {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
+    const [msg, setMsg] = useState(null);
+    const [error, setError] = useState(null);
+    const [disabled, setDisabled] = useState(false);
 
 
     useEffect(() => {
@@ -19,24 +22,33 @@ const RegisterForm = ({onRegisterRedirect}) => {
     const handleSubmit = async () => {
         setLoader(true);
         await axios.post("http://localhost:8080/api/users/new", {email: email, username: username, password: password}).then((res) => {
-            if(res.status === 200) {
+            if(res.status === 201) {
                 console.log(res);
+                setMsg("User created successfully");
             }
         }).catch((err) => {
             console.log(err);
+        }).finally(() => {
+            setLoader(false);
+            setTimeout(()=>{
+                setMsg(null);
+            }, 3000)
         });
-        setLoader(false);
     };
 
-
-    const checkPasswords = () => {
-        if(password !== confirmPassword) {
-
+    useEffect(()=>{
+        if(password !== confirmPassword){
+            setError("Passwords do not match");
+            setDisabled(true);   
+        }else{
+            setDisabled(false);
+            setError(null);
         }
-    }
+    }, [confirmPassword,password])
 
     return (
         <div className="formDiv">
+            
             <form className="form" onSubmit={(e) => {
                 e.preventDefault();
                 handleSubmit();
@@ -44,6 +56,12 @@ const RegisterForm = ({onRegisterRedirect}) => {
                 {
                     loader ?  <div className="loading"> <TailSpin color="grey" height={40}/>  </div> : null
                 } 
+                {
+                    msg  ? <div className="success"> {msg} </div> : null
+                }
+                {
+                    error ? <div className="error"> {error} </div> : null
+                }
                 <div className="box">
                     <h2>Register</h2>
                     <label htmlFor="email">
@@ -69,12 +87,11 @@ const RegisterForm = ({onRegisterRedirect}) => {
                     Repeat password
                     <input required className="input" type="password" name="rptPassword" placeholder="repeat password" onChange={(e) => {
                         setConfirmPassword(e.target.value);
-                        checkPasswords();
                     }}/>
                     </label>
                     Already have an account? <a onClick={onRegisterRedirect}>Login</a>
                 </div>
-                <button>
+                <button disabled={disabled}>
                     Register
                 </button>
 

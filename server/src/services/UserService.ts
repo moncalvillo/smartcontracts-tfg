@@ -1,13 +1,15 @@
 import User from "../models/User";
 import IUserService from "./IUserService";
 import { Identifier } from "sequelize/types";
-import { ClientUnaryCall } from "grpc";
+import IService from "./IService";
+import Service from "./Service";
+import { Identity } from "fabric-network";
 
 
 
 export class UserService extends IUserService{
 
-    constructor(){
+    constructor(private service: IService) {
         super()
     }
 
@@ -17,10 +19,11 @@ export class UserService extends IUserService{
     }
 
     async createUser(body: any): Promise<User> {
-        const count: number = await User.count({where: {email: body.email}});
+        const count: number = await User.count({where: {email: body.email, username: body.username}});
         if (count !== 0) {
-            throw new Error("Email already in use");
+            throw new Error("Email or username already in use");
         }else {
+            const newUserWallet: Identity | undefined = await this.service.registerUser(body.username, body.password)
             const newUser: User = await User.create(body);
             return newUser;
         }
@@ -46,6 +49,6 @@ export class UserService extends IUserService{
 
 }
 
-const userService = new UserService()
+const userService = new UserService(Service)
 
 export default userService;

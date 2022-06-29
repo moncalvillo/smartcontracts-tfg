@@ -3,8 +3,12 @@
 
 body{
   background-color: #F3F3F3;
+  margin: 0;
 }
 
+.root{
+  margin: 0;
+}
 .container {
   margin-bottom: 10vw;
 }
