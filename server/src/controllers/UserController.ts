@@ -11,7 +11,6 @@ class UserController {
         const {username, password} = req.body;
         try{
             const accessToken: string  = await this.userService.login(username, password);
-            console.log(accessToken)
             return res.status(200).json({accessToken});
         }catch(error:any){
             console.log(error)
@@ -25,10 +24,9 @@ class UserController {
     }
 
     create = async (req:Request, res: Response) => {
-        console.log(req.body)
         try{
-            const newUser: User = await this.userService.createUser({...req.body});
-            return res.status(201).json(newUser);
+            const accessToken: string = await this.userService.createUser({...req.body});
+            return res.status(201).json({accessToken});
         }catch(error: any){
             return res.status(400).json({message: error.message});
         }
@@ -39,6 +37,7 @@ class UserController {
         this.userService.delete(id)
         return res.status(200).end();
     }
+
 }
 
 const userController = new UserController(UserService)

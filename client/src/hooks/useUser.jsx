@@ -1,12 +1,12 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
  
-function getCurrentUser(accessToken) {
-  if (accessToken  === 'accesToken') {
-    return {
-      name: 'Thomas',
-    };
-  }
-}
+// function getCurrentUser(accessToken) {
+//   if (accessToken  === 'accesToken') {
+//     return {
+//       name: 'Thomas',
+//     };
+//   }
+// }
  
 const initialState = {
   user: {},
@@ -22,7 +22,7 @@ export function UserProvider({ children }) {
   function handleAccessTokenChange() {
     if (accessToken && accessToken !== "") {
       localStorage.setItem('access_token', accessToken);
-      const user = getCurrentUser(accessToken);
+      const user = accessToken;
       setUser(user);
     } else if (!accessToken) {
       // Log Out

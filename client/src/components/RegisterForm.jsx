@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { TailSpin } from "react-loader-spinner";
+import { useUser } from "../hooks/useUser";
 
 const RegisterForm = ({onRegisterRedirect}) => {
 
@@ -14,6 +15,9 @@ const RegisterForm = ({onRegisterRedirect}) => {
     const [error, setError] = useState(null);
     const [disabled, setDisabled] = useState(false);
 
+    const {setAccessToken} = useUser();
+
+
 
     useEffect(() => {
         setLoader(false);
@@ -21,16 +25,18 @@ const RegisterForm = ({onRegisterRedirect}) => {
 
     const handleSubmit = async () => {
         setLoader(true);
-        await axios.post("http://localhost:8080/api/users/new", {email: email, username: username, password: password}).then((res) => {
+        axios.post("http://localhost:8080/api/users/new", {email: email, username: username, password: password}).then((res) => {
             if(res.status === 201) {
-                console.log(res);
+                setAccessToken(res.data.accessToken);
+                document.cookie = `accessToken=${res.data.accessToken}`;
                 setMsg("User created successfully");
             }
         }).catch((err) => {
             console.log(err);
         }).finally(() => {
-            setLoader(false);
             setTimeout(()=>{
+                
+                setLoader(false);
                 setMsg(null);
             }, 3000)
         });

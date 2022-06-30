@@ -21,6 +21,7 @@ const LoginForm = ({onLoginRedirect}) => {
         axios.post("http://localhost:8080/api/users/login", {username: username, password: password}).then((res) => {
             if(res.status === 200) {
                 setAccessToken(res.data.accessToken);
+                document.cookie = `accessToken=${res.data.accessToken}`
             }
         }).catch((err) => {
             console.log(err);

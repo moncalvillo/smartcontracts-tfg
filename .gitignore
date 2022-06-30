@@ -4,4 +4,6 @@
 */truffle-config.js
 */tsconfig.json
 
-*/*.id
+*.id
+
+.env

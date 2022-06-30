@@ -1,9 +1,10 @@
 import path from "path";
 import IService from "./IService";
 import fs from 'fs';
-import FabricCAServices, { IEnrollResponse } from "fabric-ca-client";
+import FabricCAServices, { IAffiliationRequest, IEnrollResponse, IRegisterRequest, IServiceResponse } from "fabric-ca-client";
 import { Identity, IdentityProvider, Wallet, Wallets } from "fabric-network";
 import { User } from "fabric-common";
+import { AffiliationService } from "fabric-ca-client";
 
 export class Service extends IService{
     
@@ -19,8 +20,10 @@ export class Service extends IService{
     }
 
 
-    async enrollAdmin(): Promise<Identity | undefined> {
+    async enrollAdmin(): Promise<Identity |undefined> {
         try{
+
+            //
             const ccpPath: string = path.resolve(__dirname, '..', 'network', 'ccps','connection-org1.json');
             const ccp: any = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
     
@@ -31,10 +34,12 @@ export class Service extends IService{
             const wallet: Wallet = await Wallets.newFileSystemWallet(walletPath);
             console.log(`Wallet path: ${walletPath}`);
     
+            //
+
             const identity: Identity | undefined = await wallet.get('admin');
             if (identity) {
                 console.log('An identity for the admin user "admin" already exists in the wallet');
-                return undefined;
+                throw new Error('An identity for the admin user "admin" already exists in the wallet');
             }
     
             const enrollment: IEnrollResponse = await ca.enroll({ enrollmentID: 'admin', enrollmentSecret: 'adminpw' });
@@ -56,8 +61,8 @@ export class Service extends IService{
         
     }
 
-    async registerUser(userName: string): Promise<Identity | undefined> {
-
+    async registerUser(userName: string, password: string): Promise<Identity | undefined> {
+        console.log('Registering user: ' + userName);
         try {
 
             const ccpPath: string = path.resolve(__dirname, '..', 'network', 'ccps','connection-org1.json');
@@ -66,34 +71,35 @@ export class Service extends IService{
             const caURL: string = ccp.certificateAuthorities['ca.org1.example.com'].url;
             const ca: FabricCAServices = new FabricCAServices(caURL);
             
-            const walletPath: string = path.join(process.cwd(),'..', 'network', 'wallets');
+            const walletPath: string = path.join(__dirname,'..', 'network', 'wallets');
             const wallet: Wallet = await Wallets.newFileSystemWallet(walletPath);
             console.log(`Wallet path: ${walletPath}`);
     
             const userIdentity: Identity | undefined = await wallet.get(userName);
             if (userIdentity) {
                 console.log('An identity for the user "appUser" already exists in the wallet');
-                return undefined;
+                throw new Error('An identity for the user "appUser" already exists in the wallet');
             }
     
-            const adminIdentity = await wallet.get('admin');
+            const adminIdentity: Identity | undefined | any = await wallet.get('admin');
             if (!adminIdentity) {
                 console.log('An identity for the admin user "admin" does not exist in the wallet');
                 console.log('Enroll an admin before this action.');
-                return undefined;
+                throw new Error('An identity for the admin user "admin" does not exist in the wallet.\n Enroll an admin before this action.');
             }
     
             const provider: IdentityProvider = wallet.getProviderRegistry().getProvider(adminIdentity.type);
             const adminUser: User = await provider.getUserContext(adminIdentity, 'admin');
-    
+            
             const secret: string = await ca.register({
-                affiliation: 'org1.department1',
                 enrollmentID: userName,
-                role: 'client'
+                enrollmentSecret: password,
+                role: 'client',
+                affiliation: 'org1.department1',
             }, adminUser);
-    
+
             const enrollment: IEnrollResponse = await ca.enroll({
-                enrollmentID: 'appUser',
+                enrollmentID: userName,
                 enrollmentSecret: secret
             });
     
@@ -113,12 +119,6 @@ export class Service extends IService{
             return undefined;
         }
     }
-
-
-
-
-
-
 
 }
 
