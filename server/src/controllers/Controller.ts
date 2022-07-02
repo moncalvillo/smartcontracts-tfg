@@ -70,7 +70,7 @@ class Controller {
 
     firstQuery = async (req: Request, res: Response) => {
 
-        const query = await this.apiService.firstQuery();
+        const query: string = await this.apiService.firstQuery();
         if(query){
             res.status(200).json({
                 message: 'Query successful',

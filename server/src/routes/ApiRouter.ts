@@ -1,14 +1,16 @@
 
 import {Router} from 'express';
-import controller from '../controllers/Controller';
 import userRouter from'./UserRouter';
+import fabricRouter from'./FabricRouter';
+import authenticateToken from '../middlewares/authenticateToken';
+
 const router = Router();
 
 
-router.post('/form', /* middlewares, */ controller.submitForm);
-router.post('/enroll', controller.enrollAdmin);
-router.post('/register', controller.registerUser);
+router.use('/fabric', fabricRouter);
 
 router.use('/users', userRouter);
 
 export default router;
+
+

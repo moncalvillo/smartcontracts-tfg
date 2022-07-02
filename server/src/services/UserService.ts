@@ -43,10 +43,10 @@ export class UserService extends IUserService{
             await t.commit();
             const token = this.generateToken(newUser);
             return token;
-        }catch(err){
+        }catch(err:any){
             await t.rollback();
             console.log(err);
-            throw new Error("Email or username already in use");
+            throw new Error(err.message);
         }
         
     }
