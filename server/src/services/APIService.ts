@@ -17,44 +17,73 @@ export class APIService extends IAPIService{
         super();
     }
 
-    async firstQuery(): Promise<any>{
+    async createExpense(amount: number, type: string, concept: string, project: string, owner: string): Promise<any>{
         try {
             // Create a new file system based wallet for managing identities.
             const walletPath: string = path.join(__dirname,'..', 'network', 'wallets');
             const wallet: Wallet = await buildWallet(walletPath);
 
             // Check to see if we've already enrolled the user.
-            const userExists: Identity | undefined = await wallet.get('userTest');
-            if (!userExists) {
-                console.log('An identity for the user "appUser" does not exist in the wallet');
-                console.log('Run the registerUser.js application before retrying');
-                return "";
+            const userIdentity: Identity | undefined = await wallet.get(owner);
+            if (!userIdentity) {
+                console.log(`An identity for the user ${owner} does not exist in the wallet`);
+                throw new Error(`An identity for the user ${owner} does not exist in the wallet`);
             }
             
             // Create a new gateway for connecting to our peer node.
-            const gateway: any = new Gateway();
+            const gateway: Gateway = new Gateway();
             await gateway.connect(this.ccp, { wallet,
-                identity: 'userTest',
+                identity: owner,
                 discovery: { enabled: true, asLocalhost: true } 
             });
             // Get the network (channel) our contract is deployed to.
             const network: Network = await gateway.getNetwork('mychannel');
 
             // Get the contract from the network.
-            const contract: Contract = network.getContract('basic');
+            const contract: Contract = network.getContract('draft');
             // Evaluate the specified transaction.
-            const result: Buffer = await contract.evaluateTransaction('GetAllAssets');
+
+            const date = new Date();
+            const result: Buffer = await contract.submitTransaction('CreateAsset', '123', amount.toString(), type, concept, project, userIdentity.mspId, date.toISOString());
             console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
             // res.status(200).json({response: result.toString()});
             return result.toString();
 
-        } catch (error) {
+        } catch (error: any) {
             console.error(`Failed to evaluate transaction: ${error}`);
-            // res.status(500).json({error: error});
-            return "";
+            throw new Error(error.message)
         }
     }
+    
+    async readExpense(id: string, owner: string): Promise<any> {
+        try {
+            const walletPath: string = path.join(__dirname,'..', 'network', 'wallets');
+            const wallet: Wallet = await buildWallet(walletPath);
 
+            const userIdentity: Identity | undefined = await wallet.get(owner);
+            if (!userIdentity) {
+                console.log('An identity for the user "appUser" does not exist in the wallet');
+                throw new Error(`An identity for the user ${owner} does not exist in the wallet`);
+            }
+            
+            const gateway: any = new Gateway();
+            await gateway.connect(this.ccp, { wallet,
+                identity: userIdentity,
+                discovery: { enabled: true, asLocalhost: true } 
+            });
+            const network: Network = await gateway.getNetwork('mychannel');
+
+            const contract: Contract = network.getContract('draft');
+            const result: Buffer = await contract.evaluateTransaction('ReadAsset', id);
+            console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
+            // res.status(200).json({response: result.toString()});
+            return result.toString();   
+
+        }catch(error: any){
+            throw new Error(error.message);
+
+        }
+    }
     async getRegisteredUsers() : Promise<any>{
 
         const walletPath: string = path.join(__dirname,'..', 'network', 'wallets');

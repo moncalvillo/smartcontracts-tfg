@@ -68,17 +68,49 @@ class Controller {
         }
     }
 
-    firstQuery = async (req: Request, res: Response) => {
+    createExpense = async (req: Request, res: Response) => {
 
-        const query: string = await this.apiService.firstQuery();
-        if(query){
-            res.status(200).json({
-                message: 'Query successful',
-                query: query,
+        const { amount, expenseType, concept, project, owner = 'userTest' } = req.body;
+        console.log(amount, expenseType, concept, project, owner);
+        try{
+            const query: string = await this.apiService.createExpense(amount, expenseType, concept, project, owner);
+            if(query){
+                res.status(200).json({
+                    message: 'Query successful',
+                    query: query,
+                });
+            }else{
+                res.status(500).json({
+                    message: 'Error querying'
+                });
+            }
+        }catch(err: any){
+            console.log(err);
+            return res.status(500).json({
+                message: err.message
             });
-        }else{
-            res.status(500).json({
-                message: 'Error querying'
+        }
+        
+    }
+
+    readExpense = async (req: Request, res: Response) => {
+        const { id, owner= 'userTest' } = req.body;
+        try{
+            const query: string = await this.apiService.readExpense(id, owner);
+            if(query){
+                res.status(200).json({
+                    message: 'Query successful',
+                    query: query,
+                });
+            }else{
+                res.status(500).json({
+                    message: 'Error querying'
+                });
+            }
+        }catch(err: any){
+            console.log(err);
+            return res.status(500).json({
+                message: err.message
             });
         }
     }
