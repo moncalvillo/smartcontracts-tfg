@@ -1,12 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
- 
-// function getCurrentUser(accessToken) {
-//   if (accessToken  === 'accesToken') {
-//     return {
-//       name: 'Thomas',
-//     };
-//   }
-// }
+import Wrapper from '../components/Wrapper';
  
 const initialState = {
   user: {},
@@ -22,8 +15,8 @@ export function UserProvider({ children }) {
   function handleAccessTokenChange() {
     if (accessToken && accessToken !== "") {
       localStorage.setItem('access_token', accessToken);
-      const user = accessToken;
-      setUser(user);
+      console.log(accessToken)
+      setUser(accessToken);
     } else if (!accessToken) {
       // Log Out
       localStorage.removeItem('access_token');
@@ -33,12 +26,16 @@ export function UserProvider({ children }) {
  
   useEffect(() => {
     handleAccessTokenChange();
-    console.log("LOCAL STORAGE: " ,localStorage.getItem('access_token'))
   }, [accessToken]);
- 
+  
+
+  
   return (
     <UserContext.Provider value={{ user, accessToken, setAccessToken }}>
-      {children}
+
+      {
+        !user ? <Wrapper /> : children
+      }
     </UserContext.Provider>
   );
 }

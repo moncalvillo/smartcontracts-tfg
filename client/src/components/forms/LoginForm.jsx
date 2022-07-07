@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useUser } from "../hooks/useUser";
+import { useUser } from "../../hooks/useUser";
 import { TailSpin  } from "react-loader-spinner";
 
 const LoginForm = ({onLoginRedirect}) => {
@@ -9,7 +9,7 @@ const LoginForm = ({onLoginRedirect}) => {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-
+    const [msg, setMsg] = useState(null);
     const {setAccessToken} = useUser();
 
     useEffect(() => {
@@ -18,18 +18,24 @@ const LoginForm = ({onLoginRedirect}) => {
 
     const handleSubmit = async () => {
         setLoader(true)
-        axios.post("http://localhost:8080/api/users/login", {username: username, password: password}).then((res) => {
-            if(res.status === 200) {
-                setAccessToken(res.data.accessToken);
-                document.cookie = `accessToken=${res.data.accessToken}`
-            }
+        axios.post("http://localhost:8080/api/users/login", {username, password}).then((res) => {
+            console.log(res.data.accessToken);
+            setAccessToken(res.data.accessToken);
         }).catch((err) => {
-            console.log(err);
-        }).finally(() => {
+            console.log(err.response);
+            setMsg(err.response.data.message);
+        }).finally(() => {                
             setLoader(false);
+            setTimeout(()=>{
+                setMsg(null);
+            }, 3000);
         });
         
     };
+
+    useEffect(()=>{
+        setMsg(null);
+    }, [password, username]);
 
     return (
         <div className="formDiv">
@@ -37,9 +43,13 @@ const LoginForm = ({onLoginRedirect}) => {
                 e.preventDefault();
                 handleSubmit();
             }}> 
+                
                 {
-                    loader ?  <div className="loading"> <TailSpin color="grey" height={40}/>  </div> : null
+                    loader && <div className="loading"> <TailSpin color="grey" height={40}/>  </div> 
                 } 
+                {
+                    msg  && <div className="error"> {msg} </div>
+                }
                 <div className="box">
                     <h2>Login</h2>
                     <label htmlFor="username">

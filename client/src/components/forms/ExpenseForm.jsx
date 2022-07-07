@@ -11,13 +11,13 @@ const Form = () => {
     const [amount, setAmount] = useState(0);
     const [currency, setCurrency] = useState("");
 
-    const [loading, setLoading] = useState(true);
+    const [loader, setLoader] = useState(true);
 
     const [error, setError] = useState("");
 
 
     useEffect(() => {
-        setLoading(false);
+        setLoader(false);
     }, []);
 
 
@@ -39,7 +39,7 @@ const Form = () => {
     ]
 
     const handleSubmit = async () => {
-        setLoading(true);
+        setLoader(true);
         const data = {
             project: project,
             expenseType: expenseType,
@@ -48,20 +48,16 @@ const Form = () => {
             currency: currency,
             date: new Date(),
         }
-        console.log(data);
-        await axios.post("http://localhost:8080/api/form", data).then((res)=> {
-            if(res.status === 200) {
-                console.log(res);
-            }
-            setTimeout(() => {
-                setLoading(false);
-                alert("Form submitted successfully");
-            }, 2000);
+        await axios.post("http://localhost:8080/api/fabric/expenseCreate", data).then((res)=> {
+            console.log(res);
             
         }).catch((err)=> {
             setError(err.response.data.message);
-            setLoading(false);
             console.log(error);
+        }).finally(()=> {
+            setTimeout(()=>{
+                setLoader(false);
+            }, 1000)
         });
 
 
@@ -79,9 +75,11 @@ const Form = () => {
                 }>
                 
                 {
-                    loading ?  <div className="loading"> <TailSpin color="grey" height={40}/>  </div> : null
-                } 
-                
+                    loader &&  <div className="loading"> <TailSpin color="grey" height={40}/>  </div> 
+                }
+                {
+                    error && <div className="error"> {error} </div> 
+                }
 
                 
                 

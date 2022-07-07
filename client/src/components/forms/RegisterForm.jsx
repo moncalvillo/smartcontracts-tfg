@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { TailSpin } from "react-loader-spinner";
-import { useUser } from "../hooks/useUser";
+import { useUser } from "../../hooks/useUser";
 
 const RegisterForm = ({onRegisterRedirect}) => {
 
@@ -11,7 +11,6 @@ const RegisterForm = ({onRegisterRedirect}) => {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
-    const [msg, setMsg] = useState(null);
     const [error, setError] = useState(null);
     const [disabled, setDisabled] = useState(false);
 
@@ -29,18 +28,22 @@ const RegisterForm = ({onRegisterRedirect}) => {
             if(res.status === 201) {
                 setAccessToken(res.data.accessToken);
                 document.cookie = `accessToken=${res.data.accessToken}`;
-                setMsg("User created successfully");
+            }else{
+                
             }
         }).catch((err) => {
-            console.log(err);
+            console.log(err.response);
+            setError(err.response.data.message);
         }).finally(() => {
             setTimeout(()=>{
-                
                 setLoader(false);
-                setMsg(null);
-            }, 3000)
+            }, 1000)
         });
     };
+
+    useEffect(()=>{
+        setError(null);
+    }, [password, confirmPassword, username, email]);
 
     useEffect(()=>{
         if(password !== confirmPassword){
@@ -60,13 +63,10 @@ const RegisterForm = ({onRegisterRedirect}) => {
                 handleSubmit();
             }}> 
                 {
-                    loader ?  <div className="loading"> <TailSpin color="grey" height={40}/>  </div> : null
-                } 
-                {
-                    msg  ? <div className="success"> {msg} </div> : null
+                    loader &&  <div className="loading"> <TailSpin color="grey" height={40}/>  </div> 
                 }
                 {
-                    error ? <div className="error"> {error} </div> : null
+                    error && <div className="error"> {error} </div> 
                 }
                 <div className="box">
                     <h2>Register</h2>

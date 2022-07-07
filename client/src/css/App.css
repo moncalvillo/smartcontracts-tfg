@@ -1,16 +1,18 @@
 @import '~antd/dist/antd.css';
 
 
-body{
-  background-color: #F3F3F3;
-  margin: 0;
+html,
+body {
+  height: auto;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-.root{
-  margin: 0;
+body{
+  background-color: #F3F3F3;
+  
 }
 .container {
-  margin-bottom: 10vw;
+  margin:0;
 }
 
 /*  FOOTER   */
@@ -77,13 +79,20 @@ footer{
   flex-direction: row-reverse;
 }
 
-.logoutIcon{
+.backwardsDiv{
+  position: absolute;
+  left: 50px;
+  top: 50px;
+  padding: 1vw;
+}
+
+.icon{
   border:2px solid black;
   border-radius: 50%;
   padding: 5px;
 }
 
-.logoutIcon:hover{
+.icon:hover{
   background-color: black;
   color: #F3F3F3;
   height: 55px;
@@ -91,6 +100,8 @@ footer{
   animation-name: hover;
   animation-duration: 0.2s;
 }
+
+
 
 @keyframes hover {
   0% {

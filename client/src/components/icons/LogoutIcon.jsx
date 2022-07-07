@@ -1,16 +1,16 @@
 import {BiLogOutCircle} from 'react-icons/bi';
-import { useUser } from '../hooks/useUser';
+import { useUser } from '../../hooks/useUser';
 
 const LogoutIcon = () => {
 
     const { setAccessToken } = useUser();
     const logout = () => {
-        setAccessToken('');
+        setAccessToken(null);
     };
 
     return (
         <div className="logoutDiv">
-            <BiLogOutCircle className="logoutIcon" size="50px" onClick={logout}/>
+            <BiLogOutCircle className="icon" size="50px" onClick={logout}/>
         </div>
     );
 

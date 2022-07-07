@@ -1,0 +1,75 @@
+
+
+
+.linksDiv{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+    width: 100%;
+}
+.link{
+    color: #000;
+    text-decoration: none;
+    border: 2px solid #000;
+    border-radius: 10px;
+    padding: 1vw;
+    display: flex;
+    height: 30vh;
+    width: 20vw;
+    flex-direction: column;
+    margin: 1vw;
+    align-items: center;
+    justify-content: center;
+}
+
+.linkItem{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 5%;
+    font-size: large;
+    
+}
+
+.link:hover {
+    background-color: black;
+    color: #F3F3F3;
+    height: 31vh;
+    width: 21vw;
+    animation-name: linkHover;
+    animation-duration: 0.2s;
+}
+
+
+@keyframes linkHover {
+    0% {
+        color: black;
+        background-color: #F3F3F3;
+        height: 30.25vh;
+        width: 20.25vw;
+    }
+
+    25% {
+        background-color: #A2A2A2;
+        color: #494949;
+        height: 30.4vh;
+        width: 20.4vw;
+    }
+
+    50% {
+        color: #A2A2A2;
+        background-color: #494949;
+        height: 30.6vh;
+        width: 20.6vw;
+    }
+
+    100% {
+        background-color: black;
+        color: #F3F3F3;
+        height: 30.85vh;
+        width: 20.85vw;
+    }
+}
