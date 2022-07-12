@@ -44,7 +44,8 @@ export class APIService extends IAPIService{
             // Evaluate the specified transaction.
 
             const date = new Date();
-            const result: Buffer = await contract.submitTransaction('CreateAsset', '123', amount.toString(), type, concept, project, userIdentity.mspId, date.toISOString());
+            const id = uuid();
+            const result: Buffer = await contract.submitTransaction('CreateAsset', id, amount.toString(), type, concept, project, userIdentity.mspId, date.toISOString());
             console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
             // res.status(200).json({response: result.toString()});
             return result.toString();

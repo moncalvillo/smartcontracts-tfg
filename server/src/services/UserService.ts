@@ -8,7 +8,7 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 import connection from "../providers/Connection";
-
+import {uuid} from 'uuidv4';
 
 export class UserService extends IUserService{
 
@@ -70,7 +70,7 @@ export class UserService extends IUserService{
 
     generateToken(user: User): string {
         dotenv.config()
-        const token = jwt.sign({user}, process.env.TOKEN_SECRET as string, {expiresIn: '1h'});
+        const token = jwt.sign({user}, process.env.TOKEN_SECRET as string, {expiresIn: '10d'});
         return token;
     }
 
