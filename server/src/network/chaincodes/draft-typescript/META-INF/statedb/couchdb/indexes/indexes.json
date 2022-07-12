@@ -1,0 +1,9 @@
+{
+  "index":{
+      "fields":["type", "project", "owner", "state"] 
+  },
+  "ddoc":"indexDoc", 
+  "name":"indexDoc",
+  "type":"json"
+}
+
