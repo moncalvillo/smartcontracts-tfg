@@ -7,7 +7,7 @@
 'use strict';
 
 import FabricCAServices from "fabric-ca-client";
-import { Wallet, Wallets } from "fabric-network";
+import { Contract, Gateway, Identity, Network, Wallet, Wallets } from "fabric-network";
 
 import fs from 'fs';
 import path from 'path';
@@ -159,4 +159,29 @@ export const registerAndEnrollUser = async (caClient: FabricCAServices, wallet: 
         throw new Error(error.message);
 	}
 };
+
+
+export const connectToContract = async (owner: string, channel: string, chaincode: string) => {
+	
+	const ccp: any = buildCCPOrg1();
+    const ccp2: any = buildCCPOrg2();
+	const walletPath: string = path.join(__dirname,'..', 'network', 'wallets');
+	const wallet: Wallet = await buildWallet(walletPath);
+
+	const userIdentity: Identity | undefined = await wallet.get(owner);
+	if (!userIdentity) {
+		throw new Error(`An identity for the user ${owner} does not exist in the wallet`);
+	}
+	
+	const gateway: any = new Gateway();
+	await gateway.connect(ccp, { wallet,
+		identity: userIdentity,
+		discovery: { enabled: true, asLocalhost: true } 
+	});
+	const network: Network = await gateway.getNetwork(channel);
+
+	const contract: Contract = network.getContract(chaincode);
+
+	return {contract, userIdentity, network, gateway, wallet, ccp};
+}
 
