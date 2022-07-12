@@ -38,6 +38,7 @@
 
 .select{
     width: 100%;
+    min-width: 200px;
     height: 40px;
     border: 1px solid #ccc;
     border-radius: 4px;

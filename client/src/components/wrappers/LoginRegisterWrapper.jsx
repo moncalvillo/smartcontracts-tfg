@@ -1,6 +1,6 @@
 import {useState} from "react";
-import LoginForm from "./forms/LoginForm";
-import RegisterForm from "./forms/RegisterForm";
+import LoginForm from "../forms/LoginForm";
+import RegisterForm from "../forms/RegisterForm";
 
 
 const Wrapper = (props) => {

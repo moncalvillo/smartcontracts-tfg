@@ -1,6 +1,11 @@
 
-
 .requestsDiv{
+    display: flex;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 100px;
+}
+.requestsList{
     width: 100%;
     border-radius: 10px;
     padding: 10px;
@@ -12,10 +17,16 @@
     min-height: 400px;
 }
 
+.filters{
+    display: flex;
+    flex-direction: column;
+    padding: 5% 1% 5% 5%;
+}
+
 
 
 .requests{
-    width: 80%;
+    width: 90%;
     height: 100%;
 }
 .requestItem{
@@ -25,6 +36,7 @@
     padding: 1vw;
     display: flex;
     align-items: center;
+    justify-content: center;
     padding: 1.5%;
     margin-top: 1%;
 }
