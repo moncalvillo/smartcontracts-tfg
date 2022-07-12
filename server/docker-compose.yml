@@ -14,3 +14,5 @@ services:
         MYSQL_DATABASE: mysqldb
         MYSQL_USER: user
         MYSQL_PASSWORD: user
+
+    restart: always
