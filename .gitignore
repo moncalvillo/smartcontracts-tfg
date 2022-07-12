@@ -7,3 +7,5 @@
 *.id
 
 .env
+network/cpps/
+network/wallets/
