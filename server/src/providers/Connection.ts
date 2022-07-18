@@ -1,4 +1,9 @@
 import { Sequelize } from "sequelize-typescript";
+import ExpenseTypes from "../models/ExpenseTypes";
+import Membership from "../models/Membership";
+import Project from "../models/Project";
+import Role from "../models/Role";
+import Type from "../models/Type";
 
 import User from "./../models/User"
 
@@ -9,7 +14,7 @@ const connection = new Sequelize({
   password: "root",
   database: "mysqldb",
   logging: false,
-  models: [User],
+  models: [User, Type, Project],
 });
 
 export default connection;

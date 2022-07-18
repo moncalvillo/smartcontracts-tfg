@@ -1,9 +1,13 @@
 import { Identifier } from "sequelize/types";
 import User from "../models/User";
 
-export default abstract class IUserService {
+export default abstract class IDatabaseService {
     abstract login(username: string, password: string) : Promise<string>;
     abstract getAll() : Promise<User[]>;
     abstract createUser(body: any): Promise<string>;
     abstract delete(id:Identifier): Promise<void>;
+
+    abstract getProjects(user: User): Promise<any>;
+    abstract getTypes(user: User): Promise<any>;
+    // abstract getTypesByProject(user: User, project: string): Promise<any>;
 }

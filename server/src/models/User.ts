@@ -1,5 +1,8 @@
 // @/models.ts
-import { Table, Model, Column, DataType } from "sequelize-typescript";
+import { Table, Model, Column, DataType, BelongsToMany, HasMany, HasOne, ForeignKey } from "sequelize-typescript";
+// import Project from "./Project";
+// import Membership from "./Membership";
+// import Role from "./Role";
 
 @Table({
   timestamps: false,
@@ -7,9 +10,20 @@ import { Table, Model, Column, DataType } from "sequelize-typescript";
 })
 export default class User extends Model {
 
+
+  @Column({
+      type: DataType.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+  })
+  id!: Number;
+  
   @Column({
     type: DataType.STRING,
     allowNull: false,
+    validate: {
+      isEmail: true,
+    }
   })
   email!: string;
   
@@ -25,10 +39,14 @@ export default class User extends Model {
   })
   password!: string;
 
-  @Column({
-    type: DataType.BOOLEAN,
-    allowNull: true,
-    defaultValue: false,
-  })
-  remember!: boolean;
+  // @BelongsToMany(() => Project, { as: 'projects', through: () => Membership })
+  // projects!: Project[];
+
+  // @ForeignKey(() => Role)
+  // @Column({
+  //   type: DataType.STRING,
+  //   field: 'roleType'
+  // })
+  // roleType!: string;
+
 }

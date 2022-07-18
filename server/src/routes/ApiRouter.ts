@@ -1,15 +1,14 @@
 
 import {Router} from 'express';
-import userRouter from'./UserRouter';
+import serverRouter from'./DatabaseRouter';
 import fabricRouter from'./FabricRouter';
-import authenticateToken from '../middlewares/authenticateToken';
-
+import FabricController from '../controllers/FabricController';
 const router = Router();
 
 
 router.use('/fabric', fabricRouter);
-
-router.use('/users', userRouter);
+router.use('/server', serverRouter);
+router.post('/init', FabricController.init);
 
 export default router;
 

@@ -1,18 +1,19 @@
 import User from "../models/User";
-import IUserService from "./IUserService";
-import { Identifier, Sequelize } from "sequelize/types";
-import IService from "./IService";
-import Service from "./Service";
 import { Identity } from "fabric-network";
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 import connection from "../providers/Connection";
-import {uuid} from 'uuidv4';
+import IBlockchainService from "./IBlockchainService";
+import IDatabaseService from "./IDatabaseService";
+import BlockchainService  from "./BlockchainService";
+import { Identifier } from "sequelize/types";
+import Project from "../models/Project";
+import Type from "../models/Type";
 
-export class UserService extends IUserService{
+export class DatabaseService extends IDatabaseService{
 
-    constructor(private service: IService) {
+    constructor(private service: IBlockchainService) {
         super()
     }
 
@@ -22,15 +23,18 @@ export class UserService extends IUserService{
     }
 
     async createUser(body: any): Promise<string> {
+        console.log(body)
         const count: number = await User.count({where: {email: body.email, username: body.username}});
         if (count !== 0) {
             throw new Error("Email or username already in use");
         }
+        const allCount: number = await User.count();
         
         const hashedPw: string = await this.hashPassword(body.password);
         const t = await connection.transaction();
 
         const createUser: any = {
+            id: allCount+1,
             email: body.email,
             username: body.username,
             password: hashedPw,
@@ -81,11 +85,19 @@ export class UserService extends IUserService{
     }
 
 
+    async getProjects(user: User): Promise<any> {
+        const projects: Project[] = await Project.findAll();
+        return projects;
+    }
 
-    
+    async getTypes(user: User): Promise<any> {
+        const types: Type[] = await Type.findAll();
+        return types;
+    }
+
 
 }
 
-const userService = new UserService(Service)
+const databaseService = new DatabaseService(BlockchainService)
 
-export default userService;
+export default databaseService;

@@ -1,0 +1,61 @@
+import {Request, Response} from 'express';
+import User from '../models/User';
+import DatabaseService from '../services/DatabaseService';
+import IDatabaseService from '../services/IDatabaseService';
+
+class UserController {
+
+    constructor(private databaseService: IDatabaseService){ }
+
+    login = async (req: Request, res: Response) => {
+        const {username, password} = req.body;
+        try{
+            const accessToken: string  = await this.databaseService.login(username, password);
+            return res.status(200).json({accessToken});
+        }catch(error:any){
+            console.log(error)
+            return res.status(400).json({message: error.message});
+        }
+    }
+
+    getAll = async (req:Request, res:Response) => {
+        const allUsers = await this.databaseService.getAll();
+        return res.json(allUsers);
+    }
+
+    create = async (req:Request, res: Response) => {
+        try{
+            const accessToken: string = await this.databaseService.createUser({...req.body});
+            return res.status(201).json({accessToken});
+        }catch(error: any){
+            return res.status(400).json({message: error.message});
+        }
+    }
+
+    delete = (req:Request, res: Response) => {
+        const { id } = req.params
+        this.databaseService.delete(id)
+        return res.status(200).end();
+    }
+
+    getProjects = async (req:Request, res: Response) => {
+        const { user } = req.body;
+        const projects = await this.databaseService.getProjects(user.username);
+        return res.status(200).json({
+            result: projects
+        });
+    }
+
+    getTypes = async (req:Request, res: Response) => {
+        const { user } = req.body;
+        const types = await this.databaseService.getTypes(user.username);
+        return res.status(200).json({
+            result: types
+        });
+    }
+
+}
+
+const userController = new UserController(DatabaseService)
+
+export default userController;
