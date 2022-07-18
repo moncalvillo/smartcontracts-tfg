@@ -8,7 +8,7 @@ const RequestsList = (props) => {
 
 
     const [requests, setRequests] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [types, setTypes] = useState([]);
     const [type, setType] = useState("");
@@ -35,42 +35,46 @@ const RequestsList = (props) => {
         state: requestState,
     }
 
-    const states = ["APPROVED", "PENDING", "REJECTED"];
+    const states = [
+        {
+            id: '1',
+            name: 'APPROVED',
+        },
+        {
+            id: '2',
+            name: 'REJECTED',
+        },
+        {
+            id: '3',
+            name: 'PENDING',
+        },
+    ];
 
-    async function getTypes(project){
-        setLoading(true);
-        // axios.get(`/api/user/${project}/types`).then((res) => {
-        //     setTypes(res.data); 
-        // }).catch((err) => {
-        //     setError(err)
-        // }).finally(() => {
-        //     setLoading(false);
-        // });
-        setTypes(["Material", "Equipment"]);
+    async function getTypes(){
+        axios.get(`/server/types`).then((res) => {
+            setTypes(res.data.result); 
+        }).catch((err) => {
+            setError(err)
+        })
     }
 
-    async function getProjects(project){
-        setLoading(true);
-        // axios.get(`/api/user/projects/`).then((res) => {
-        //     setTypes(res.data); 
-        // }).catch((err) => {
-        //     setError(err)
-        // }).finally(() => {
-        //     setLoading(false);
-        // });
-        setProjects(["Project 1", "Project 2", "Project 3", "Project 4"]);
+    async function getProjects(){
+        axios.get(`/server/projects`).then((res) => {
+            setProjects(res.data.result); 
+        }).catch((err) => {
+            setError(err)
+        })
+        // setProjects(["Project 1", "Project 2", "Project 3", "Project 4"]);
     }
 
     async function getRequests(){
         setLoading(true);
-        axios.get("http://localhost:8080/api/fabric/expenses", {
+        axios.get("/fabric/expenses", {
             params: params,
-            headers: {
-                'Authorization': `token ${localStorage.getItem('access_token')}`
-            }
         }).then((res)=>{
             setRequests(res.data.result);
         }).catch((err)=>{
+            console.log(err);
             setError(err.response.data.message);
         }).finally(()=>{
             setLoading(false);

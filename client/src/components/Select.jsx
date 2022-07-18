@@ -16,8 +16,8 @@ const Selector = ({label, options, setState}) => {
                     onChange={(e) => setState(e.target.value)}>
                     <option key="all" value=""> All </option>
                     {options.map((option) => (
-                    <option key={option} value={option}>
-                        {option}
+                    <option key={option.id} value={option.name}>
+                        {option.name}
                     </option>
                     ))}
                 </select>

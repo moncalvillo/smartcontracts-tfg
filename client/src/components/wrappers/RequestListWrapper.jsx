@@ -1,5 +1,6 @@
 
 import { TailSpin } from "react-loader-spinner";
+import Request from "../Request";
 
 const RequestsListWrapper = (props) => {
 
@@ -22,9 +23,7 @@ const RequestsListWrapper = (props) => {
                 </div>
             ) : (
                 props.requests.map((request) => (
-                    <div className="requestItem"> 
-                        <p><b>ID:  </b> {request.ID} <b>PROJECT:  </b> {request.Project} <b>TYPE:  </b> {request.Type} <b>AMOUNT:  </b>{request.Amount} {request.Currency} <b>CONCEPT:  </b>{request.Concept} <b>STATE:  </b> {request.State.toString()}</p>
-                    </div>
+                    <Request request={request}/> 
                 ))
             )
     )

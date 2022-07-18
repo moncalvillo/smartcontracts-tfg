@@ -11,6 +11,7 @@
     padding: 10px;
     margin-top: 50px;
     display: flex;
+    
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -24,6 +25,9 @@
 }
 
 
+.inactive{
+    display: none;
+}
 
 .requests{
     width: 90%;
@@ -37,6 +41,23 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     padding: 1.5%;
     margin-top: 1%;
 }
+
+.toggleRequest{
+    background-color: white;
+    border: 1px solid #CFCFCF;
+    border-radius: 5px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding-top: 1%;
+    margin-bottom: 5px;
+}
+
+
+    

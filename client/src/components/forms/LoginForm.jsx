@@ -18,8 +18,7 @@ const LoginForm = ({onLoginRedirect}) => {
 
     const handleSubmit = async () => {
         setLoader(true)
-        axios.post("http://localhost:8080/api/users/login", {username, password}).then((res) => {
-            console.log(res.data.accessToken);
+        axios.post("/server/login", {username, password}).then((res) => {
             setAccessToken(res.data.accessToken);
         }).catch((err) => {
             console.log(err.response);

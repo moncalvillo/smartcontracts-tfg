@@ -24,7 +24,7 @@ const RegisterForm = ({onRegisterRedirect}) => {
 
     const handleSubmit = async () => {
         setLoader(true);
-        axios.post("http://localhost:8080/api/users/new", {email: email, username: username, password: password}).then((res) => {
+        axios.post("http://localhost:8080/api/server/new", {email: email, username: username, password: password}).then((res) => {
             if(res.status === 201) {
                 setAccessToken(res.data.accessToken);
                 document.cookie = `accessToken=${res.data.accessToken}`;

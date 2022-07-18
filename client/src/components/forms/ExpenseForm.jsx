@@ -5,15 +5,15 @@ import {TailSpin} from 'react-loader-spinner';
 
 const Form = () => {
 
-    const [expenseType, setExpenseType] = useState("");
-    const [project, setProject] = useState("");
-    const [concept, setConcept] = useState("");
+    const [expenseType, setExpenseType] = useState(null);
+    const [project, setProject] = useState(null);
+    const [concept, setConcept] = useState(null);
     const [amount, setAmount] = useState(0);
-    const [currency, setCurrency] = useState("");
+    const [currency, setCurrency] = useState(null);
 
     const [loader, setLoader] = useState(true);
-
-    const [error, setError] = useState("");
+    const [success, setSuccess] = useState(null);
+    const [error, setError] = useState(null);
 
 
     useEffect(() => {
@@ -38,6 +38,14 @@ const Form = () => {
         "CAD",
     ]
 
+    const resetValues = () => {
+        setExpenseType(null);
+        setProject(null);
+        setConcept(null);
+        setAmount(0);
+        setCurrency(null);
+    }
+    
     const handleSubmit = async () => {
         setLoader(true);
         const data = {
@@ -48,21 +56,20 @@ const Form = () => {
             currency: currency,
             date: new Date(),
         }
-        await axios.post("http://localhost:8080/api/fabric/expenseCreate", data).then((res)=> {
+        await axios.post("/fabric/test", data).then((res)=> {
             console.log(res);
+            resetValues();
+            setSuccess('Expense created successfully');
             
         }).catch((err)=> {
             setError(err.response.data.message);
             console.log(error);
         }).finally(()=> {
-            setTimeout(()=>{
-                setLoader(false);
-            }, 1000)
+            setLoader(false);
         });
-
-
-
     }
+
+  
 
     return (
         <div className="formDiv">
@@ -79,6 +86,9 @@ const Form = () => {
                 }
                 {
                     error && <div className="error"> {error} </div> 
+                }
+                {
+                    success && <div className="success"> {success} </div>
                 }
 
                 
