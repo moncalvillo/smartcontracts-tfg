@@ -5,29 +5,44 @@ import {TailSpin} from 'react-loader-spinner';
 
 const Form = () => {
 
-    const [expenseType, setExpenseType] = useState(null);
-    const [project, setProject] = useState(null);
-    const [concept, setConcept] = useState(null);
-    const [amount, setAmount] = useState(0);
-    const [currency, setCurrency] = useState(null);
+    const [expenseType, setExpenseType] = useState("");
+    const [project, setProject] = useState("");
+    const [concept, setConcept] = useState("");
+    const [amount, setAmount] = useState("");
+    const [currency, setCurrency] = useState("");
 
     const [loader, setLoader] = useState(true);
     const [success, setSuccess] = useState(null);
     const [error, setError] = useState(null);
 
 
+    const [types, setTypes] = useState([]);
+    const [projects, setProjects] = useState([]);
+
     useEffect(() => {
         setLoader(false);
+        getProjects();
+        getTypes();
     }, []);
 
 
+    async function getTypes(){
+        axios.get(`/server/types`).then((res) => {
+            setTypes(res.data.result); 
+        }).catch((err) => {
+            setError(err)
+        });
+    }
 
-    const PROJECTS = [
-        "Project 1",
-        "Project 2",
-        "Project 3",
-        "Project 4",
-    ]
+    async function getProjects(){
+        axios.get(`/server/projects`).then((res) => {
+            setProjects(res.data.result); 
+        }).catch((err) => {
+            setError(err)
+        })
+    }
+
+
 
     const CURRENCIES = [
         "BTC",
@@ -39,11 +54,11 @@ const Form = () => {
     ]
 
     const resetValues = () => {
-        setExpenseType(null);
-        setProject(null);
-        setConcept(null);
-        setAmount(0);
-        setCurrency(null);
+        setExpenseType("");
+        setProject("");
+        setConcept("");
+        setAmount("");
+        setCurrency("");
     }
     
     const handleSubmit = async () => {
@@ -56,8 +71,7 @@ const Form = () => {
             currency: currency,
             date: new Date(),
         }
-        await axios.post("/fabric/test", data).then((res)=> {
-            console.log(res);
+        await axios.post("/fabric/expense/new", data).then((res)=> {
             resetValues();
             setSuccess('Expense created successfully');
             
@@ -90,30 +104,36 @@ const Form = () => {
                 {
                     success && <div className="success"> {success} </div>
                 }
-
-                
                 
                 <div className="box">
                     <h2> Institution</h2> 
                     <label htmlFor="expenseType">
                     Type of expense
-                    <input
-                        className="input"
+                    <select
+                        className="select"
                         id="expenseType"
-                        placeholder="Type of expense"
-                        onBlur={(e) => {setExpenseType(e.target.value);}}/>
+                        value={expenseType}
+                        onChange={(e) => {setExpenseType(e.target.value);}}>
+                        <option />
+                        {types.map((t) => (
+                            <option key={t.id} value={t.name}>
+                                {t.name}
+                            </option>
+                        ))}
+                    </select>
                     </label>
                     <label htmlFor="project">
                     Project
                     <select
                         className="select"
                         id="project"
-                        onBlur={(e) => {setProject(e.target.value);}}>
+                        value={project}
+                        onChange={(e) => {setProject(e.target.value);}}>
                         <option />
-                        {PROJECTS.map((p) => (
-                        <option key={p} value={p}>
-                            {p}
-                        </option>
+                        {projects.map((p) => (
+                            <option key={p.id} value={p.name}>
+                                {p.name}
+                            </option>
                         ))}
                     </select>
                     </label>
@@ -127,23 +147,26 @@ const Form = () => {
                             className="input"
                             id="concept"
                             placeholder="Concept"
-                            onBlur={(e) => {setConcept(e.target.value);}}/>
+                            value={concept}
+                            onChange={(e) => {setConcept(e.target.value);}}/>
                     </label>
                     <label htmlFor="amount">
                     Amount
                         <input
                             className="input"
                             id="amount"
+                            value={amount}
                             type="number"
                             placeholder="00.00"
-                            onBlur={(e) => {setAmount(e.target.value);}}/>
+                            onChange={(e) => {setAmount(e.target.value);}}/>
                     </label>
                     <label htmlFor="currency">
                     Currency
                     <select
                         className="select"
                         id="currency"
-                        onBlur={(e) => {setCurrency(e.target.value);}}>
+                        value={currency}
+                        onChange={(e) => {setCurrency(e.target.value);}}>
                         <option />
                         {CURRENCIES.map((p) => (
                         <option key={p} value={p}>

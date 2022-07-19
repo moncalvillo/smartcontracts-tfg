@@ -12,9 +12,11 @@ import { Contract, Gateway, Identity, Network, Wallet, Wallets } from "fabric-ne
 import fs from 'fs';
 import path from 'path';
 
+const fabricSamplePath = path.join('\\\\wsl.localhost', 'Ubuntu-20.04', 'root','tfg','fabric-samples');
+
 export const buildCCPOrg1 = () => {
 	// load the common connection configuration file
-	const ccpPath: string = path.resolve(__dirname, '..', 'network', 'ccps','connection-org1.json');
+	const ccpPath: string = path.join(fabricSamplePath,'test-network','organizations','peerOrganizations','org1.example.com', 'connection-org1.json');
 	const fileExists: boolean = fs.existsSync(ccpPath);
 	if (!fileExists) {
 		throw new Error(`no such file or directory: ${ccpPath}`);
@@ -30,7 +32,7 @@ export const buildCCPOrg1 = () => {
 
 export const buildCCPOrg2 = () => {
 	// load the common connection configuration file
-	const ccpPath: string = path.resolve(__dirname, '..', 'network', 'ccps','connection-org2.json');
+	const ccpPath: string = path.join(fabricSamplePath, 'test-network','organizations','peerOrganizations','org2.example.com', 'connection-org2.json');
 	const fileExists = fs.existsSync(ccpPath);
 	if (!fileExists) {
 		throw new Error(`no such file or directory: ${ccpPath}`);

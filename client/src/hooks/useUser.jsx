@@ -15,7 +15,6 @@ export function UserProvider({ children }) {
   function handleAccessTokenChange() {
     if (accessToken && accessToken !== "") {
       localStorage.setItem('access_token', accessToken);
-      console.log(accessToken)
       setUser(accessToken);
     } else if (!accessToken) {
       // Log Out

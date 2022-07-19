@@ -64,7 +64,6 @@ const RequestsList = (props) => {
         }).catch((err) => {
             setError(err)
         })
-        // setProjects(["Project 1", "Project 2", "Project 3", "Project 4"]);
     }
 
     async function getRequests(){

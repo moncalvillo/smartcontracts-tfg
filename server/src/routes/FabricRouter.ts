@@ -9,7 +9,7 @@ router.use(authenticateToken);
 
 router.post('/test', FabricController.test);
 router.post('/enroll', FabricController.enrollAdmin);
-router.post('/expenseCreate', FabricController.createExpense);
+router.post('/expense/new', FabricController.createExpense);
 router.post('/expenseRead', FabricController.readExpense);
 // router.post('/request', FabricController.request);
 router.get('/expenses', FabricController.getExpenses);
