@@ -6,6 +6,7 @@
     align-items: center;
     justify-content: center;
     margin-top: 50px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 .loading{
     display: flex;
@@ -17,6 +18,7 @@
 .form {
     width:600px;
     padding: 3vw;
+
 }
 
 .box{
@@ -53,7 +55,6 @@
     margin-bottom: 10px;
     display: inline-block;  
     width: 100%;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 .form button{
@@ -69,4 +70,74 @@
     margin-top: 1vh;
 }
 
+.wrapper{
+    display: inline-flex;
+    width:100%;
+    align-items: center;
+    justify-content: space-evenly;
+    font-size: 10px;
+  }
+.wrapper .option{
+    background: #F3F3F3;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 0 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 0 10px;
+    border: 1px solid #CFCFCF;
+    transition: all 0.3s ease;
+}
+.wrapper .option .dot{
+    height: 20px;
+    width: 20px;
+    background: #d9d9d9;
+    border-radius: 50%;
+    position: relative;
+}
+.wrapper .option .dot::before{
+    position: absolute;
+    content: "";
+    top: 4px;
+    left: 4px;
+    width: 12px;
+    height: 12px;
+    background: #4D4D4D;
+    border-radius: 50%;
+    opacity: 0;
+    transform: scale(1.5);
+    transition: all 0.3s ease;
+}
+input[type="radio"]{
+    display: none;
+}
+#user:checked:checked ~ .user,
+#manager:checked:checked ~ .manager{
+    border-color: #4D4D4D;
+    background: #4D4D4D;
+}
+#user:checked:checked ~ .user .dot,
+#manager:checked:checked ~ .manager .dot{
+    background: #F3F3F3;
+}
+#user:checked:checked ~ .user .dot::before,
+#manager:checked:checked ~ .manager .dot::before{
+    opacity: 1;
+    transform: scale(1);
+}
+.wrapper .option span{
+    font-size: 1.7vh;
+    color: #808080;
+}
+#user:checked:checked ~ .user span,
+#manager:checked:checked ~ .manager span{
+    color: #F3F3F3;
+}
 
+.fullname{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
