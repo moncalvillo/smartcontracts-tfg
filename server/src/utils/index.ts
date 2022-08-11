@@ -11,8 +11,9 @@ import { Contract, Gateway, Identity, Network, Wallet, Wallets } from "fabric-ne
 
 import fs from 'fs';
 import path from 'path';
-
-const fabricSamplePath = path.join('\\\\wsl.localhost', 'Ubuntu-20.04', 'root','tfg','fabric-samples');
+import config from "../providers/Configuration";
+// \\wsl.localhost\Ubuntu-20.04\home\pablo\tfg\fabric-samples\test-network\organizations\peerOrganizations\org1.example.com
+const fabricSamplePath = config.networkPath;
 
 export const buildCCPOrg1 = () => {
 	// load the common connection configuration file
