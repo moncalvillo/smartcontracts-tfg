@@ -13,9 +13,12 @@ export function UserProvider({ children }) {
   const [user, setUser] = useState(null);
  
   function handleAccessTokenChange() {
+    if(user){
+      setAccessToken(user.accessToken);
+    }
+
     if (accessToken && accessToken !== "") {
       localStorage.setItem('access_token', accessToken);
-      setUser(accessToken);
     } else if (!accessToken) {
       // Log Out
       localStorage.removeItem('access_token');
@@ -25,12 +28,12 @@ export function UserProvider({ children }) {
  
   useEffect(() => {
     handleAccessTokenChange();
-  }, [accessToken]);
+  }, [accessToken, user]);
   
 
   
   return (
-    <UserContext.Provider value={{ user, accessToken, setAccessToken }}>
+    <UserContext.Provider value={{ user, accessToken, setAccessToken, setUser }}>
 
       {
         !user ? <Wrapper /> : children

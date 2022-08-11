@@ -132,3 +132,21 @@ footer{
     height: 54px;
   }
 }
+
+.profile-name {
+  color: black;
+  border:#494949 solid 1px;
+  border-radius: 10px;
+  padding: 1%;
+  position: fixed;
+  left: 1%;
+  bottom: 1%;
+  min-height: 24vh;
+  min-width: 18vw;
+}
+/* .profile-name h1{
+  font-weight: bold;
+}
+
+.profile-name h3{
+} */

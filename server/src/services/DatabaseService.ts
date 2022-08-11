@@ -22,7 +22,7 @@ export class DatabaseService extends IDatabaseService{
         return allUsers;
     }
 
-    async createUser(body: any): Promise<string> {
+    async createUser(body: any): Promise<any> {
         console.log(body)
         const count: number = await User.count({where: {email: body.email, username: body.username}});
         if (count !== 0) {
@@ -38,6 +38,9 @@ export class DatabaseService extends IDatabaseService{
             email: body.email,
             username: body.username,
             password: hashedPw,
+            roleType: body.roleType,
+            firstName: body.firstName,
+            lastName: body.lastName,
         }
         try{
             const newUser: User = await User.create(createUser, {transaction: t});
@@ -45,8 +48,16 @@ export class DatabaseService extends IDatabaseService{
                 const newUserWallet: Identity | undefined = await this.service.registerUser(body.username, hashedPw) 
             }
             await t.commit();
-            const token = this.generateToken(newUser);
-            return token;
+            const res: any = {
+                username: newUser.username,
+                email: newUser.email,
+                id: newUser.id,
+                roleType: newUser.roleType,
+                firstName: newUser.firstName,
+                lastName: newUser.lastName,
+                accessToken: this.generateToken(newUser),
+            }
+            return res;
         }catch(err:any){
             await t.rollback();
             console.log(err);
@@ -55,11 +66,20 @@ export class DatabaseService extends IDatabaseService{
         
     }
     
-    async login(username: string, password: string): Promise<string> {
+    async login(username: string, password: string): Promise<any> {
         const user: User | null = await User.findOne({where: {username}});
-        const checkPw: boolean = await bcrypt.compare(password, user!.password);
-        if (user && checkPw) {
-            return this.generateToken(user);
+        console.log(user)
+        if (user && await bcrypt.compare(password, user!.password)) {
+            const res: any = {
+                username: user.username,
+                email: user.email,
+                id: user.id,
+                roleType: user.roleType,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                accessToken: this.generateToken(user),
+            }
+            return res;
         }else{ 
             throw new Error("Invalid credentials");
         }

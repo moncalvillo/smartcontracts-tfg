@@ -60,18 +60,24 @@ const users = [
         username: "userTest",
         password: "userTest",
         roleType: "user",
+        firstName: "User",
+        lastName: "Test"
     },
     {
         email: "managerTest@gmail.com",
         username: "managerTest",
         password: "managerTest",
         roleType: "manager",
+        firstName: "Manager",
+        lastName: "Test"
     },
     {
         email: "secondUser@gmail.com",
         username: "secondUser",
         password: "secondUser",
         roleType: "user",
+        firstName: "Second",
+        lastName: "User"
     }
 ]
 

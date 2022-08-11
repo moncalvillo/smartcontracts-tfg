@@ -1,16 +1,12 @@
 // @/models.ts
 import { Table, Model, Column, DataType, BelongsToMany, HasMany, HasOne, ForeignKey } from "sequelize-typescript";
-// import Project from "./Project";
-// import Membership from "./Membership";
-// import Role from "./Role";
 
 @Table({
   timestamps: false,
   tableName: "user",
 })
 export default class User extends Model {
-
-
+ 
   @Column({
       type: DataType.INTEGER,
       allowNull: false,
@@ -38,6 +34,24 @@ export default class User extends Model {
     allowNull: false,
   })
   password!: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  firstName!: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  lastName!: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  roleType!: string;
 
   // @BelongsToMany(() => Project, { as: 'projects', through: () => Membership })
   // projects!: Project[];

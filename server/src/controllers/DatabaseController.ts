@@ -10,8 +10,8 @@ class UserController {
     login = async (req: Request, res: Response) => {
         const {username, password} = req.body;
         try{
-            const accessToken: string  = await this.databaseService.login(username, password);
-            return res.status(200).json({accessToken});
+            const user: any  = await this.databaseService.login(username, password);
+            return res.status(200).json({user});
         }catch(error:any){
             console.log(error)
             return res.status(400).json({message: error.message});
@@ -25,8 +25,8 @@ class UserController {
 
     create = async (req:Request, res: Response) => {
         try{
-            const accessToken: string = await this.databaseService.createUser({...req.body});
-            return res.status(201).json({accessToken});
+            const user: any = await this.databaseService.createUser({...req.body});
+            return res.status(201).json({user});
         }catch(error: any){
             return res.status(400).json({message: error.message});
         }

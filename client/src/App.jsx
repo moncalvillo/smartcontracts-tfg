@@ -3,6 +3,7 @@ import "./css/App.css";
 import "./css/messages.css";
 import "./css/links.css";
 import "./css/requests.css";
+import axios from "axios";
 
 import { UserProvider } from "./hooks/useUser";
 import Router from "./routes/Router";
@@ -10,6 +11,7 @@ import Router from "./routes/Router";
 
 const App = () => {
 
+  axios.defaults.baseURL = 'http://localhost:8080/api';
   return (
 
       

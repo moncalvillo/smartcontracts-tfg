@@ -5,7 +5,7 @@ import Home from "./Home";
 import Form from "./Form";
 import Requests from "./Requests";
 import LogoutIcon from "../components/icons/LogoutIcon";
-
+import ProfileName from "../components/ProfileName";
 import {
   BrowserRouter as Router,
   Routes,
@@ -16,15 +16,15 @@ import {
 const RouterComponent = () => {
 
 
-    const { setAccessToken } = useUser();
+    const { setUser } = useUser();
 
     axios.interceptors.response.use(undefined, (error) => {
-        if(error.response.status === 403) {
-            setAccessToken(null);
+        if(error.response.status === 401 || 403) {
+          setUser(null)
         }
     });
 
-    axios.defaults.baseURL = 'http://localhost:8080/api';
+    
     axios.defaults.headers.common['Authorization'] = `token ${localStorage.getItem('access_token')}`;
 
     return (
@@ -42,6 +42,7 @@ const RouterComponent = () => {
                     }
                   />
               </Routes>
+              <ProfileName />
               <LogoutIcon />
               
         </Router>
