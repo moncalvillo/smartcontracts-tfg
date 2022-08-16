@@ -10,7 +10,7 @@ const LoginForm = ({onLoginRedirect}) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [msg, setMsg] = useState(null);
-    const {setUser} = useUser();
+    const {setAccessToken} = useUser();
 
     useEffect(() => {
         setLoader(false);
@@ -19,15 +19,12 @@ const LoginForm = ({onLoginRedirect}) => {
     const handleSubmit = async () => {
         setLoader(true)
         axios.post("/server/login", {username, password}).then((res) => {
-            setUser(res.data.user);
+            setAccessToken(res.data.user.accessToken);
         }).catch((err) => {
             console.log(err.response);
             setMsg(err.response.data.message);
         }).finally(() => {                
             setLoader(false);
-            setTimeout(()=>{
-                setMsg(null);
-            }, 3000);
         });
         
     };

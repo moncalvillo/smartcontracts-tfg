@@ -18,7 +18,7 @@ const RegisterForm = ({onRegisterRedirect}) => {
     const [error, setError] = useState(null);
     const [disabled, setDisabled] = useState(false);
 
-    const {setUser} = useUser();
+    const {setAccessToken} = useUser();
 
 
 
@@ -30,7 +30,7 @@ const RegisterForm = ({onRegisterRedirect}) => {
         setLoader(true);
         axios.post("/server/new", {email, username, password, firstName: firstname, lastName: lastname, roleType: role}).then((res) => {
             if(res.status === 201) {
-                setUser(res.data.user);
+                setAccessToken(res.data.user.accessToken);
                 // document.cookie = `accessToken=${res.data.accessToken}`;
             }
         }).catch((err) => {
@@ -38,9 +38,6 @@ const RegisterForm = ({onRegisterRedirect}) => {
             setError(err.response.data.message);
         }).finally(() => {
             setLoader(false);
-            setTimeout(()=>{
-                setLoader(false);
-            }, 1000)
         });
     };
 
