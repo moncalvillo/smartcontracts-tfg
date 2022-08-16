@@ -1,7 +1,7 @@
 import {Request, Response} from 'express';
-import User from '../models/User';
 import DatabaseService from '../services/DatabaseService';
 import IDatabaseService from '../services/IDatabaseService';
+import jwtDecode from 'jwt-decode';
 
 class UserController {
 
@@ -52,6 +52,23 @@ class UserController {
         return res.status(200).json({
             result: types
         });
+    }
+
+    getUser = async (req:Request, res: Response) => {
+        const authHeader = req.headers['authorization'];    
+        const token: string | undefined = authHeader && authHeader.split(' ')[1];
+
+        const decodedToken: any = jwtDecode(token as string);
+        const obj = {
+            username: decodedToken.user.username,
+            email: decodedToken.user.email,
+            id: decodedToken.user.id,
+            firstName: decodedToken.user.firstName,
+            lastName: decodedToken.user.lastName,
+            roleType: decodedToken.user.roleType
+        }
+        return res.status(200).json({user: obj});
+
     }
 
 }
