@@ -14,9 +14,9 @@ export class BlockchainService extends IBlockchainService{
         super();
     }
 
-    async initLedger(user: string): Promise<any> {
+    async initLedger(wallet: string): Promise<any> {
         try {
-            const {contract} = await connectToContract(user,'mychannel','draft');
+            const {contract} = await connectToContract(wallet,'mychannel','draft');
             await contract.submitTransaction('InitLedger');
             console.log(`Ledger initialized`);
             return ;
@@ -44,8 +44,8 @@ async enrollAdmin(): Promise<Identity |undefined> {
         
     }
 
-    async registerUser(userName: string, password: string): Promise<Identity | undefined> {
-        console.log('Registering user: ' + userName);
+    async registerUser(walletStr: string, password: string): Promise<Identity | undefined> {
+        console.log('Registering user: ' + walletStr);
         try {
 
             const ccp: any = buildCCPOrg1();
@@ -53,7 +53,7 @@ async enrollAdmin(): Promise<Identity |undefined> {
             const walletPath: string = path.join(__dirname,'..', 'network', 'wallets');
             const wallet: Wallet = await buildWallet(walletPath);
     
-            const walletUser: Identity |undefined = await registerAndEnrollUser(ca, wallet, 'Org1MSP', userName, password, 'org1.department1');
+            const walletUser: Identity |undefined = await registerAndEnrollUser(ca, wallet, 'Org1MSP', walletStr, password, 'org1.department1');
             if(!walletUser){
                 throw new Error('Could not create user identity');
             }
@@ -64,13 +64,13 @@ async enrollAdmin(): Promise<Identity |undefined> {
         }
     }
     
-    async createExpense(amount: number, type: string, concept: string, project: string, owner: string): Promise<any>{
+    async createExpense(amount: number, type: string, concept: string, project: string, walletStr: string): Promise<any>{
         try {
             
-            const {contract, userIdentity} = await connectToContract(owner,'mychannel','draft');
+            const {contract, userIdentity} = await connectToContract(walletStr,'mychannel','draft');
             const date = new Date();
             const id = uuid();
-            const result: Buffer = await contract.submitTransaction('CreateAsset', id, amount.toString(), type, concept, project, owner, date.toISOString()) as any | null;
+            const result: Buffer = await contract.submitTransaction('CreateAsset', id, amount.toString(), type, concept, project, walletStr, date.toISOString()) as any | null;
             if(result){
                 contract.submitTransaction('CheckRequest', id);
                 console.log(`Expense request sent.`);
@@ -86,9 +86,9 @@ async enrollAdmin(): Promise<Identity |undefined> {
         }
     }
     
-    async readExpense(id: string, owner: string): Promise<any> {
+    async readExpense(id: string, walletStr: string): Promise<any> {
         try {
-            const {contract} = await connectToContract(owner,'mychannel','draft');
+            const {contract} = await connectToContract(walletStr,'mychannel','draft');
             const result: Buffer = await contract.evaluateTransaction('ReadAsset', id) as any | null;
             if(result){
 
@@ -104,9 +104,9 @@ async enrollAdmin(): Promise<Identity |undefined> {
         }
     }
 
-    async updateExpense(owner: string, expense: any) {
+    async updateExpense(walletStr: string, expense: any) {
         try {
-            const {contract} = await connectToContract(owner,'mychannel','draft');
+            const {contract} = await connectToContract(walletStr,'mychannel','draft');
             const date = new Date();            
             const result: Buffer = await contract.submitTransaction('UpdateAsset', expense.id, expense.amount.toString(), expense.expenseType, expense.concept, expense.project, date.toISOString()) as any | null;
             console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
@@ -118,9 +118,9 @@ async enrollAdmin(): Promise<Identity |undefined> {
         }
     }
 
-    async getAllExpenses(user: string): Promise<any> {
+    async getAllExpenses(walletStr: string): Promise<any> {
         try {
-            const {contract} = await connectToContract(user,'mychannel','draft');
+            const {contract} = await connectToContract(walletStr,'mychannel','draft');
             const expenses: any = await contract.submitTransaction('GetAllAssets');
             const jsonObj = JSON.parse(expenses.toString());
             return jsonObj.map((x: { Record: any; }) => x.Record);   
@@ -131,11 +131,12 @@ async enrollAdmin(): Promise<Identity |undefined> {
     }
 
 
-    async getExpenses(user: string, params: any): Promise<any> {
+    async getExpenses(walletStr: string, params: any): Promise<any> {
         try {
+            console.log(walletStr);
             const { type, project, state } = params;
-            const {contract} = await connectToContract(user,'mychannel','draft');
-            const expenses: any = await contract.submitTransaction('QueryAssetsByParams', user, type, project, state) as any | null;
+            const {contract} = await connectToContract(walletStr,'mychannel','draft');
+            const expenses: any = await contract.submitTransaction('QueryAssetsByParams', walletStr, type, project, state) as any | null;
             if(expenses){
                 const jsonObj = JSON.parse(expenses.toString());
                 console.log(`Transaction has been evaluated, result is: ${jsonObj}`);

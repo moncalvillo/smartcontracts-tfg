@@ -8,9 +8,9 @@ class UserController {
     constructor(private databaseService: IDatabaseService){ }
 
     login = async (req: Request, res: Response) => {
-        const {username, password} = req.body;
+        const {email, password} = req.body;
         try{
-            const user: any  = await this.databaseService.login(username, password);
+            const user: any  = await this.databaseService.login(email, password);
             return res.status(200).json({user});
         }catch(error:any){
             console.log(error)

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { TailSpin } from "react-loader-spinner";
 import { useUser } from "../../hooks/useUser";
+import SocialMediaIcons from "../wrappers/SocialMediaIcons";
 
 const RegisterForm = ({onRegisterRedirect}) => {
 
@@ -9,12 +10,13 @@ const RegisterForm = ({onRegisterRedirect}) => {
     
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [username, setUsername] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [error, setError] = useState(null);
     const [disabled, setDisabled] = useState(false);
 
-    const {setAccessToken} = useUser();
+    const {setUser} = useUser();
 
 
 
@@ -24,12 +26,11 @@ const RegisterForm = ({onRegisterRedirect}) => {
 
     const handleSubmit = async () => {
         setLoader(true);
-        axios.post("http://localhost:8080/api/server/new", {email: email, username: username, password: password}).then((res) => {
+        axios.post("/server/new", {email, firstName, password, lastName}).then((res) => {
             if(res.status === 201) {
-                setAccessToken(res.data.accessToken);
+                console.log(res.data);
+                setUser(res.data.user);
                 document.cookie = `accessToken=${res.data.accessToken}`;
-            }else{
-                
             }
         }).catch((err) => {
             console.log(err.response);
@@ -43,7 +44,7 @@ const RegisterForm = ({onRegisterRedirect}) => {
 
     useEffect(()=>{
         setError(null);
-    }, [password, confirmPassword, username, email]);
+    }, [password, confirmPassword, firstName, lastName, email]);
 
     useEffect(()=>{
         if(password !== confirmPassword){
@@ -76,10 +77,16 @@ const RegisterForm = ({onRegisterRedirect}) => {
                         setEmail(e.target.value);
                     }}/>
                     </label>
-                    <label htmlFor="username">
-                    Username
-                    <input required className="input" type="text" name="username" placeholder="username" onBlur={(e)=>{
-                        setUsername(e.target.value);
+                    <label htmlFor="firstName">
+                    First name
+                    <input required className="input" type="text" name="firstName" placeholder="first name" onBlur={(e)=>{
+                        setFirstName(e.target.value);
+                    }}/>
+                    </label>
+                    <label htmlFor="lastName">
+                    Last name
+                    <input required className="input" type="text" name="lastName" placeholder="last name" onBlur={(e)=>{
+                        setLastName(e.target.value);
                     }}/>
                     </label>
                         
@@ -100,6 +107,9 @@ const RegisterForm = ({onRegisterRedirect}) => {
                 <button disabled={disabled}>
                     Register
                 </button>
+                <div className="social-media">
+                    <SocialMediaIcons />
+                </div>
 
             </form>
         </div>
