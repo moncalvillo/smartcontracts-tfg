@@ -38,7 +38,7 @@ export class DatabaseService extends IDatabaseService{
             id: allCount+1,
             email: body.email,
             password: hashedPw,
-            roleType: "user",
+            roleType: body.roleType || "user",
             firstName: body.firstName,
             lastName: body.lastName,
             wallet: body.wallet || v4(),

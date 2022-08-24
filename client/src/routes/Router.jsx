@@ -16,7 +16,7 @@ import {
 const RouterComponent = () => {
 
 
-    const { setUser } = useUser();
+    const { user, setUser } = useUser();
 
     axios.interceptors.response.use(undefined, (error) => {
         if(error.response.status === 401 || 403) {
@@ -31,7 +31,7 @@ const RouterComponent = () => {
         <Router>
               <Routes>
                   <Route path="/" element={<Home />} />
-                  <Route path="/form" element={<Form />} />
+                  { user.roleType === "user" && <Route path="/form" element={<Form />} />}
                   <Route path="/requests" element={<Requests />} />
                   <Route
                     path="*"

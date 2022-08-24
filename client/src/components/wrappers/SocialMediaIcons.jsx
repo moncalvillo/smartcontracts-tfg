@@ -1,9 +1,5 @@
-import { AiFillGoogleCircle, AiFillInstagram, AiFillTwitterCircle } from "react-icons/ai";
+import { AiFillTwitterCircle } from "react-icons/ai";
 import { FaFacebook } from "react-icons/fa";
-import { RiWhatsappFill } from "react-icons/ri";
-import { useEffect  } from "react";
-import { useUser } from "../../hooks/useUser";
-import axios from "axios";
 import GoogleSignIn from "../icons/GoogleSignIn";
 
 const SocialMediaIcons = () => {

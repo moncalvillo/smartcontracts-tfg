@@ -10,17 +10,15 @@ const RegisterForm = ({onRegisterRedirect}) => {
     
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [email, setEmail] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
-    const [email, setEmail] = useState("");
-    const [firstname, setFirstname] = useState("");
-    const [lastname, setLastname] = useState("");
-    const [role, setRole] = useState("");
+    const [roleType, setRoleType] = useState("");
 
     const [error, setError] = useState(null);
     const [disabled, setDisabled] = useState(false);
 
-    const {setUser} = useUser();
+    const {setAccessToken} = useUser();
 
 
 
@@ -32,11 +30,11 @@ const RegisterForm = ({onRegisterRedirect}) => {
         setLoader(true);
         axios.post("/server/new", {email, firstName, password, lastName,roleType}).then((res) => {
             if(res.status === 201) {
-                setUser(res.data.user);
+                console.log(res.data)
+                setAccessToken(res.data.user);
                 document.cookie = `accessToken=${res.data.accessToken}`;
             }
         }).catch((err) => {
-            console.log(err.response);
             setError(err.response.data.message);
         }).finally(() => {
             setLoader(false);
@@ -58,7 +56,7 @@ const RegisterForm = ({onRegisterRedirect}) => {
     }, [confirmPassword,password])
 
     const onValueChange = (e) => {
-        setRole(e.target.value);
+        setRoleType(e.target.value);
         console.log(e.target.value);
     }
 
@@ -78,24 +76,41 @@ const RegisterForm = ({onRegisterRedirect}) => {
                 <div className="box">
                     <h2>Register</h2>
                     <label htmlFor="email">
-                    Email
-                    <input required className="input" type="email" name="email" placeholder="email" onBlur={(e)=>{
-                        setEmail(e.target.value);
-                    }}/>
+                        Email
+                        <input required className="input" type="email" name="email" placeholder="email" onBlur={(e)=>{
+                            setEmail(e.target.value);
+                        }}/>
                     </label>
                     <label htmlFor="firstName">
-                    First name
-                    <input required className="input" type="text" name="firstName" placeholder="first name" onBlur={(e)=>{
-                        setFirstName(e.target.value);
-                    }}/>
-                    <label htmlFor="password">
-                    <label htmlFor="lastName">
-                    Last name
-                    <input required className="input" type="text" name="lastName" placeholder="last name" onBlur={(e)=>{
-                        setLastName(e.target.value);
-                    }}/>
+                        First name
+                        <input required className="input" type="text" name="firstName" placeholder="first name" onBlur={(e)=>{
+                            setFirstName(e.target.value);
+                        }}/>
                     </label>
-                        
+                    <label htmlFor="lastName">
+                        Last name
+                        <input required className="input" type="text" name="lastName" placeholder="last name" onBlur={(e)=>{
+                            setLastName(e.target.value);
+                        }}/>
+                    </label>
+                    <label htmlFor="role">
+                    Role
+                        <div className="wrapper" >
+                            <input type="radio" name="role" id="user" value="user" checked={roleType === "user"}
+                                onChange={onValueChange}/>
+                            <input type="radio" name="role" id="manager" value="manager" checked={roleType === "manager"}
+                                onChange={onValueChange}/>
+                            <label for="user" className="option user">
+                                <div class="dot"></div>
+                                <span>Responsible</span>
+                            </label>
+                            <label for="manager" className="option manager">
+                                <div class="dot"></div>
+                                <span>Manager</span>
+                            </label>
+                        </div>
+                    </label>
+                    <label htmlFor="password">
                         Password
                         <input required className="input" type="password" name="password" placeholder="password" onBlur={(e)=>{
                             setPassword(e.target.value);

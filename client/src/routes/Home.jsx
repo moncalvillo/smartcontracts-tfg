@@ -2,17 +2,18 @@
 import FormLink from "../components/links/FormLink";
 import RequestsLink from "../components/links/RequestsLink";
 import { Link } from 'react-router-dom';
+import { useUser } from "../hooks/useUser";
 const Home = () => {
 
-
+    const { user } = useUser();
 
     return (
         <div className="linksSection">
             
             <div className="linksDiv"> 
-                <Link to="/form" >
+                {user.roleType ==="user" && <Link to="/form" >
                     <FormLink />
-                </Link>
+                </Link>}
 
                 <Link to="/requests" >
                     <RequestsLink />

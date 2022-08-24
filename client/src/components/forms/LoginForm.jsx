@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { useUser } from "../../hooks/useUser";
 import { TailSpin  } from "react-loader-spinner";
 import SocialMediaIcons from "../wrappers/SocialMediaIcons";
+import PasswordInput from "../atoms/inputs/PasswordInput";
+import EmailInput from "../atoms/inputs/EmailInput";
 
 const LoginForm = ({onLoginRedirect}) => {
 
@@ -19,8 +21,8 @@ const LoginForm = ({onLoginRedirect}) => {
 
     const handleSubmit = async () => {
         setLoader(true)
-            setUser(res.data.user);
         axios.post("/server/login", {email, password}).then((res) => {
+            setAccessToken(res.data.user.accessToken);
         }).catch((err) => {
             console.log(err.response);
             setMsg(err.response.data.message);
@@ -51,16 +53,12 @@ const LoginForm = ({onLoginRedirect}) => {
                     <h2>Login</h2>
                     <label htmlFor="email">
                     Email
-                    <input required className="input" type="email" name="email" placeholder="email" onBlur={(e)=>{
-                        setEmail(e.target.value);
-                    }}/>
+                    <EmailInput placeholder="Email" setState={setEmail} />
                     </label>
                         
                     <label htmlFor="password">
-                    Password.
-                    <input className="input" type="password" name="password" placeholder="password" onBlur={(e)=>{
-                        setPassword(e.target.value);
-                    }}/>
+                    Password
+                    <PasswordInput placeholder="Password" setState={setPassword}/>
                     </label>
 
                     Don`t have an account? <a onClick={onLoginRedirect}>Register</a>

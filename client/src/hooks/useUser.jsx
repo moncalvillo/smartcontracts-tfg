@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import Wrapper from '../components/wrappers/LoginRegisterWrapper';
- import axios from 'axios';
+import jwtDecode from 'jwt-decode';
 const initialState = {
   user: {},
   accessToken: undefined,
@@ -15,15 +15,8 @@ export function UserProvider({ children }) {
   function handleAccessTokenChange() {
     if (accessToken && accessToken !== "") {
       localStorage.setItem('access_token', accessToken);
-      axios.get('/server/user', {
-        headers: {
-          'Authorization': 'Bearer ' + localStorage.getItem('access_token')
-        }
-      }).then((res) => {
-        setUser(res.data.user);
-      }).catch((err) => {
-        console.log(err)
-      });
+      const {user} = jwtDecode(accessToken);
+      setUser(user)
     } else if (!accessToken) {
       // Log Out
       localStorage.removeItem('access_token');
@@ -34,6 +27,7 @@ export function UserProvider({ children }) {
   useEffect(() => {
     handleAccessTokenChange();
   }, [accessToken]);
+
   
 
   
