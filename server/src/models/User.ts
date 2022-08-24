@@ -22,12 +22,6 @@ export default class User extends Model {
     }
   })
   email!: string;
-  
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  username!: string;
 
   @Column({
     type: DataType.STRING,
@@ -46,6 +40,12 @@ export default class User extends Model {
     allowNull: false,
   })
   lastName!: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  wallet!: string;
 
   @Column({
     type: DataType.STRING,

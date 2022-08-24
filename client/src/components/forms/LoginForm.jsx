@@ -2,12 +2,13 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useUser } from "../../hooks/useUser";
 import { TailSpin  } from "react-loader-spinner";
+import SocialMediaIcons from "../wrappers/SocialMediaIcons";
 
 const LoginForm = ({onLoginRedirect}) => {
 
     const [loader, setLoader] = useState(true);
 
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [msg, setMsg] = useState(null);
     const {setAccessToken} = useUser();
@@ -18,8 +19,8 @@ const LoginForm = ({onLoginRedirect}) => {
 
     const handleSubmit = async () => {
         setLoader(true)
-        axios.post("/server/login", {username, password}).then((res) => {
-            setAccessToken(res.data.user.accessToken);
+            setUser(res.data.user);
+        axios.post("/server/login", {email, password}).then((res) => {
         }).catch((err) => {
             console.log(err.response);
             setMsg(err.response.data.message);
@@ -31,7 +32,7 @@ const LoginForm = ({onLoginRedirect}) => {
 
     useEffect(()=>{
         setMsg(null);
-    }, [password, username]);
+    }, [password, email]);
 
     return (
         <div className="formDiv">
@@ -48,10 +49,10 @@ const LoginForm = ({onLoginRedirect}) => {
                 }
                 <div className="box">
                     <h2>Login</h2>
-                    <label htmlFor="username">
-                    Username
-                    <input className="input" type="text" name="username" placeholder="username" onBlur={(e)=>{
-                        setUsername(e.target.value);
+                    <label htmlFor="email">
+                    Email
+                    <input required className="input" type="email" name="email" placeholder="email" onBlur={(e)=>{
+                        setEmail(e.target.value);
                     }}/>
                     </label>
                         
@@ -69,6 +70,9 @@ const LoginForm = ({onLoginRedirect}) => {
                 </button>
 
             </form>
+            <div className="social-media">
+                <SocialMediaIcons />
+            </div>
         </div>
     );
 }

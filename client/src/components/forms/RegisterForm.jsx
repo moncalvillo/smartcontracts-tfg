@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { TailSpin } from "react-loader-spinner";
 import { useUser } from "../../hooks/useUser";
+import SocialMediaIcons from "../wrappers/SocialMediaIcons";
 
 const RegisterForm = ({onRegisterRedirect}) => {
 
@@ -9,7 +10,8 @@ const RegisterForm = ({onRegisterRedirect}) => {
     
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [username, setUsername] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [firstname, setFirstname] = useState("");
     const [lastname, setLastname] = useState("");
@@ -18,7 +20,7 @@ const RegisterForm = ({onRegisterRedirect}) => {
     const [error, setError] = useState(null);
     const [disabled, setDisabled] = useState(false);
 
-    const {setAccessToken} = useUser();
+    const {setUser} = useUser();
 
 
 
@@ -28,10 +30,10 @@ const RegisterForm = ({onRegisterRedirect}) => {
 
     const handleSubmit = async () => {
         setLoader(true);
-        axios.post("/server/new", {email, username, password, firstName: firstname, lastName: lastname, roleType: role}).then((res) => {
+        axios.post("/server/new", {email, firstName, password, lastName,roleType}).then((res) => {
             if(res.status === 201) {
-                setAccessToken(res.data.user.accessToken);
-                // document.cookie = `accessToken=${res.data.accessToken}`;
+                setUser(res.data.user);
+                document.cookie = `accessToken=${res.data.accessToken}`;
             }
         }).catch((err) => {
             console.log(err.response);
@@ -43,7 +45,7 @@ const RegisterForm = ({onRegisterRedirect}) => {
 
     useEffect(()=>{
         setError(null);
-    }, [password, confirmPassword, username, email]);
+    }, [password, confirmPassword, firstName, lastName, email]);
 
     useEffect(()=>{
         if(password !== confirmPassword){
@@ -76,49 +78,24 @@ const RegisterForm = ({onRegisterRedirect}) => {
                 <div className="box">
                     <h2>Register</h2>
                     <label htmlFor="email">
-                        Email
-                        <input required className="input" type="email" name="email" placeholder="email" onBlur={(e)=>{
-                            setEmail(e.target.value);
-                        }}/>
-                        </label>
-                    <label htmlFor="username">
-                        Username
-                        <input required className="input" type="text" name="username" placeholder="username" onBlur={(e)=>{
-                            setUsername(e.target.value);
-                        }}/>
-                        </label>
-                    <div className="fullname">
-                        <label htmlFor="firstname">
-                            First name
-                            <input required className="input" type="text" name="firstname" placeholder="first name" onBlur={(e)=>{
-                                setFirstname(e.target.value);
-                            }}/>
-                        </label>
-                        <label htmlFor="lastname">
-                            Last name
-                            <input required className="input" type="text" name="lastname" placeholder="last name" onBlur={(e)=>{
-                                setLastname(e.target.value);
-                            }}/>
-                        </label>
-                    </div>
-                    <label htmlFor="role">
-                    Role
-                        <div className="wrapper" >
-                            <input type="radio" name="role" id="user" value="user" checked={role === "user"}
-              onChange={onValueChange}/>
-                            <input type="radio" name="role" id="manager" value="manager" checked={role === "manager"}
-              onChange={onValueChange}/>
-                            <label for="user" className="option user">
-                                <div class="dot"></div>
-                                <span>Responsible</span>
-                            </label>
-                            <label for="manager" className="option manager">
-                                <div class="dot"></div>
-                                <span>Manager</span>
-                            </label>
-                        </div>
+                    Email
+                    <input required className="input" type="email" name="email" placeholder="email" onBlur={(e)=>{
+                        setEmail(e.target.value);
+                    }}/>
                     </label>
+                    <label htmlFor="firstName">
+                    First name
+                    <input required className="input" type="text" name="firstName" placeholder="first name" onBlur={(e)=>{
+                        setFirstName(e.target.value);
+                    }}/>
                     <label htmlFor="password">
+                    <label htmlFor="lastName">
+                    Last name
+                    <input required className="input" type="text" name="lastName" placeholder="last name" onBlur={(e)=>{
+                        setLastName(e.target.value);
+                    }}/>
+                    </label>
+                        
                         Password
                         <input required className="input" type="password" name="password" placeholder="password" onBlur={(e)=>{
                             setPassword(e.target.value);
@@ -135,6 +112,9 @@ const RegisterForm = ({onRegisterRedirect}) => {
                 <button disabled={disabled}>
                     Register
                 </button>
+                <div className="social-media">
+                    <SocialMediaIcons />
+                </div>
 
             </form>
         </div>
