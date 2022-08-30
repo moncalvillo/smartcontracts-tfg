@@ -11,8 +11,8 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-import Request from "../organism/Request";
 import ResolveRequest from "./ResolveRequest";
+import Oracle from "./Oracle";
 
 
 const RouterComponent = () => {
@@ -33,7 +33,8 @@ const RouterComponent = () => {
         <Router>
               <Routes>
                   <Route path="/" element={<Home />} />
-                  { user.roleType === "user" && <Route path="/form" element={<Form />} />}
+                  { user.roleType !== "manager" && <Route path="/form" element={<Form />} />}
+                  { user.roleType !== "user" && <Route path="/oracle" element={<Oracle />} />}
                   <Route path="/requests/:id" element={<ResolveRequest />} />
                   <Route path="/requests" element={<Requests />} />
                   <Route

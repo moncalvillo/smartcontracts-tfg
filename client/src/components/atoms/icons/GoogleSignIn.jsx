@@ -8,9 +8,7 @@ const GoogleSignIn = () => {
     const {setAccessToken} = useUser();
     function handleCallbackResponse(response) {
         console.log("RESPONSE: ", response)
-        axios.post("/auth/google", {
-            token: response.credential
-        }).then(res => {
+        axios.post("/auth/google", { token: response.credential }).then(res => {
             setAccessToken(res.data.user.accessToken);
           }).catch((err) => {
             console.log(err.response);

@@ -24,7 +24,6 @@ export class DatabaseService extends IDatabaseService{
     }
 
     async createUser(body: any): Promise<any> {
-        console.log(body)
         const count: number = await User.count({where: {email: body.email}});
         if (count !== 0) {
             throw new Error("Email already in use");
@@ -69,7 +68,6 @@ export class DatabaseService extends IDatabaseService{
     
     async login(email: string, password: string): Promise<any> {
         const user: User | null = await User.findOne({where: {email}});
-        console.log(user)
         if (user && await bcrypt.compare(password, user!.password)) {
             const res: any = {
                 email: user.email,
