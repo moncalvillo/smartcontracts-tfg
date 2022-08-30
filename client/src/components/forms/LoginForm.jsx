@@ -1,11 +1,10 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useUser } from "../../hooks/useUser";
+import { useUser } from "../hooks/useUser";
 import { TailSpin  } from "react-loader-spinner";
-import SocialMediaIcons from "../wrappers/SocialMediaIcons";
 import PasswordInput from "../atoms/inputs/PasswordInput";
 import EmailInput from "../atoms/inputs/EmailInput";
-
+import SocialMediaIcons from "../organism/SocialMediaIcons";
 const LoginForm = ({onLoginRedirect}) => {
 
     const [loader, setLoader] = useState(true);

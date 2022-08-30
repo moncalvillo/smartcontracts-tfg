@@ -5,8 +5,8 @@ import "./css/links.css";
 import "./css/requests.css";
 import axios from "axios";
 
-import { UserProvider } from "./hooks/useUser";
-import Router from "./routes/Router";
+import { UserProvider } from "./components/hooks/useUser";
+import Router from "./components/routes/Router";
 
 
 const App = () => {

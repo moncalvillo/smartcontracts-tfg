@@ -1,8 +1,9 @@
 
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Selector from "./Select";
-import RequestsListWrapper from "./wrappers/RequestListWrapper";
+import { useUser } from "./hooks/useUser";
+import Selector from "./atoms/inputs/Select";
+import RequestsListWrapper from "./organism/RequestListWrapper";
 
 const RequestsList = (props) => {
 
@@ -21,7 +22,7 @@ const RequestsList = (props) => {
         getProjects();
     }, []);
 
-    
+    const {user} = useUser();
 
 
     useEffect(()=>{
@@ -33,6 +34,7 @@ const RequestsList = (props) => {
         type: type,
         project: project,
         state: requestState,
+        user: user,
     }
 
     const states = [

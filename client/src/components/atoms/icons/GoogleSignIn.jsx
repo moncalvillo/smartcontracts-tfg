@@ -5,15 +5,16 @@ import { useUser } from "../../hooks/useUser";
 
 
 const GoogleSignIn = () => {
-    const {setUser} = useUser();
+    const {setAccessToken} = useUser();
     function handleCallbackResponse(response) {
-        axios.post('/auth/google', { token: response.credential }).then(res => {
-            console.log(res.data);
-            setUser(res.data.user);
-        }).catch(err => {
-            console.log(err);
-        }).finally(() => {
-        });
+        console.log("RESPONSE: ", response)
+        axios.post("/auth/google", {
+            token: response.credential
+        }).then(res => {
+            setAccessToken(res.data.user.accessToken);
+          }).catch((err) => {
+            console.log(err.response);
+          });
     }
 
     useEffect(()=>{

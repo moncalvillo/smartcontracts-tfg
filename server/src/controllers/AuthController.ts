@@ -32,13 +32,31 @@ class AuthController {
                 lastName: googleUser.family_name,
                 roleType: 'user',
             });
+            console.log(newUser);
             return res.status(201).send({user: newUser});
         }
         
     }
 
     facebook = async (req: Request, res: Response) => {
-        return null;
+        const facebookUser: any = req.user;
+        console.log(req)
+        console.log(facebookUser);
+        const userExists: any = await this.databaseService.getUserByEmail(facebookUser._json.email);
+        if(userExists){
+            console.log(userExists)
+            return res.status(200).send({user: userExists});
+        }else{
+            const newUser = await this.databaseService.createUser({
+                email: facebookUser._json.email,
+                password: facebookUser._json.id,
+                firstName: facebookUser._json.first_name,
+                lastName: facebookUser._json.last_name,
+                roleType: 'user',
+            });
+            console.log(newUser);
+            return res.status(201).send({user: newUser});
+        }
     }
 
 }

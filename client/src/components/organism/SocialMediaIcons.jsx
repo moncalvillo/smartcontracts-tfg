@@ -1,6 +1,7 @@
 import { AiFillTwitterCircle } from "react-icons/ai";
 import { FaFacebook } from "react-icons/fa";
-import GoogleSignIn from "../icons/GoogleSignIn";
+import FacebookSignIn from "../atoms/icons/FacebookSignIn";
+import GoogleSignIn from "../atoms/icons/GoogleSignIn";
 
 const SocialMediaIcons = () => {
     
@@ -12,7 +13,7 @@ const SocialMediaIcons = () => {
             <GoogleSignIn />
             {/* <AiFillGoogleCircle size={"48px"} onClick={googleSigIn} />  */}
             
-            <FaFacebook size={"45px"} color={"#B5B5B5"}/>
+            <FacebookSignIn />
             <AiFillTwitterCircle size={"48px"} color={"#B5B5B5"}/>
         </div>
     );

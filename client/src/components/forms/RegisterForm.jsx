@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { TailSpin } from "react-loader-spinner";
-import { useUser } from "../../hooks/useUser";
-import SocialMediaIcons from "../wrappers/SocialMediaIcons";
+import { useUser } from "../hooks/useUser";
+import SocialMediaIcons from "../organism/SocialMediaIcons";
 
 const RegisterForm = ({onRegisterRedirect}) => {
 

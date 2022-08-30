@@ -1,6 +1,6 @@
 
-import FormLink from "../components/links/FormLink";
-import RequestsLink from "../components/links/RequestsLink";
+import FormLink from "../molecules/links/FormLink";
+import RequestsLink from "../molecules/links/RequestsLink";
 import { Link } from 'react-router-dom';
 import { useUser } from "../hooks/useUser";
 const Home = () => {

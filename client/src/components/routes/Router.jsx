@@ -4,13 +4,15 @@ import { useUser } from "../hooks/useUser";
 import Home from "./Home";
 import Form from "./Form";
 import Requests from "./Requests";
-import LogoutIcon from "../components/icons/LogoutIcon";
-import ProfileName from "../components/ProfileName";
+import LogoutIcon from "../atoms/icons/LogoutIcon";
+import ProfileName from "../ProfileName";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
 } from "react-router-dom";
+import Request from "../organism/Request";
+import ResolveRequest from "./ResolveRequest";
 
 
 const RouterComponent = () => {
@@ -32,6 +34,7 @@ const RouterComponent = () => {
               <Routes>
                   <Route path="/" element={<Home />} />
                   { user.roleType === "user" && <Route path="/form" element={<Form />} />}
+                  <Route path="/requests/:id" element={<ResolveRequest />} />
                   <Route path="/requests" element={<Requests />} />
                   <Route
                     path="*"
