@@ -2,11 +2,12 @@ import ProjectFilter from "../molecules/filters/ProjectFilter";
 import StateFilter from "../molecules/filters/StateFilter";
 import TypeFilter from "../molecules/filters/TypeFilter";
 import UserFilter from "../molecules/filters/UserFilter";
-
+import {useUser} from "../hooks/useUser";
 
 const FiltersWrapper = ({setProject, setError, setType, setRequestState, setUser}) => {
 
 
+    const {user} = useUser();
     return (
         <div className="filters"> 
             <h1> Filters </h1>
@@ -16,7 +17,7 @@ const FiltersWrapper = ({setProject, setError, setType, setRequestState, setUser
             <br/>
             <StateFilter setRequestState={setRequestState} />
             <br/>
-            { setUser && <UserFilter setUser={setUser} setError={setError}/> }
+            { user.roleType !== "user" && <UserFilter setUser={setUser} setError={setError}/> }
         </div>
     );
 
