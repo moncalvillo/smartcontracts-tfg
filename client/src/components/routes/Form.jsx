@@ -1,5 +1,5 @@
-import BackwardsIcon from "../components/icons/BackwardsIcon";
-import ExpenseForm from "../components/forms/ExpenseForm";
+import BackwardsIcon from "../atoms/icons/BackwardsIcon";
+import ExpenseForm from "../forms/ExpenseForm";
 
 const Form = () => {
 

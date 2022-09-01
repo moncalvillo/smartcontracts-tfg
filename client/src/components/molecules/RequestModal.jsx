@@ -1,10 +1,11 @@
 import { useState } from "react";
 import {IoIosArrowDown, IoIosArrowUp} from "react-icons/io";
 import {FcApproval, FcCancel, FcAlarmClock} from "react-icons/fc";
+import ResolveButton from "../atoms/buttons/ResolveButton";
 
 
 
-const Request =  ({request}) => {
+const RequestModal =  ({request}) => {
     const [active, setActive] = useState(false);
 
     const handleOnClick = () =>{
@@ -15,7 +16,7 @@ const Request =  ({request}) => {
         if(state ==="PENDING"){
             return <FcAlarmClock size={"30px"}/>
         }
-        if(state ==="ACCEPTED"){
+        if(state ==="APROVED"){
             return <FcApproval size={"30px"}/>
         }
         if(state ==="REJECTED"){
@@ -32,16 +33,16 @@ const Request =  ({request}) => {
                 <p> Amount:  <b>{request.Amount} {request.Currency} </b> </p>
                 <p className="reqIcon"> {iconState(request.State.toString())} </p>
             </div>
-            {!active && <IoIosArrowDown />}
+            {!active && <> <ResolveButton id={request.ID}/> <IoIosArrowDown /> </>}
             <div className={active ? 'toggleRequest': 'inactive'}>
                 <p><b>ID:  </b> {request.ID} </p>
                 <p> <b>Concept:  </b>{request.Concept}  </p> 
                 <p> <b>Date: </b> {request.Date} </p>
             </div> 
-            {active && <IoIosArrowUp />}
+            {active && <> <ResolveButton id={request.ID}/> <IoIosArrowUp /></>}
         </div>
     );
 
 }
 
-export default Request;
+export default RequestModal;

@@ -1,15 +1,18 @@
 {
-  "name": "truffle-client",
+  "name": "client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "antd": "4.21.3",
     "axios": "0.26.1",
+    "dotenv": "16.0.1",
     "fabric-network": "2.2.13",
+    "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "3.1.2",
     "react": "18.1.0",
     "react-dom": "18.1.0",
-    "react-icons": "^4.4.0",
-    "react-loader-spinner": "^5.1.5",
+    "react-icons": "4.4.0",
+    "react-loader-spinner": "5.1.5",
     "react-router-dom": "6.3.0",
     "react-scripts": "5.0.1"
   },

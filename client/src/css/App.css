@@ -142,7 +142,7 @@ footer{
   left: 1%;
   bottom: 1%;
   min-height: 24vh;
-  min-width: 18vw;
+  width: 20%;
 }
 /* .profile-name h1{
   font-weight: bold;

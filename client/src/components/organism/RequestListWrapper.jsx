@@ -1,6 +1,6 @@
 
 import { TailSpin } from "react-loader-spinner";
-import Request from "../Request";
+import RequestModal from "../molecules/RequestModal";
 
 const RequestsListWrapper = (props) => {
 
@@ -23,7 +23,7 @@ const RequestsListWrapper = (props) => {
                 </div>
             ) : (
                 props.requests.map((request) => (
-                    <Request request={request}/> 
+                    <RequestModal request={request}/> 
                 ))
             )
     )

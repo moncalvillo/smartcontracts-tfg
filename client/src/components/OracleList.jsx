@@ -2,41 +2,70 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useUser } from "./hooks/useUser";
+import Selector from "./atoms/inputs/Select";
 import RequestsListWrapper from "./organism/RequestListWrapper";
 import FiltersWrapper from "./organism/FiltersWrapper";
 
-const RequestsList = () => {
+const OracleList = (props) => {
+
 
     const [requests, setRequests] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [types, setTypes] = useState([]);
     const [type, setType] = useState("");
+    const [projects, setProjects] = useState([]);
     const [project, setProject] = useState("");
+    const [users, setUsers] = useState([]);
+    const [user, setUser] = useState("");
     const [requestState, setRequestState] = useState("");
 
-    const {user} = useUser();
+
+    const {currentUser} = useUser();
 
     useEffect(()=>{
         getRequests();
-    }, [type,project,requestState]);
-
+    }, [type,project,requestState,user]);
 
     const params = {
         type: type,
         project: project,
         state: requestState,
         user: user,
+        currentUser: currentUser,
     }
+
+    
 
     async function getRequests(){
         setLoading(true);
-        axios.get("/fabric/expenses", {
+        axios.get("http://localhost:8081/fabric/expenses", {
             params: params,
         }).then((res)=>{
-            setRequests(res.data.result);
+            setRequests({
+                ID: "123",
+                Type: "Type",
+                Project: "Project",
+                State: "PENDING",
+                Amount: 5000,
+                Currency: "USD",
+                Date: "Date",
+                Concept: "Concept",
+            })
+            // setRequests(res.data.result);
         }).catch((err)=>{
-            console.log(err);
-            setError(err.response.data.message);
+            setRequests({
+                ID: "123",
+                Type: "Type",
+                Project: "Project",
+                State: "PENDING",
+                Amount: 5000,
+                Currency: "USD",
+                Date: "Date",
+                Concept: "Concept",
+            })
+            console.log(err.response.data);
+            // setError(err.response.data.message);
         }).finally(()=>{
             setLoading(false);
         })
@@ -46,14 +75,15 @@ const RequestsList = () => {
         setType,
         setProject,
         setRequestState,
+        setUser,
         setError,
     }
-
     return (
         <div className="requestsDiv">
-            <FiltersWrapper {...filterProps} />
+            <FiltersWrapper props={filterProps} />
             <div className="requestsList">
-                <h1> Requests </h1>
+
+                <h1> Expense requests </h1>
                 <div className="requests">
                     <RequestsListWrapper loading={loading} error={error} requests={requests}/>
                 </div>
@@ -68,4 +98,4 @@ const RequestsList = () => {
 
 }
 
-export default RequestsList;
+export default OracleList;

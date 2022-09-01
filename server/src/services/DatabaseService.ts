@@ -10,6 +10,7 @@ import BlockchainService  from "./BlockchainService";
 import { Identifier } from "sequelize/types";
 import Project from "../models/Project";
 import Type from "../models/Type";
+import { v4 } from "uuid";
 
 export class DatabaseService extends IDatabaseService{
 
@@ -23,10 +24,9 @@ export class DatabaseService extends IDatabaseService{
     }
 
     async createUser(body: any): Promise<any> {
-        console.log(body)
-        const count: number = await User.count({where: {email: body.email, username: body.username}});
+        const count: number = await User.count({where: {email: body.email}});
         if (count !== 0) {
-            throw new Error("Email or username already in use");
+            throw new Error("Email already in use");
         }
         const allCount: number = await User.count();
         
@@ -36,25 +36,25 @@ export class DatabaseService extends IDatabaseService{
         const createUser: any = {
             id: allCount+1,
             email: body.email,
-            username: body.username,
             password: hashedPw,
-            roleType: body.roleType,
+            roleType: body.roleType || "user",
             firstName: body.firstName,
             lastName: body.lastName,
+            wallet: body.wallet || v4(),
         }
         try{
             const newUser: User = await User.create(createUser, {transaction: t});
-            if(newUser && newUser.username !== "admin"){
-                const newUserWallet: Identity | undefined = await this.service.registerUser(body.username, hashedPw) 
+            if(newUser && newUser.roleType !== "admin"){
+                const newUserWallet: Identity | undefined = await this.service.registerUser(newUser.wallet, hashedPw) 
             }
             await t.commit();
             const res: any = {
-                username: newUser.username,
                 email: newUser.email,
                 id: newUser.id,
                 roleType: newUser.roleType,
                 firstName: newUser.firstName,
                 lastName: newUser.lastName,
+                wallet: newUser.wallet,
                 accessToken: this.generateToken(newUser),
             }
             return res;
@@ -66,17 +66,16 @@ export class DatabaseService extends IDatabaseService{
         
     }
     
-    async login(username: string, password: string): Promise<any> {
-        const user: User | null = await User.findOne({where: {username}});
-        console.log(user)
+    async login(email: string, password: string): Promise<any> {
+        const user: User | null = await User.findOne({where: {email}});
         if (user && await bcrypt.compare(password, user!.password)) {
             const res: any = {
-                username: user.username,
                 email: user.email,
                 id: user.id,
                 roleType: user.roleType,
                 firstName: user.firstName,
                 lastName: user.lastName,
+                wallet: user.wallet,
                 accessToken: this.generateToken(user),
             }
             return res;
@@ -91,6 +90,22 @@ export class DatabaseService extends IDatabaseService{
         await User.destroy({ where: { id } });
     }
 
+    async getUserByEmail(email: string): Promise<any> {
+        const user: User | null = await User.findOne({where: {email}});
+        if(user) {
+            const res: any = {
+                email: user.email,
+                id: user.id,
+                roleType: user.roleType,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                accessToken: this.generateToken(user),
+            }
+            return res;
+        }else {
+            return null;
+        }
+    }
 
     generateToken(user: User): string {
         dotenv.config()

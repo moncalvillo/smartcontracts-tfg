@@ -1,5 +1,5 @@
-import BackwardsIcon from "../components/icons/BackwardsIcon";
-import RequestsList from "../components/RequestsList";
+import BackwardsIcon from "../atoms/icons/BackwardsIcon";
+import RequestsList from "../RequestsList";
 
 const Requests = () => {
 

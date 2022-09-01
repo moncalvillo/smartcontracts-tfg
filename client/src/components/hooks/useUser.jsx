@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import Wrapper from '../components/wrappers/LoginRegisterWrapper';
- 
+import jwtDecode from 'jwt-decode';
+import LoginRegisterWrapper from '../organism/LoginRegisterWrapper';
 const initialState = {
   user: {},
   accessToken: undefined,
@@ -13,12 +13,12 @@ export function UserProvider({ children }) {
   const [user, setUser] = useState(null);
  
   function handleAccessTokenChange() {
-    if(user){
-      setAccessToken(user.accessToken);
-    }
-
     if (accessToken && accessToken !== "") {
+      console.log(accessToken);
       localStorage.setItem('access_token', accessToken);
+      const {user} = jwtDecode(accessToken);
+      console.log(user)
+      setUser(user)
     } else if (!accessToken) {
       // Log Out
       localStorage.removeItem('access_token');
@@ -28,15 +28,16 @@ export function UserProvider({ children }) {
  
   useEffect(() => {
     handleAccessTokenChange();
-  }, [accessToken, user]);
+  }, [accessToken]);
+
   
 
   
   return (
-    <UserContext.Provider value={{ user, accessToken, setAccessToken, setUser }}>
+    <UserContext.Provider value={{ user, accessToken, setAccessToken }}>
 
       {
-        !user ? <Wrapper /> : children
+        !user ? <LoginRegisterWrapper /> : children
       }
     </UserContext.Provider>
   );

@@ -5,6 +5,7 @@ import config from './Configuration';
 import Routes from './Routes';
 import connection from './Connection';
 import "reflect-metadata";
+import Passport from '../middlewares/Passport';
 
 class Server {
 
@@ -17,6 +18,7 @@ class Server {
     private async initMiddlewares(): Promise<void>{
         BodyParser.add(this.app);
         CORS.init(this.app);
+        Passport.init(this.app);
         await connection.sync();
 
     }
