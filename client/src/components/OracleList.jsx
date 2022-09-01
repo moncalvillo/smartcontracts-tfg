@@ -4,6 +4,7 @@ import axios from "axios";
 import { useUser } from "./hooks/useUser";
 import Selector from "./atoms/inputs/Select";
 import RequestsListWrapper from "./organism/RequestListWrapper";
+import FiltersWrapper from "./organism/FiltersWrapper";
 
 const OracleList = (props) => {
 
@@ -19,19 +20,12 @@ const OracleList = (props) => {
     const [user, setUser] = useState("");
     const [requestState, setRequestState] = useState("");
 
-    useEffect(() => {
-        getTypes();
-        getProjects();
-        getUsers();
-    }, []);
 
     const {currentUser} = useUser();
-
 
     useEffect(()=>{
         getRequests();
     }, [type,project,requestState,user]);
-
 
     const params = {
         type: type,
@@ -41,44 +35,7 @@ const OracleList = (props) => {
         currentUser: currentUser,
     }
 
-    const states = [
-        {
-            id: '1',
-            name: 'APPROVED',
-        },
-        {
-            id: '2',
-            name: 'REJECTED',
-        },
-        {
-            id: '3',
-            name: 'PENDING',
-        },
-    ];
-
-    async function getTypes(){
-        axios.get(`/server/types`).then((res) => {
-            setTypes(res.data.result); 
-        }).catch((err) => {
-            setError(err)
-        })
-    }
-
-    async function getProjects(){
-        axios.get(`/server/projects`).then((res) => {
-            setProjects(res.data.result); 
-        }).catch((err) => {
-            setError(err)
-        })
-    }
-
-    async function getUsers(){
-        axios.get(`/server/users`).then((res) => {
-            setUsers(res.data.result); 
-        }).catch((err) => {
-            setError(err)
-        })
-    }
+    
 
     async function getRequests(){
         setLoading(true);
@@ -114,18 +71,16 @@ const OracleList = (props) => {
         })
     }
 
+    const filterProps = {
+        setType,
+        setProject,
+        setRequestState,
+        setUser,
+        setError,
+    }
     return (
         <div className="requestsDiv">
-            <div className="filters"> 
-            <h1> Filters </h1>
-                <Selector label="Project" setState={setProject} options={projects}/>
-                <br/>
-                <Selector label="Type" setState={setType} options={types}/>
-                <br/>
-                <Selector label="State" setState={setRequestState} options={states}/>
-                <br/>
-                <Selector label="User" setState={setUser} options={users}/>
-            </div>
+            <FiltersWrapper props={filterProps} />
             <div className="requestsList">
 
                 <h1> Expense requests </h1>
