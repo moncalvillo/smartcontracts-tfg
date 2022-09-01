@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Selector from "../../atoms/inputs/Select";
 
 
-const TypeFilter = (setType, setError) => {
+const TypeFilter = ({setType, setError}) => {
 
     const [types, setTypes] = useState([]);
 

@@ -6,7 +6,6 @@ import UserFilter from "../molecules/filters/UserFilter";
 
 const FiltersWrapper = ({setProject, setError, setType, setRequestState, setUser}) => {
 
-    console.log(setProject)
 
     return (
         <div className="filters"> 

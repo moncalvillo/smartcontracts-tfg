@@ -2,14 +2,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useUser } from "./hooks/useUser";
-import Selector from "./atoms/inputs/Select";
 import RequestsListWrapper from "./organism/RequestListWrapper";
-import TypeFilter from "./molecules/filters/TypeFilter";
-import ProjectFilter from "./molecules/filters/ProjectFilter";
-import StateFilter from "./molecules/filters/StateFilter";
 import FiltersWrapper from "./organism/FiltersWrapper";
 
-const RequestsList = (props) => {
+const RequestsList = () => {
 
     const [requests, setRequests] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -55,7 +51,7 @@ const RequestsList = (props) => {
 
     return (
         <div className="requestsDiv">
-            <FiltersWrapper props={...filterProps} />
+            <FiltersWrapper {...filterProps} />
             <div className="requestsList">
                 <h1> Requests </h1>
                 <div className="requests">

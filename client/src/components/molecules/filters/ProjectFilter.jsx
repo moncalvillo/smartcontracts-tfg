@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Selector from "../../atoms/inputs/Select";
 
-const ProjectFilter = (setProject, setError) => {
+const ProjectFilter = ({setProject, setError}) => {
     
     const [projects, setProjects] = useState([]);
 

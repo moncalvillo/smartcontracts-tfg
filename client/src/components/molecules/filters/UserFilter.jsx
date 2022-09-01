@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Selector from "../../atoms/inputs/Select";
 
-const UserFilter = (setUser, setError) => {
+const UserFilter = ({setUser, setError}) => {
 
     const [users, setUsers] = useState([]);
 

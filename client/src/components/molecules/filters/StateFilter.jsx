@@ -1,7 +1,7 @@
 
 import Selector from "../../atoms/inputs/Select";
 
-const StateFilter = (setRequestState) => {
+const StateFilter = ({setRequestState}) => {
 
     const states = [
         {
