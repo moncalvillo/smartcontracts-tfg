@@ -86,7 +86,6 @@ export class DatabaseService extends IDatabaseService{
     }
 
     async delete(id: Identifier): Promise<void> {
-        const deletedDog: User | null = await User.findByPk(id);
         await User.destroy({ where: { id } });
     }
 
@@ -128,6 +127,13 @@ export class DatabaseService extends IDatabaseService{
     async getTypes(user: User): Promise<any> {
         const types: Type[] = await Type.findAll();
         return types;
+    }
+
+    async getUsers(): Promise<any> {
+        const users: User[] = await User.findAll();
+        return users.map((user: User) => {
+            return { id: user.id, name: `${user.firstName} ${user.lastName}` };
+        });
     }
 
 
