@@ -6,6 +6,7 @@ import FabricCAServices from "fabric-ca-client";
 import path from "path";
 import { Wallet, Identity } from "fabric-network";
 import { Expense } from "../types/Expense";
+import config from "../providers/Configuration";
 
 export class BlockchainService extends IBlockchainService{
 
@@ -30,7 +31,7 @@ async enrollAdmin(): Promise<Identity |undefined> {
         try{
             const ccp: any = buildCCPOrg1();
             const ca: FabricCAServices = buildCAClient(ccp, 'ca.org1.example.com');
-            const walletPath: string = path.join(__dirname,'..', 'network', 'wallets');
+            const walletPath: string = path.join(config.fabricSamplePath, config.network, 'wallets');
             const wallet: Wallet = await buildWallet(walletPath);
             const adminWallet: Identity | undefined = await enrollAdmin(ca, wallet, 'Org1MSP');
             if(!adminWallet){
@@ -50,7 +51,7 @@ async enrollAdmin(): Promise<Identity |undefined> {
 
             const ccp: any = buildCCPOrg1();
             const ca: FabricCAServices = buildCAClient(ccp, 'ca.org1.example.com');
-            const walletPath: string = path.join(__dirname,'..', 'network', 'wallets');
+            const walletPath: string = path.join(config.fabricSamplePath, config.network, 'wallets');
             const wallet: Wallet = await buildWallet(walletPath);
     
             const walletUser: Identity |undefined = await registerAndEnrollUser(ca, wallet, 'Org1MSP', walletStr, password, 'org1.department1');

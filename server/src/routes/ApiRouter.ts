@@ -16,6 +16,7 @@ router.use('/server', serverRouter);
 router.use('/auth', authRouter);
 router.post('/init', FabricController.init);
 
+
 export default router;
 
 

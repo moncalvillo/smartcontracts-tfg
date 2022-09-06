@@ -6,11 +6,17 @@ import DatabaseService  from "../services/DatabaseService";
 import fs from "fs";
 import path from "path";
 import { uuid } from "uuidv4";
+import config from "../providers/Configuration";
 
 async function populate() {
 
-    const directory =path.join(__dirname, "..", 'network', 'wallets');
+    const directory =path.join(config.fabricSamplePath, config.network, 'wallets');
 
+    if (!fs.existsSync(directory)){
+        fs.mkdirSync(directory);
+        console.log('Folder Created Successfully.');
+    }
+    
     fs.readdir(directory, (err, files) => {
     if (err) throw err;
 

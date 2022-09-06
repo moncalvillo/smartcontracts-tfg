@@ -1,5 +1,4 @@
 import {Request, Response} from 'express';
-import User from '../models/User';
 import DatabaseService from '../services/DatabaseService';
 import IDatabaseService from '../services/IDatabaseService';
 

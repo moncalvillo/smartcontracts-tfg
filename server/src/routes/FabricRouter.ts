@@ -5,6 +5,9 @@ import authenticateToken from '../middlewares/authenticateToken';
 const router = Router();
 
 
+router.get('/allExpenses', FabricController.getAllExpenses);
+
+
 router.use(authenticateToken);
 
 router.post('/test', FabricController.test);
@@ -14,7 +17,6 @@ router.post('/expenseRead', FabricController.readExpense);
 // router.post('/request', FabricController.request);
 router.get('/expenses', FabricController.getExpenses);
 // router.post('/init', FabricController.init);
-router.get('/allExpenses', FabricController.getAllExpenses);
 router.post('/update', FabricController.updateExpense);
 
 

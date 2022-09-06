@@ -8,6 +8,8 @@ export interface Expense {
     Currency: string;
     Date: Date;
     State: State;
+    Resolution: string;
+    Inspector: string;
 }
 
 type State = "PENDING" | "APPROVED" | "REJECTED";

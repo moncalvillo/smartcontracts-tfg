@@ -1,6 +1,4 @@
 import axios from "axios";
-import { useEffect } from "react";
-import { FaFacebook } from "react-icons/fa";
 import { useUser } from "../../hooks/useUser";
 
 
@@ -20,7 +18,10 @@ const FacebookSignIn = () => {
       }
 
     return (
-        <FaFacebook size={"45px"} color={"#B5B5B5"} onClick={handleOnClick}/>
+        // <FaFacebook size={"45px"}  onClick={handleOnClick}/>
+        <button class="loginBtn--facebook" onClick={handleOnClick}>
+          Login with Facebook
+        </button>
     );
 }
 
