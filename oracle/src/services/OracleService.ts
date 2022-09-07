@@ -1,4 +1,5 @@
 
+import { inspect } from "util";
 import ExpenseResolution from "../models/ExpenseResolution";
 import { connectToContract } from "../utils";
 import IOracleService from "./IOracleService";
@@ -28,6 +29,44 @@ export class OracleService extends IOracleService{
                 console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
                 const jsonObj = JSON.parse(result.toString());
                 return jsonObj;
+            }else {
+                return null;
+            }
+        } catch (error: any) {
+            console.error(`Failed to evaluate transaction: ${error}`);
+            throw new Error(error.message)
+        }    
+    }
+
+    async getPending(inspector: string, params: any): Promise<any> {
+        try {
+            const { type, project, state, user } = params;
+            const {contract} = await connectToContract(inspector,'mychannel','draft');
+            const result: any = await contract.submitTransaction('QueryAssetsByParams', user, type, project, "PENDING") as any | null;
+
+            if(result){
+                console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
+                const jsonObj = JSON.parse(result.toString());
+                return jsonObj;
+            }else {
+                return null;
+            }
+        } catch (error: any) {
+            console.error(`Failed to evaluate transaction: ${error}`);
+            throw new Error(error.message)
+        }    
+    }
+
+    async countPending(inspector: string): Promise<any> {
+        try {
+            
+            const {contract} = await connectToContract(inspector,'mychannel','draft');
+            const result: Number = await contract.submitTransaction('QueryAssetsByParams') as any | null;
+
+            if(result){
+                console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
+                
+                return result;
             }else {
                 return null;
             }
