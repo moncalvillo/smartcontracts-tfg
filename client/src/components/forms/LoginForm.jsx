@@ -1,16 +1,18 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useUser } from "../../hooks/useUser";
+import { useUser } from "../hooks/useUser";
 import { TailSpin  } from "react-loader-spinner";
-
+import PasswordInput from "../atoms/inputs/PasswordInput";
+import EmailInput from "../atoms/inputs/EmailInput";
+import SocialMediaIcons from "../organism/SocialMediaIcons";
 const LoginForm = ({onLoginRedirect}) => {
 
     const [loader, setLoader] = useState(true);
 
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [msg, setMsg] = useState(null);
-    const {setUser} = useUser();
+    const {setAccessToken} = useUser();
 
     useEffect(() => {
         setLoader(false);
@@ -18,23 +20,20 @@ const LoginForm = ({onLoginRedirect}) => {
 
     const handleSubmit = async () => {
         setLoader(true)
-        axios.post("/server/login", {username, password}).then((res) => {
-            setUser(res.data.user);
+        axios.post("/server/login", {email, password}).then((res) => {
+            setAccessToken(res.data.user.accessToken);
         }).catch((err) => {
             console.log(err.response);
             setMsg(err.response.data.message);
         }).finally(() => {                
             setLoader(false);
-            setTimeout(()=>{
-                setMsg(null);
-            }, 3000);
         });
         
     };
 
     useEffect(()=>{
         setMsg(null);
-    }, [password, username]);
+    }, [password, email]);
 
     return (
         <div className="formDiv">
@@ -51,18 +50,14 @@ const LoginForm = ({onLoginRedirect}) => {
                 }
                 <div className="box">
                     <h2>Login</h2>
-                    <label htmlFor="username">
-                    Username
-                    <input className="input" type="text" name="username" placeholder="username" onBlur={(e)=>{
-                        setUsername(e.target.value);
-                    }}/>
+                    <label htmlFor="email">
+                    Email
+                    <EmailInput placeholder="Email" setState={setEmail} />
                     </label>
                         
                     <label htmlFor="password">
-                    Password.
-                    <input className="input" type="password" name="password" placeholder="password" onBlur={(e)=>{
-                        setPassword(e.target.value);
-                    }}/>
+                    Password
+                    <PasswordInput placeholder="Password" setState={setPassword}/>
                     </label>
 
                     Don`t have an account? <a onClick={onLoginRedirect}>Register</a>
@@ -72,6 +67,9 @@ const LoginForm = ({onLoginRedirect}) => {
                 </button>
 
             </form>
+            <div className="social-media">
+                <SocialMediaIcons />
+            </div>
         </div>
     );
 }

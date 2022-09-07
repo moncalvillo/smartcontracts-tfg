@@ -8,9 +8,9 @@ class UserController {
     constructor(private databaseService: IDatabaseService){ }
 
     login = async (req: Request, res: Response) => {
-        const {username, password} = req.body;
+        const {email, password} = req.body;
         try{
-            const user: any  = await this.databaseService.login(username, password);
+            const user: any  = await this.databaseService.login(email, password);
             return res.status(200).json({user});
         }catch(error:any){
             console.log(error)
@@ -51,6 +51,13 @@ class UserController {
         const types = await this.databaseService.getTypes(user.username);
         return res.status(200).json({
             result: types
+        });
+    }
+
+    getUsers = async (req:Request, res: Response) => {
+        const users = await this.databaseService.getUsers();
+        return res.status(200).json({
+            result: users
         });
     }
 

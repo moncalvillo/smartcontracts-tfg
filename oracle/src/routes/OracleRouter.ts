@@ -1,8 +1,14 @@
+
 import {Router} from 'express';
-import controller from '../controller/Controller';
+import OracleController from '../controllers/OracleController';
 
 const router = Router();
 
-router.post('/test', controller.test);
+
+  
+router.use('/test', OracleController.test);
+router.use('/resolve', OracleController.resolve);
 
 export default router;
+
+

@@ -14,5 +14,7 @@ router.use(authenticateToken);
 
 router.get('/projects', DatabaseController.getProjects);
 router.get('/types', DatabaseController.getTypes);
+router.get('/users', DatabaseController.getUsers);
+
 
 export default router;

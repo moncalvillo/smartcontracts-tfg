@@ -17,7 +17,13 @@ class FabricController {
     enrollAdmin = async (req: Request, res: Response) => {
 
         try {
-            await this.databaseService.createUser({email: "admin@gmail.com", username: "admin", password: "adminpw"});
+            await this.databaseService.createUser({
+                email: "admin@gmail.com", 
+                password: "adminpw",
+                firstName: "Admin",
+                lastName: "Admin",
+                roleType: "admin"
+            });
         }catch(err){
             console.log(err);
             return res.status(500).json({
@@ -53,8 +59,8 @@ class FabricController {
     }
 
     registerUser = async (req: Request, res: Response) => {
-        const { username, password } = req.body;
-        const user = await this.blockchainService.registerUser(username, password);
+        const { wallet, password } = req.body;
+        const user = await this.blockchainService.registerUser(wallet, password);
         if(user){
             res.status(200).json({
                 message: 'User registered successfully',
@@ -69,7 +75,7 @@ class FabricController {
 
     createExpense = async (req: Request, res: Response) => {
 
-        const { amount, expenseType, concept, project, user = 'userTest' } = req.body;
+        const { amount, expenseType, concept, project, user = 'as8a5f6b-1975-4d66-b085-c6fc910ee6df' } = req.body;
         try{
             const query: Expense = await this.blockchainService.createExpense(amount, expenseType, concept, project, user.username);
             if(query){
@@ -92,7 +98,7 @@ class FabricController {
     }
 
     readExpense = async (req: Request, res: Response) => {
-        const { id, owner= 'userTest' } = req.body;
+        const { id, owner= 'as8a5f6b-1975-4d66-b085-c6fc910ee6df' } = req.body;
         try{
             const query: string = await this.blockchainService.readExpense(id, owner);
             if(query){
@@ -138,7 +144,7 @@ class FabricController {
     getAllExpenses = async (req: Request, res: Response) => {
 
         try{
-            const { user="userTest" } = req.params; 
+            const { user="as8a5f6b-1975-4d66-b085-c6fc910ee6df" } = req.params; 
             const result: any = await this.blockchainService.getAllExpenses(user);
     
             if(result){
@@ -164,7 +170,7 @@ class FabricController {
         try{
             console.log(req.query);
             const user = req.body.user;
-            const result: any = await this.blockchainService.getExpenses(user.username, req.query);
+            const result: any = await this.blockchainService.getExpenses(user.wallet, req.query);
     
             if(result){
                 res.status(200).json({
@@ -184,32 +190,7 @@ class FabricController {
     }
 
 
-    // request = async (req: Request, res: Response) => {
-
-    //     try{
-
-    //         const result: boolean = await this.blockchainService.requestExpense([...req.body]);
-    
-    //         if(result){
-    //             res.status(200).json({
-    //                 message: 'Expense request sent successfully',
-    //                 result,
-    //             });
-    //         }else{
-    //             res.status(500).json({
-    //                 message: 'Error requesting expense'
-    //             });
-    //         }
-    //     }catch(err: any){
-    //         console.log(err);
-    //         return res.status(500).json({
-    //             message: err.message
-    //         });
-    //     }
-
-
-    // }
-  
+ 
 }
 
 const controller = new FabricController(BlockchainService, DatabaseService);

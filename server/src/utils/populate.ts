@@ -5,11 +5,18 @@ import BlockchainService  from "../services/BlockchainService";
 import DatabaseService  from "../services/DatabaseService";
 import fs from "fs";
 import path from "path";
+import { uuid } from "uuidv4";
+import config from "../providers/Configuration";
 
 async function populate() {
 
-    const directory =path.join(__dirname, "..", 'network', 'wallets');
+    const directory =path.join(config.fabricSamplePath, config.network, 'wallets');
 
+    if (!fs.existsSync(directory)){
+        fs.mkdirSync(directory);
+        console.log('Folder Created Successfully.');
+    }
+    
     fs.readdir(directory, (err, files) => {
     if (err) throw err;
 
@@ -43,7 +50,7 @@ async function populate() {
         })
     }
 
-    BlockchainService.initLedger('userTest');
+    BlockchainService.initLedger('as8a5f6b-1975-4d66-b085-c6fc910ee6df');
 
 
     return;
@@ -57,26 +64,26 @@ export default populate;
 const users = [
     {
         email: "userTest@gmail.com",
-        username: "userTest",
         password: "userTest",
         roleType: "user",
         firstName: "User",
-        lastName: "Test"
+        lastName: "Test",
+        wallet: "as8a5f6b-1975-4d66-b085-c6fc910ee6df"
     },
     {
         email: "managerTest@gmail.com",
-        username: "managerTest",
         password: "managerTest",
         roleType: "manager",
         firstName: "Manager",
-        lastName: "Test"
+        lastName: "Test",
+        wallet: "a4355f6b-1975-4d66-b085-c6fc910ee6ss"
     },
     {
         email: "secondUser@gmail.com",
-        username: "secondUser",
         password: "secondUser",
         roleType: "user",
         firstName: "Second",
+        wallet: "r48a5f6b-1975-4d66-b085-c6fc910ee6aa",
         lastName: "User"
     }
 ]

@@ -7,7 +7,7 @@ class CORS {
     console.log('Enabling CORS...');
 
     const options = {
-      origin: 'http://localhost:3000',
+      origin: ['http://localhost:3000', 'https://localhost:3000'],
       optionsSuccessStatus: 200,
     };
 
