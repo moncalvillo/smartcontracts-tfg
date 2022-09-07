@@ -3,6 +3,7 @@ import axios from "axios";
 import { TailSpin } from "react-loader-spinner";
 import { useUser } from "../hooks/useUser";
 import SocialMediaIcons from "../organism/SocialMediaIcons";
+import RadioInput from "../atoms/inputs/RadioInput";
 
 const RegisterForm = ({onRegisterRedirect}) => {
 
@@ -55,10 +56,7 @@ const RegisterForm = ({onRegisterRedirect}) => {
         }
     }, [confirmPassword,password])
 
-    const onValueChange = (e) => {
-        setRoleType(e.target.value);
-        console.log(e.target.value);
-    }
+    
 
     return (
         <div className="formDiv">
@@ -95,20 +93,7 @@ const RegisterForm = ({onRegisterRedirect}) => {
                     </label>
                     <label htmlFor="role">
                     Role
-                        <div className="wrapper" >
-                            <input type="radio" name="role" id="user" value="user" checked={roleType === "user"}
-                                onChange={onValueChange}/>
-                            <input type="radio" name="role" id="manager" value="manager" checked={roleType === "manager"}
-                                onChange={onValueChange}/>
-                            <label for="user" className="option user">
-                                <div class="dot"></div>
-                                <span>Responsible</span>
-                            </label>
-                            <label for="manager" className="option manager">
-                                <div class="dot"></div>
-                                <span>Manager</span>
-                            </label>
-                        </div>
+                        <RadioInput opt1="user" opt2="manager" setState={setRoleType} state={roleType}/>
                     </label>
                     <label htmlFor="password">
                         Password
