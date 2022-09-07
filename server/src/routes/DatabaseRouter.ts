@@ -8,6 +8,7 @@ router.post('/login', /* middlewares, */ DatabaseController.login);
 router.get('/', DatabaseController.getAll);
 router.post('/new', DatabaseController.create);
 router.delete('/:id', DatabaseController.delete)
+router.get('/user', DatabaseController.getUser);
 
 router.use(authenticateToken);
 
