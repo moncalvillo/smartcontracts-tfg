@@ -14,10 +14,8 @@ export function UserProvider({ children }) {
  
   function handleAccessTokenChange() {
     if (accessToken && accessToken !== "") {
-      console.log(accessToken);
       localStorage.setItem('access_token', accessToken);
       const {user} = jwtDecode(accessToken);
-      console.log(user)
       setUser(user)
     } else if (!accessToken) {
       // Log Out

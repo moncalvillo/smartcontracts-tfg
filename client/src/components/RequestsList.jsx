@@ -1,8 +1,7 @@
 
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useUser } from "./hooks/useUser";
-import RequestsListWrapper from "./organism/RequestListWrapper";
+import ExpenseListWrapper from "./organism/ExpenseListWrapper";
 import FiltersWrapper from "./organism/FiltersWrapper";
 
 const RequestsList = () => {
@@ -14,7 +13,6 @@ const RequestsList = () => {
     const [project, setProject] = useState("");
     const [requestState, setRequestState] = useState("");
 
-    const {user} = useUser();
 
     useEffect(()=>{
         getRequests();
@@ -25,7 +23,6 @@ const RequestsList = () => {
         type: type,
         project: project,
         state: requestState,
-        user: user,
     }
 
     async function getRequests(){
@@ -55,7 +52,7 @@ const RequestsList = () => {
             <div className="requestsList">
                 <h1> Requests </h1>
                 <div className="requests">
-                    <RequestsListWrapper loading={loading} error={error} requests={requests}/>
+                    <ExpenseListWrapper loading={loading} error={error} requests={requests}/>
                 </div>
             </div>
 

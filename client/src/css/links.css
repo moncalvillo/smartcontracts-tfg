@@ -21,6 +21,7 @@
     margin: 1vw;
     align-items: center;
     justify-content: center;
+    position: relative;
 }
 
 .linkItem{
@@ -42,6 +43,38 @@
     animation-name: linkHover;
     animation-duration: 0.2s;
 }
+
+/* .unresolvedExpenses{
+    position: absolute;
+    top: 24vh;
+    left: 45vw;
+    padding: 5px 10px;
+    border-radius: 10px;
+    background: red;
+    color: white;
+} */
+
+.unresolvedExpenses{
+    position: absolute;
+    top: -3%;
+    right: 5%;
+    left: 83%;
+    bottom: 89%;
+    padding: 5px 10px;
+    border: 2px solid black;
+    border-radius: 10px;
+    background: red;
+    color: white;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.unresolvedExpenses>p{
+    font-weight: 900;
+}
+
+
 
 
 @keyframes linkHover {

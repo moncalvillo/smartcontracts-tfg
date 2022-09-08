@@ -129,9 +129,10 @@ export class DatabaseService extends IDatabaseService{
         return types;
     }
 
-    async getUsers(): Promise<any> {
+    async getUsers(currentUser: User): Promise<any> {
         const users: User[] = await User.findAll();
-        return users.map((user: User) => {
+        console.log(currentUser);
+        return users.filter((user: User) => user.id !== currentUser.id).map((user: User) => {
             return { id: user.id, name: `${user.firstName} ${user.lastName}` };
         });
     }

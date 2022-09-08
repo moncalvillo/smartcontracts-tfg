@@ -71,7 +71,7 @@ const Form = () => {
             currency: currency,
             date: new Date(),
         }
-        await axios.post("/fabric/expense/new", data).then((res)=> {
+        await axios.post("/fabric/expense", data).then((res)=> {
             resetValues();
             setSuccess('Expense created successfully');
             

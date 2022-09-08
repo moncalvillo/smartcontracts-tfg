@@ -27,7 +27,7 @@ export class BlockchainService extends IBlockchainService{
     }
 
     
-async enrollAdmin(): Promise<Identity |undefined> {
+    async enrollAdmin(): Promise<Identity |undefined> {
         try{
             const ccp: any = buildCCPOrg1();
             const ca: FabricCAServices = buildCAClient(ccp, 'ca.org1.example.com');
@@ -65,15 +65,15 @@ async enrollAdmin(): Promise<Identity |undefined> {
         }
     }
     
-    async createExpense(amount: number, type: string, concept: string, project: string, walletStr: string): Promise<any>{
+    async createExpense(amount: number, type: string, concept: string, project: string, walletStr: string, currency: string): Promise<any>{
         try {
             
             const {contract, userIdentity} = await connectToContract(walletStr,'mychannel','draft');
             const date = new Date();
             const id = uuid();
-            const result: Buffer = await contract.submitTransaction('CreateAsset', id, amount.toString(), type, concept, project, walletStr, date.toISOString()) as any | null;
+            const result: Buffer = await contract.submitTransaction('CreateAsset', id, amount.toString(), currency, type, concept, project, walletStr, date.toISOString()) as any | null;
             if(result){
-                contract.submitTransaction('CheckRequest', id);
+                // contract.submitTransaction('CheckRequest', id);
                 console.log(`Expense request sent.`);
                 console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
                 const jsonObj = JSON.parse(result.toString());
@@ -134,8 +134,8 @@ async enrollAdmin(): Promise<Identity |undefined> {
 
     async getExpenses(walletStr: string, params: any): Promise<any> {
         try {
-            console.log(walletStr);
             const { type, project, state } = params;
+            console.log(walletStr);
             const {contract} = await connectToContract(walletStr,'mychannel','draft');
             const expenses: any = await contract.submitTransaction('QueryAssetsByParams', walletStr, type, project, state) as any | null;
             if(expenses){

@@ -1,11 +1,10 @@
 
 
-const RadioInput = ({ opt1, opt2, setState,  state }) => {
+const RadioInput = ({ label1, label2, opt1, opt2, setState,  state }) => {
 
 
     const onValueChange = (e) => {
         setState(e.target.value);
-        console.log(e.target.value);
     }
 
     return (
@@ -14,13 +13,13 @@ const RadioInput = ({ opt1, opt2, setState,  state }) => {
                 onChange={onValueChange}/>
             <input type="radio" name="role" id="secondOpt" value={opt2} checked={state === opt2}
                 onChange={onValueChange}/>
-            <label for="firstOpt" className="option firstOpt">
-                <div class="dot"></div>
-                <span>{opt1}</span>
+            <label htmlFor="firstOpt" className="option firstOpt">
+                <div className="dot"></div>
+                <span>{label1}</span>
             </label>
-            <label for="secondOpt" className="option secondOpt">
-                <div class="dot"></div>
-                <span>{opt2}</span>
+            <label htmlFor="secondOpt" className="option secondOpt">
+                <div className="dot"></div>
+                <span>{label2}</span>
             </label>
         </div>
     );

@@ -13,6 +13,7 @@ import {
 } from "react-router-dom";
 import ResolveRequest from "./ResolveRequest";
 import Oracle from "./Oracle";
+import WrongPage from "./WrongPage";
 
 
 const RouterComponent = () => {
@@ -35,14 +36,13 @@ const RouterComponent = () => {
                   <Route path="/" element={<Home />} />
                   { user.roleType !== "manager" && <Route path="/form" element={<Form />} />}
                   { user.roleType !== "user" && <Route path="/oracle" element={<Oracle />} />}
-                  <Route path="/requests/:id" element={<ResolveRequest />} />
-                  <Route path="/requests" element={<Requests />} />
+                  <Route path="/expenses/:id" element={<ResolveRequest />} />
+                  <Route path="/expenses" element={<Requests />} />
                   <Route
                     path="*"
                     element={
-                      <main style={{ padding: "1rem" }}>
-                        <p>There's nothing here!</p>
-                      </main>
+                      <WrongPage />
+                      
                     }
                   />
               </Routes>

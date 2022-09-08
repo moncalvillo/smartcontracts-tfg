@@ -18,7 +18,7 @@ const Home = () => {
                 {user.roleType ==="manager" && <Link to="/oracle" >
                     <OracleLink />
                 </Link>}
-                <Link to="/requests" >
+                <Link to="/expenses" >
                     <RequestsLink />
                 </Link>
             </div>

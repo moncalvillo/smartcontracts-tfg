@@ -16,7 +16,7 @@ const RequestModal =  ({request}) => {
         if(state ==="PENDING"){
             return <FcAlarmClock size={"30px"}/>
         }
-        if(state ==="APROVED"){
+        if(state ==="APPROVED"){
             return <FcApproval size={"30px"}/>
         }
         if(state ==="REJECTED"){
@@ -38,6 +38,7 @@ const RequestModal =  ({request}) => {
                 <p><b>ID:  </b> {request.ID} </p>
                 <p> <b>Concept:  </b>{request.Concept}  </p> 
                 <p> <b>Date: </b> {request.Date} </p>
+                <p> <b>Owner: </b> {request.Owner} </p>
             </div> 
             {active && <> <ResolveButton id={request.ID}/> <IoIosArrowUp /></>}
         </div>

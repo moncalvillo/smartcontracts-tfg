@@ -1,6 +1,5 @@
 import passport from 'passport';
 const FacebookStrategy = require('passport-facebook-token');
-const GoogleTokenStrategy = require('passport-google-token').Strategy;
 import dotenv from 'dotenv';
 import { Application } from 'express';
 import session from 'express-session';
@@ -31,18 +30,7 @@ class Passport {
         return done(null, profile);
       }
     ));
-    passport.use(
-      new GoogleTokenStrategy(
-        {
-          clientID: process.env.GOOGLE_CLIENT_ID as string,
-          clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-        },
-        function(accessToken:any, refreshToken:any, profile:any, done:any) {
-          // console.log(profile);
-          return done(null, profile);
-        }
-      )
-    );
+
     return app;
   }
 }

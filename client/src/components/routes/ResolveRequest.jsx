@@ -1,13 +1,13 @@
 import BackwardsIcon from "../atoms/icons/BackwardsIcon";
 import ResolveRequestForm from "../forms/ResolveRequestForm";
-import Request from "../organism/Request";
+import Expense from "../organism/Expense";
 
 const ResolveRequest = () => {
 
     return (
         <div>
             <BackwardsIcon />
-            <Request />
+            <Expense />
         </div>
 
     );

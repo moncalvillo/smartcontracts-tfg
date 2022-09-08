@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const ResolveButton = ({ id }) => {
 
-    const path = `/requests/${id}`;
+    const path = `/expenses/${id}`;
 
     return(
         <Link to={path}>

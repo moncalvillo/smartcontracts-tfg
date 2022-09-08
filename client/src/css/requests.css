@@ -84,20 +84,7 @@
 
 }
 
-.request-div{
-    border: 1px solid blue;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-}
 
-.requestData{
-    border: 1px solid red;
-    width: 70%;
-    padding: 0% 3%;
-}
 
 .requestButton {
     height: 30px;

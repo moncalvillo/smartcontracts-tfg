@@ -38,18 +38,18 @@ export class OracleService extends IOracleService{
         }    
     }
 
-    async getPending(inspector: string, params: any): Promise<any> {
+    async getPending(inspector: string, params: any): Promise<ExpenseResolution[]> {
         try {
-            const { type, project, state, user } = params;
+            const { type, project, user } = params;
             const {contract} = await connectToContract(inspector,'mychannel','draft');
             const result: any = await contract.submitTransaction('QueryAssetsByParams', user, type, project, "PENDING") as any | null;
 
             if(result){
                 console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
                 const jsonObj = JSON.parse(result.toString());
-                return jsonObj;
+                return jsonObj.map((x: { Record: any; }) => x.Record);
             }else {
-                return null;
+                return [];
             }
         } catch (error: any) {
             console.error(`Failed to evaluate transaction: ${error}`);
@@ -61,12 +61,11 @@ export class OracleService extends IOracleService{
         try {
             
             const {contract} = await connectToContract(inspector,'mychannel','draft');
-            const result: Number = await contract.submitTransaction('QueryAssetsByParams') as any | null;
-
+            const result: any = await contract.submitTransaction('CountPending') as any | null;
             if(result){
                 console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
-                
-                return result;
+                const jsonObj = JSON.parse(result.toString());
+                return jsonObj;
             }else {
                 return null;
             }

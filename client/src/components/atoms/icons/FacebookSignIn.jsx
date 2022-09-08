@@ -19,7 +19,7 @@ const FacebookSignIn = () => {
 
     return (
         // <FaFacebook size={"45px"}  onClick={handleOnClick}/>
-        <button class="loginBtn--facebook" onClick={handleOnClick}>
+        <button className="loginBtn--facebook" onClick={handleOnClick}>
           Login with Facebook
         </button>
     );

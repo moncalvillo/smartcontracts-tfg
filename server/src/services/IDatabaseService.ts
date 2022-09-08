@@ -10,6 +10,6 @@ export default abstract class IDatabaseService {
 
     abstract getProjects(user: User): Promise<any>;
     abstract getTypes(user: User): Promise<any>;
-    abstract getUsers(): Promise<any>;
+    abstract getUsers(currentUser: User): Promise<any>;
     // abstract getTypesByProject(user: User, project: string): Promise<any>;
 }
