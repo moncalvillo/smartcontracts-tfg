@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import ExpenseListWrapper from "./organism/ExpenseListWrapper";
 import FiltersWrapper from "./organism/FiltersWrapper";
+import Refresh from "./atoms/icons/Refresh";
 
 const OracleList = (props) => {
 
@@ -14,12 +15,14 @@ const OracleList = (props) => {
     const [project, setProject] = useState("");
     const [user, setUser] = useState("");
     const [requestState, setRequestState] = useState("");
+    const [reload, setReload] = useState(false);
+
 
 
 
     useEffect(()=>{
         getRequests();
-    }, [type,project,requestState,user]);
+    }, [type,project,requestState,user, reload]);
 
     const params = {
         type: type,
@@ -35,7 +38,6 @@ const OracleList = (props) => {
         axios.get("http://localhost:8081/oracle/pending", {
             params: params,
         }).then((res)=>{
-            console.log(res.data.result)
             setRequests(res.data.result);
         }).catch((err)=>{
             console.log(err.response.data);
@@ -57,8 +59,10 @@ const OracleList = (props) => {
         <div className="requestsDiv">
             <FiltersWrapper {...filterProps} />
             <div className="requestsList">
-
-                <h1> Expense requests </h1>
+                <div className="list-header"> 
+                    <h1> Expense requests </h1>
+                    <Refresh reload={reload} setReload={setReload} />
+                </div>
                 <div className="requests">
                     <ExpenseListWrapper loading={loading} error={error} requests={requests}/>
                 </div>

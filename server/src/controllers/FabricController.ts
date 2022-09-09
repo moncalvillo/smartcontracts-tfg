@@ -76,7 +76,6 @@ class FabricController {
     createExpense = async (req: Request, res: Response) => {
 
         const { amount, expenseType, concept, project, currency, user } = req.body;
-        console.log( amount, expenseType, concept, project, currency, user);
         try{
             const query: Expense = await this.blockchainService.createExpense(amount, expenseType, concept, project, user.wallet, currency);
             if(query){

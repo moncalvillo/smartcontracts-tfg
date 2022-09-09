@@ -131,7 +131,6 @@ export class DatabaseService extends IDatabaseService{
 
     async getUsers(currentUser: User): Promise<any> {
         const users: User[] = await User.findAll();
-        console.log(currentUser);
         return users.filter((user: User) => user.id !== currentUser.id).map((user: User) => {
             return { id: user.id, name: `${user.firstName} ${user.lastName}` };
         });

@@ -99,4 +99,20 @@
     margin-bottom: 10px;
 }
 
+.list-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 90%;
+}
+
+.refresh{
+    cursor: pointer;
+    position: absolute;
+    left: 75%;
+
+}
+
     

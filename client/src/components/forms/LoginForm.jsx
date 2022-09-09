@@ -5,6 +5,7 @@ import { TailSpin  } from "react-loader-spinner";
 import PasswordInput from "../atoms/inputs/PasswordInput";
 import EmailInput from "../atoms/inputs/EmailInput";
 import SocialMediaIcons from "../organism/SocialMediaIcons";
+
 const LoginForm = ({onLoginRedirect}) => {
 
     const [loader, setLoader] = useState(true);
@@ -23,7 +24,7 @@ const LoginForm = ({onLoginRedirect}) => {
         axios.post("/server/login", {email, password}).then((res) => {
             setAccessToken(res.data.user.accessToken);
         }).catch((err) => {
-            console.log(err.response);
+            console.log(err.response.data.message);
             setMsg(err.response.data.message);
         }).finally(() => {                
             setLoader(false);
