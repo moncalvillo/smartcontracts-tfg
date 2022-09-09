@@ -124,7 +124,9 @@ export class BlockchainService extends IBlockchainService{
             const {contract} = await connectToContract(walletStr,'mychannel','draft');
             const expenses: any = await contract.submitTransaction('GetAllAssets');
             const jsonObj = JSON.parse(expenses.toString());
-            return jsonObj.map((x: { Record: any; }) => x.Record);   
+            const list = jsonObj.map((x: { Record: any; }) => x.Record);
+            const sorted = list.sort((objA: Expense, objB: Expense) => Number(new Date(objB.Date)) - Number(new Date(objA.Date)));
+            return sorted; 
 
         }catch(error: any){
             throw new Error(error.message);
@@ -141,7 +143,10 @@ export class BlockchainService extends IBlockchainService{
             if(expenses){
                 const jsonObj = JSON.parse(expenses.toString());
                 console.log(`Transaction has been evaluated, result is: ${jsonObj}`);
-                return jsonObj.map((x: { Record: any; }) => x.Record); 
+                const list = jsonObj.map((x: { Record: any; }) => x.Record);
+                const sorted = list.sort((objA: Expense, objB: Expense) => Number(new Date(objB.Date)) - Number(new Date(objA.Date)));
+                console.log(sorted);
+                return sorted; 
             }else{
                 return null;
             }
