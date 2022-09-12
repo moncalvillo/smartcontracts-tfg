@@ -34,7 +34,7 @@ const RouterComponent = () => {
         <Router>
               <Routes>
                   <Route path="/" element={<Home />} />
-                  { user.roleType !== "manager" && <Route path="/form" element={<Form />} />}
+                  <Route path="/form" element={<Form />} />
                   { user.roleType !== "user" && <Route path="/oracle" element={<Oracle />} />}
                   <Route path="/expenses/:id" element={<ResolveRequest />} />
                   <Route path="/expenses" element={<Requests />} />

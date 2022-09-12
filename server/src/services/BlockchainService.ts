@@ -145,7 +145,6 @@ export class BlockchainService extends IBlockchainService{
                 console.log(`Transaction has been evaluated, result is: ${jsonObj}`);
                 const list = jsonObj.map((x: { Record: any; }) => x.Record);
                 const sorted = list.sort((objA: Expense, objB: Expense) => Number(new Date(objB.Date)) - Number(new Date(objA.Date)));
-                console.log(sorted);
                 return sorted; 
             }else{
                 return null;
