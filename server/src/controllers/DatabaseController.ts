@@ -38,8 +38,7 @@ class UserController {
         return res.status(200).end();
     }
 
-    getProjects = async (req:Request, res: Response) => {
-        const { user } = req.body;
+    getProjects = async (req:Request, res: Response) => {        
         const projects = await this.databaseService.getProjects();
         return res.status(200).json({
             result: projects
@@ -47,7 +46,6 @@ class UserController {
     }
 
     getTypes = async (req:Request, res: Response) => {
-        const { user } = req.body;
         const types = await this.databaseService.getTypes();
         return res.status(200).json({
             result: types
@@ -117,7 +115,6 @@ class UserController {
         const { user } = req.body;
         if(user.roleType !== "user"){
             try{
-
                 const { id } = req.params
                 await this.databaseService.deleteProject(id);
                 return res.status(200).end();

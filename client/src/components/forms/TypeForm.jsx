@@ -3,7 +3,7 @@ import { useState } from "react";
 import { TailSpin } from "react-loader-spinner";
 
 
-const TypeForm = () => {
+const TypeForm = ({reload, setReload}) => {
 
     const [loader, setLoader] = useState(false);
     const [success, setSuccess] = useState(null);
@@ -26,6 +26,7 @@ const TypeForm = () => {
             console.log(error);
         }).finally(()=> {
             setLoader(false);
+            setReload(reload + 1);
         });
     }
 

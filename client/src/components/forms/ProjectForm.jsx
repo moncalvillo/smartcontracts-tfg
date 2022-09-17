@@ -3,7 +3,7 @@ import { useState } from "react";
 import { TailSpin } from "react-loader-spinner";
 
 
-const ProjectForm = () => {
+const ProjectForm = ({reload, setReload}) => {
 
     const [loader, setLoader] = useState(false);
     const [success, setSuccess] = useState(null);
@@ -26,6 +26,7 @@ const ProjectForm = () => {
             console.log(error);
         }).finally(()=> {
             setLoader(false);
+            setReload(reload + 1 );
         });
     }
 
@@ -66,6 +67,8 @@ const ProjectForm = () => {
                 </div>
                 <button>Submit</button>
             </form>
+
+            
         </div>
     );
 

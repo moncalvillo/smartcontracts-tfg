@@ -10,10 +10,10 @@ router.post('/new', DatabaseController.create);
 router.delete('/:id', DatabaseController.delete)
 router.get('/user', DatabaseController.getUser);
 
-router.use(authenticateToken);
-
 router.get('/projects', DatabaseController.getProjects);
 router.get('/types', DatabaseController.getTypes);
+
+router.use(authenticateToken);
 router.get('/users', DatabaseController.getUsers);
 router.post('/projects', DatabaseController.createProject);
 router.post('/types', DatabaseController.createType);

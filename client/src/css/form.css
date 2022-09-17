@@ -218,3 +218,45 @@ input[type="radio"]{
     background-color: #5B7BD5;
     background-image: linear-gradient(#5B7BD5, #4864B1);
   }
+
+
+  .list-form{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-height: 40vh;
+    height: 100%;
+    padding: 1%;
+    color: #C4C4C4;
+    font-size: 12px;
+  }
+
+  .list-form>.box{
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    width: 20%;
+    height: 15vh;
+    overflow-y: scroll;
+    cursor: default;
+    scroll-behavior: smooth;
+    padding: 1%;
+    font-size: 12px;
+  }
+
+.list-form-item{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 5vh;
+    padding: 2%;
+    font-size: 12px;
+}
+
+.list-form-item>.itemIcon{
+    cursor: pointer;
+}
