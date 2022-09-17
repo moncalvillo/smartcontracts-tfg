@@ -75,9 +75,8 @@ class FabricController {
 
     createExpense = async (req: Request, res: Response) => {
 
-        const { amount, expenseType, concept, project, currency, user } = req.body;
         try{
-            const query: Expense = await this.blockchainService.createExpense(amount, expenseType, concept, project, user.wallet, currency);
+            const query: Expense | null = await this.blockchainService.createExpense(req.body);
             if(query){
                 res.status(200).json({
                     message: 'Query successful',

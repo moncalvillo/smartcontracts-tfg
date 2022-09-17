@@ -1,9 +1,10 @@
 import { Identity } from "fabric-network";
+import User from "../models/User";
 import { Expense } from "../types/Expense";
 
 export default abstract class IBlockchainService {
     abstract updateExpense(username: any, body: any): string | PromiseLike<string>;
-    abstract createExpense(amount: number, type: string, concept: string, project: string, owner: string, currency: string): Promise<any>;
+    abstract createExpense(body: any): Promise<Expense | null>;
     abstract readExpense(id: string, owner: string): Promise<any>;
     abstract getExpenses(user:string, params: any): Promise<any>;
     abstract getAllExpenses(user: string): Promise<any>;
