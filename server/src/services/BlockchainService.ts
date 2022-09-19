@@ -150,10 +150,9 @@ export class BlockchainService extends IBlockchainService{
         try {
             const { type, project, state, user } = params;
             const {  email, wallet, firstName, lastName, roleType } = currentUser;
-            const userSTR: string = JSON.stringify({email, firstName, lastName, wallet, roleType})
+            const userSTR: string = JSON.stringify({email, firstName, lastName, wallet, roleType});
             const {contract} = await connectToContract(currentUser.wallet,'mychannel','draft');
             const searchBy: string = currentUser.roleType !== 'user' ? user : userSTR;
-            console.log("SEARCH BY: ", searchBy);
             const expenses: any = await contract.submitTransaction('QueryAssetsByParams', searchBy, type, project, state) as any | null;
             if(expenses){
                 const jsonObj = JSON.parse(expenses.toString());
