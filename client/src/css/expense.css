@@ -1,0 +1,62 @@
+.expense-div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 2% 5%;
+    max-height: 100vh;
+}
+
+.expenseData{
+    text-align: center;
+    width: 85%;
+    padding: 1% 1%;
+}
+
+.expenseSolver{
+    text-align: center;
+    width: 65%;
+    padding: 3% 1%;
+    margin-left: 20%;
+}
+
+.expense-box{
+    border: 1px solid #CFCFCF;
+    border-radius: 10px;
+    padding: 1% 1%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: space-evenly;
+    font-size: larger;
+    text-align: left;
+}
+.column{
+    width: 45%;
+    padding: 1% 1%;
+}
+
+.row-element{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 1% 0%;
+}
+
+.row-element>p{
+    color: #919191;
+}
+.row-element>b{
+    max-width: 85%;
+}
+
+.expense-box>form{
+    width: 100%;
+}
+
+#resolution-form{
+    padding: 2%;
+}

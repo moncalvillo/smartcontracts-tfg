@@ -38,17 +38,15 @@ class UserController {
         return res.status(200).end();
     }
 
-    getProjects = async (req:Request, res: Response) => {
-        const { user } = req.body;
-        const projects = await this.databaseService.getProjects(user.username);
+    getProjects = async (req:Request, res: Response) => {        
+        const projects = await this.databaseService.getProjects();
         return res.status(200).json({
             result: projects
         });
     }
 
     getTypes = async (req:Request, res: Response) => {
-        const { user } = req.body;
-        const types = await this.databaseService.getTypes(user.username);
+        const types = await this.databaseService.getTypes();
         return res.status(200).json({
             result: types
         });
@@ -76,6 +74,70 @@ class UserController {
         }
         return res.status(200).json({user: obj});
 
+    }
+
+    createProject = async (req:Request, res: Response) => {
+        const { user } = req.body;
+        if(user.roleType !== "user"){
+            try{
+
+                const project = await this.databaseService.createProject(req.body);
+                return res.status(200).json({
+                    result: project
+                });
+            }catch(error: any){
+                return res.status(400).json({message: error.message});
+            }
+        }else{
+            return res.status(401).json({message: "You are not authorized to create a project"});
+        }
+    }
+
+    createType = async (req:Request, res: Response) => {
+        const { user } = req.body;
+        if(user.roleType !== "user"){
+            try{
+
+                const type = await this.databaseService.createType(req.body);
+                return res.status(200).json({
+                    result: type
+                });
+            }catch(error: any){
+                return res.status(400).json({message: error.message});
+            }
+        }else{
+            return res.status(401).json({message: "You are not authorized to create a type"});
+        }
+    }
+
+    deleteProject = async (req:Request, res: Response) => {
+        const { user } = req.body;
+        if(user.roleType !== "user"){
+            try{
+                const { id } = req.params
+                await this.databaseService.deleteProject(id);
+                return res.status(200).end();
+            }catch(error: any){
+                return res.status(400).json({message: error.message});
+            }
+        }else{
+            return res.status(401).json({message: "You are not authorized to delete a project"});
+        }
+    }
+
+    deleteType = async (req:Request, res: Response) => {
+        const { user } = req.body;
+        if(user.roleType !== "user"){
+            try{
+                const { id } = req.params
+                await this.databaseService.deleteType(id);
+                return res.status(200).end();
+            }catch(error: any){
+                return res.status(400).json({message: error.message});
+            }
+        }else{
+            return res.status(401).json({message: "You are not authorized to delete a type"});
+        }
     }
 
 }

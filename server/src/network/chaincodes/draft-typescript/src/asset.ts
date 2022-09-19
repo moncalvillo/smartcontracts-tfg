@@ -29,10 +29,16 @@ export class Expense {
     public Date: Date;
 
     @Property()
-    public Owner: string;
+    public Owner: any;
 
     @Property()
-    public State: Boolean;
+    public State: string;
+
+    @Property()
+    public Resolution: string;
+
+    @Property()
+    public Inspector: any;
 
 
 }

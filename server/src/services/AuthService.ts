@@ -17,7 +17,6 @@ export class AuthService extends IAuthService{
             audience: process.env.GOOGLE_CLIENT_ID, // Specify the CLIENT_ID of the app that accesses the backend
         });
         const googleUser: any = ticket.getPayload();
-        console.log(googleUser)
 
         return googleUser;
     }

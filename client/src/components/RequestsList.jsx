@@ -1,9 +1,9 @@
 
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useUser } from "./hooks/useUser";
-import RequestsListWrapper from "./organism/RequestListWrapper";
+import ExpenseListWrapper from "./organism/ExpenseListWrapper";
 import FiltersWrapper from "./organism/FiltersWrapper";
+import Refresh from "./atoms/icons/Refresh";
 
 const RequestsList = () => {
 
@@ -12,13 +12,13 @@ const RequestsList = () => {
     const [error, setError] = useState(null);
     const [type, setType] = useState("");
     const [project, setProject] = useState("");
+    const [user, setUser] = useState("");
     const [requestState, setRequestState] = useState("");
-
-    const {user} = useUser();
+    const [reload, setReload] = useState(false);
 
     useEffect(()=>{
         getRequests();
-    }, [type,project,requestState]);
+    }, [type,project,requestState,user, reload]);
 
 
     const params = {
@@ -30,6 +30,7 @@ const RequestsList = () => {
 
     async function getRequests(){
         setLoading(true);
+        console.log(params);
         axios.get("/fabric/expenses", {
             params: params,
         }).then((res)=>{
@@ -47,15 +48,20 @@ const RequestsList = () => {
         setProject,
         setRequestState,
         setError,
+        setUser
     }
 
     return (
         <div className="requestsDiv">
             <FiltersWrapper {...filterProps} />
             <div className="requestsList">
-                <h1> Requests </h1>
+                <div className="list-header"> 
+                    <h1> Requests </h1>
+                    <Refresh reload={reload} setReload={setReload} />
+                </div>
+                
                 <div className="requests">
-                    <RequestsListWrapper loading={loading} error={error} requests={requests}/>
+                    <ExpenseListWrapper loading={loading} error={error} requests={requests}/>
                 </div>
             </div>
 

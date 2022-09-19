@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import Selector from "../../atoms/inputs/Select";
 
 const UserFilter = ({setUser, setError}) => {
 
@@ -19,7 +18,24 @@ const UserFilter = ({setUser, setError}) => {
     }
 
     return (
-        <Selector label="User" setState={setUser} options={users}/>
+        <label htmlFor="selector">
+            <h3>User</h3>
+                <select
+                    className="select"
+                    id="selector"
+                    onChange={(e) => setUser(e.target.value)}>
+                    <option key="all" value=""> All </option>
+                    {users.map((option) => {
+                        
+                        const opt = JSON.stringify(option);
+                        return (
+                        <option key={option.id} value={opt}>
+                            {option.firstName} {option.lastName}
+                        </option>
+                        );
+                    })}
+                </select>
+        </label>
     );
 }
 

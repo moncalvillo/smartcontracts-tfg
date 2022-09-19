@@ -119,21 +119,59 @@ export class DatabaseService extends IDatabaseService{
     }
 
 
-    async getProjects(user: User): Promise<any> {
+    async createProject(body: any): Promise<Project> {
+        const {name} = body;
+        try{
+
+            const project: Project = await Project.create({name});
+            return project;
+        }
+        catch(err:any){
+            console.log(err.message);
+            
+            throw new Error(err.message);
+        }
+            
+    }
+
+    async createType(body: any): Promise<Type> {
+        const {name} = body;
+        try{
+            const type: Type = await Type.create({name});
+            return type;
+        }catch(err:any){
+            console.log(err.message);
+            throw new Error(err.message);
+        }
+    }
+
+    async getProjects(): Promise<Project[]> {
         const projects: Project[] = await Project.findAll();
         return projects;
     }
 
-    async getTypes(user: User): Promise<any> {
+    async getTypes(): Promise<Type[]> {
         const types: Type[] = await Type.findAll();
         return types;
     }
 
     async getUsers(): Promise<any> {
         const users: User[] = await User.findAll();
-        return users.map((user: User) => {
-            return { id: user.id, name: `${user.firstName} ${user.lastName}` };
+        const list =  users.filter((user: User) => user.roleType === 'user').map((user) =>{
+            const json = user.toJSON();
+            delete json.password;
+            delete json.id;
+            return json;
         });
+        return list;
+    }   
+
+    async deleteProject(id: Identifier): Promise<void> {
+        await Project.destroy({ where: { id } });
+    }
+
+    async deleteType(id: Identifier): Promise<void> {
+        await Type.destroy({ where: { id } });
     }
 
 

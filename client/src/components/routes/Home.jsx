@@ -12,13 +12,13 @@ const Home = () => {
         <div className="linksSection">
             
             <div className="linksDiv"> 
-                {user.roleType ==="user" && <Link to="/form" >
+                <Link to="/form" >
                     <FormLink />
-                </Link>}
+                </Link>
                 {user.roleType ==="manager" && <Link to="/oracle" >
                     <OracleLink />
                 </Link>}
-                <Link to="/requests" >
+                <Link to="/expenses" >
                     <RequestsLink />
                 </Link>
             </div>
