@@ -24,21 +24,21 @@ const assets: ExpenseType[] = [
             Project: "Helheim",
             Owner: JSON.stringify({
                     email: "userTest@gmail.com",
-                    roleType: "user",
                     firstName: "User",
                     lastName: "Test",
-                    wallet: "as8a5f6b-1975-4d66-b085-c6fc910ee6df"
+                    wallet: "as8a5f6b-1975-4d66-b085-c6fc910ee6df",
+                    roleType: "user",
                 }),
-            Currency: "USD",
+            Currency: "CREDUS",
             Date: new Date(2022, 7, 20, 15,0,0),
             State: "APPROVED",
             Resolution: "Lorem ipsum dolor sit amet. Vel accusantium rerum aut voluptas consequatur eum dicta internos qui voluptas maiores ea pariatur laborum aut quasi consequatur. Cum enim pariatur eum voluptas beatae aut iste porro ut nemo accusamus et perferendis fugit et provident rerum. Aut ratione harum ad ullam optio qui rerum nihil et dolore voluptatibus. Ea perspiciatis omnis aut atque quia sed dicta voluptates ut necessitatibus perspiciatis et animi amet cum galisum molestias. Id debitis officia qui voluptas voluptate sed cumque vitae sit voluptatibus accusantium est quaerat officiis aut dolore sint aut consequatur porro.",
             Inspector: JSON.stringify({
                     email: "managerTest@gmail.com",
-                    roleType: "manager",
                     firstName: "Manager",
                     lastName: "Test",
-                    wallet: "a4355f6b-1975-4d66-b085-c6fc910ee6ss"
+                    wallet: "a4355f6b-1975-4d66-b085-c6fc910ee6ss",
+                    roleType: "manager",
                 }),
         },
         {
@@ -49,12 +49,12 @@ const assets: ExpenseType[] = [
             Project: "Helheim",
             Owner: JSON.stringify({
                     email: "userTest@gmail.com",
-                    roleType: "user",
                     firstName: "User",
                     lastName: "Test",
-                    wallet: "as8a5f6b-1975-4d66-b085-c6fc910ee6df"
+                    wallet: "as8a5f6b-1975-4d66-b085-c6fc910ee6df",
+                    roleType: "user",
                 }),
-            Currency: "USD",
+            Currency: "CREDUS",
             Date: new Date(2022, 7, 10, 15,0,0),
             State: "PENDING",
             Resolution: null,
@@ -68,21 +68,21 @@ const assets: ExpenseType[] = [
             Project: "Helheim",
             Owner: JSON.stringify({
                     email: "secondUser@gmail.com",
-                    roleType: "user",
                     firstName: "Second",
+                    lastName: "User",
                     wallet: "r48a5f6b-1975-4d66-b085-c6fc910ee6aa",
-                    lastName: "User"
+                    roleType: "user",
                 }),
-            Currency: "USD",
+            Currency: "CREDUS",
             Date: new Date(2022, 7, 8, 15,0,0),
             State: "APPROVED",
             Resolution: "Lorem ipsum dolor sit amet. Vel accusantium rerum aut voluptas consequatur eum dicta internos qui voluptas maiores ea pariatur laborum aut quasi consequatur. Cum enim pariatur eum voluptas beatae aut iste porro ut nemo accusamus et perferendis fugit et provident rerum. Aut ratione harum ad ullam optio qui rerum nihil et dolore voluptatibus. Ea perspiciatis omnis aut atque quia sed dicta voluptates ut necessitatibus perspiciatis et animi amet cum galisum molestias. Id debitis officia qui voluptas voluptate sed cumque vitae sit voluptatibus accusantium est quaerat officiis aut dolore sint aut consequatur porro.",
             Inspector: JSON.stringify({
                     email: "managerTest@gmail.com",
-                    roleType: "manager",
                     firstName: "Manager",
                     lastName: "Test",
-                    wallet: "a4355f6b-1975-4d66-b085-c6fc910ee6ss"
+                    wallet: "a4355f6b-1975-4d66-b085-c6fc910ee6ss",
+                    roleType: "manager",
                 }),
         },
         {
@@ -93,21 +93,21 @@ const assets: ExpenseType[] = [
             Project: "Niflheim",
             Owner: JSON.stringify({
                     email: "userTest@gmail.com",
-                    roleType: "user",
                     firstName: "User",
                     lastName: "Test",
-                    wallet: "as8a5f6b-1975-4d66-b085-c6fc910ee6df"
+                    wallet: "as8a5f6b-1975-4d66-b085-c6fc910ee6df",
+                    roleType: "user",
                 }),
-            Currency: "USD",
+            Currency: "CREDUS",
             Date: new Date(2022, 6, 27, 15,0,0),
             State: "REJECTED",
             Resolution: "Example test for resolution",
             Inspector: JSON.stringify({
                     email: "managerTest@gmail.com",
-                    roleType: "manager",
                     firstName: "Manager",
                     lastName: "Test",
-                    wallet: "a4355f6b-1975-4d66-b085-c6fc910ee6ss"
+                    wallet: "a4355f6b-1975-4d66-b085-c6fc910ee6ss",
+                    roleType: "manager",
                 }),
         },
         {
@@ -118,21 +118,21 @@ const assets: ExpenseType[] = [
             Project: "Niflheim",
             Owner: JSON.stringify({
                     email: "userTest@gmail.com",
-                    roleType: "user",
                     firstName: "User",
                     lastName: "Test",
-                    wallet: "as8a5f6b-1975-4d66-b085-c6fc910ee6df"
+                    wallet: "as8a5f6b-1975-4d66-b085-c6fc910ee6df",
+                    roleType: "user",
                 }),
-            Currency: "USD",
+            Currency: "CREDUS",
             Date: new Date(2022, 6, 20, 15,0,0),
             State: "APPROVED",
             Resolution: "Example test for resolution",
             Inspector: JSON.stringify({
                     email: "managerTest@gmail.com",
-                    roleType: "manager",
                     firstName: "Manager",
                     lastName: "Test",
-                    wallet: "a4355f6b-1975-4d66-b085-c6fc910ee6ss"
+                    wallet: "a4355f6b-1975-4d66-b085-c6fc910ee6ss",
+                    roleType: "manager",
                 }),
         },
         {
@@ -143,12 +143,12 @@ const assets: ExpenseType[] = [
             Project: "Niflheim",
             Owner: JSON.stringify({
                     email: "secondUser@gmail.com",
-                    roleType: "user",
                     firstName: "Second",
+                    lastName: "User",
                     wallet: "r48a5f6b-1975-4d66-b085-c6fc910ee6aa",
-                    lastName: "User"
+                    roleType: "user",
                 }),
-            Currency: "USD",
+            Currency: "CREDUS",
             Date: new Date(2022, 6, 3, 15,0,0),
             State: "REJECTED",
             Resolution: "Example test for resolution",
@@ -169,12 +169,12 @@ const assets: ExpenseType[] = [
             Project: "Asgard",
             Owner: JSON.stringify({
                     email: "userTest@gmail.com",
-                    roleType: "user",
                     firstName: "User",
                     lastName: "Test",
-                    wallet: "as8a5f6b-1975-4d66-b085-c6fc910ee6df"
+                    wallet: "as8a5f6b-1975-4d66-b085-c6fc910ee6df",
+                    roleType: "user",
                 }),
-            Currency: "USD",
+            Currency: "CREDUS",
             Date: new Date(2022, 5, 29, 15,0,0),
             State: "PENDING",
             Resolution: null,
@@ -188,21 +188,21 @@ const assets: ExpenseType[] = [
             Project: "Asgard",
             Owner: JSON.stringify({
                     email: "userTest@gmail.com",
-                    roleType: "user",
                     firstName: "User",
                     lastName: "Test",
-                    wallet: "as8a5f6b-1975-4d66-b085-c6fc910ee6df"
+                    wallet: "as8a5f6b-1975-4d66-b085-c6fc910ee6df",
+                    roleType: "user",
                 }),
-            Currency: "USD",
+            Currency: "CREDUS",
             Date: new Date(2022, 5, 27, 15,0,0),
             State: "REJECTED",
             Resolution: "Example test for resolution",
             Inspector: JSON.stringify({
                     email: "managerTest@gmail.com",
-                    roleType: "manager",
                     firstName: "Manager",
                     lastName: "Test",
-                    wallet: "a4355f6b-1975-4d66-b085-c6fc910ee6ss"
+                    wallet: "a4355f6b-1975-4d66-b085-c6fc910ee6ss",
+                    roleType: "manager",
                 }),
         },
         {
@@ -213,21 +213,21 @@ const assets: ExpenseType[] = [
             Project: "Asgard",
             Owner: JSON.stringify({
                     email: "secondUser@gmail.com",
-                    roleType: "user",
                     firstName: "Second",
+                    lastName: "User",
                     wallet: "r48a5f6b-1975-4d66-b085-c6fc910ee6aa",
-                    lastName: "User"
+                    roleType: "user",
                 }),
-            Currency: "USD",
+            Currency: "CREDUS",
             Date: new Date(2022, 5, 20, 15,0,0),
             State: "APPROVED",
             Resolution: "Example test for resolution",
             Inspector: JSON.stringify({
                     email: "managerTest@gmail.com",
-                    roleType: "manager",
                     firstName: "Manager",
                     lastName: "Test",
-                    wallet: "a4355f6b-1975-4d66-b085-c6fc910ee6ss"
+                    wallet: "a4355f6b-1975-4d66-b085-c6fc910ee6ss",
+                    roleType: "manager",
                 }),
         },
         {
@@ -238,21 +238,21 @@ const assets: ExpenseType[] = [
             Project: "Midgard",
             Owner: JSON.stringify({
                     email: "userTest@gmail.com",
-                    roleType: "user",
                     firstName: "User",
                     lastName: "Test",
-                    wallet: "as8a5f6b-1975-4d66-b085-c6fc910ee6df"
+                    wallet: "as8a5f6b-1975-4d66-b085-c6fc910ee6df",
+                    roleType: "user",
                 }),
-            Currency: "USD",
+            Currency: "CREDUS",
             Date: new Date(2022, 5, 14, 15,0,0),
             State: "REJECTED",
             Resolution: "Example test for resolution",
             Inspector: JSON.stringify({
                     email: "managerTest@gmail.com",
-                    roleType: "manager",
                     firstName: "Manager",
                     lastName: "Test",
-                    wallet: "a4355f6b-1975-4d66-b085-c6fc910ee6ss"
+                    wallet: "a4355f6b-1975-4d66-b085-c6fc910ee6ss",
+                    roleType: "manager",
                 }),
         },
         {
@@ -263,21 +263,21 @@ const assets: ExpenseType[] = [
             Project: "Midgard",
             Owner: JSON.stringify({
                     email: "userTest@gmail.com",
-                    roleType: "user",
                     firstName: "User",
                     lastName: "Test",
-                    wallet: "as8a5f6b-1975-4d66-b085-c6fc910ee6df"
+                    wallet: "as8a5f6b-1975-4d66-b085-c6fc910ee6df",
+                    roleType: "user",
                 }),
-            Currency: "USD",
+            Currency: "CREDUS",
             Date: new Date(2022, 5, 3, 15,0,0),
             State: "APPROVED",
             Resolution: "Example test for resolution",
             Inspector: JSON.stringify({
                     email: "managerTest@gmail.com",
-                    roleType: "manager",
                     firstName: "Manager",
                     lastName: "Test",
-                    wallet: "a4355f6b-1975-4d66-b085-c6fc910ee6ss"
+                    wallet: "a4355f6b-1975-4d66-b085-c6fc910ee6ss",
+                    roleType: "manager",
                 }),
         },
         {
@@ -288,21 +288,21 @@ const assets: ExpenseType[] = [
             Project: "Midgard",
             Owner: JSON.stringify({
                     email: "secondUser@gmail.com",
-                    roleType: "user",
                     firstName: "Second",
                     wallet: "r48a5f6b-1975-4d66-b085-c6fc910ee6aa",
-                    lastName: "User"
+                    lastName: "User",
+                    roleType: "user",
                 }),
-            Currency: "USD",
+            Currency: "CREDUS",
             Date: new Date(2022, 5, 2, 15,0,0),
             State: "APPROVED",
             Resolution: "Example test for resolution",
             Inspector: JSON.stringify({
                     email: "managerTest@gmail.com",
-                    roleType: "manager",
                     firstName: "Manager",
                     lastName: "Test",
-                    wallet: "a4355f6b-1975-4d66-b085-c6fc910ee6ss"
+                    wallet: "a4355f6b-1975-4d66-b085-c6fc910ee6ss",
+                    roleType: "manager",
                 }),
         },
         {
@@ -313,21 +313,21 @@ const assets: ExpenseType[] = [
             Project: "Vanaheim",
             Owner: JSON.stringify({
                     email: "userTest@gmail.com",
-                    roleType: "user",
                     firstName: "User",
                     lastName: "Test",
-                    wallet: "as8a5f6b-1975-4d66-b085-c6fc910ee6df"
+                    wallet: "as8a5f6b-1975-4d66-b085-c6fc910ee6df",
+                    roleType: "user",
                 }),
-            Currency: "USD",
+            Currency: "CREDUS",
             Date: new Date(2022, 5, 1, 15,0,0),
             State: "APPROVED",
             Resolution: "Example test for resolution",
             Inspector: JSON.stringify({
                     email: "managerTest@gmail.com",
-                    roleType: "manager",
                     firstName: "Manager",
                     lastName: "Test",
-                    wallet: "a4355f6b-1975-4d66-b085-c6fc910ee6ss"
+                    wallet: "a4355f6b-1975-4d66-b085-c6fc910ee6ss",
+                    roleType: "manager",
                 }),
         },
     ];

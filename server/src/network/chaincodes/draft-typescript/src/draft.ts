@@ -10,7 +10,7 @@ import { Contract, Context} from 'fabric-contract-api';
 import { stat } from 'fs';
 import { stringify } from 'querystring';
 import { Expense } from './asset';
-import { ASSETS_LIST } from './assetsData';
+import { ASSETS_LIST, ExpenseType } from './assetsData';
 
 async function savePrivateData(ctx: Context , assetKey: string) {
 	const clientOrg: string = ctx.clientIdentity.getMSPID();
@@ -67,7 +67,7 @@ async function readState(ctx: Context, id: string) {
 }
 
 export class Draft extends Contract {
-	balance: number;
+	balance: number = 10000;
 
     constructor() {
         super();
@@ -106,15 +106,17 @@ export class Draft extends Contract {
 			Inspector: inspector,
 		};
 		await savePrivateData(ctx, id);
-		const assetBuffer: Buffer = Buffer.from(JSON.stringify(expense));
-
-		await ctx.stub.setEvent('CreateAsset', assetBuffer);
+		
 		if(state === "PENDING"){
-			this.validateRequest(ctx, JSON.stringify(expense));
+			this.validateRequest(expense);
 		}
+		
+		const assetBuffer: Buffer = Buffer.from(JSON.stringify(expense));
+		await ctx.stub.setEvent('CreateAsset', assetBuffer);
+		
 		await ctx.stub.putState(id, assetBuffer);
 		const indexName = "id~type~project~state";
-		const indexKey = await ctx.stub.createCompositeKey(indexName, [expense.Owner, expense.Type, expense.Project, expense.State.toString()]); 
+		const indexKey = await ctx.stub.createCompositeKey(indexName, [expense.Owner, expense.Type, expense.Project, expense.State.toString(), expense.Currency]); 
 		await ctx.stub.putState(indexKey, Buffer.from('\u0000'));
 		return assetBuffer.toString();
 	}
@@ -173,6 +175,7 @@ export class Draft extends Contract {
 
 		let queryString: any = {}
 		queryString.selector = {};
+		queryString.selector.Currency = "CREDUS";
 		if(owner) queryString.selector.Owner = owner;
 		if(type) queryString.selector.Type = type;
 		if(project) queryString.selector.Project = project;
@@ -242,23 +245,31 @@ export class Draft extends Contract {
         return allResults;
 	}
 
-	async validateRequest(ctx: Context, jsonObj: string): Promise<string | null> {
-		const obj: Expense = JSON.parse(jsonObj);
+	validateRequest(expense: any): void {
 		
 		const failedMsg: string[] = [];
+		try{
+			this.validateFields(expense, failedMsg) 
+			this.validateBalance(expense,failedMsg)
+			this.validateType(expense,failedMsg)
+			this.validateDate(expense,failedMsg);
 
-		const b: Boolean = this.validateFields(obj, failedMsg) && this.validateBalance(obj,failedMsg) && this.validateType(obj,failedMsg)
-		&& this.validateDate(obj,failedMsg);
-
-		const SC: any = {
-			inspector: "Smart Contract",
-			name: "Draft",
+		}catch(err: any){
+			return;
 		}
 
-		if(b){
-			return await this.ResolveAsset(ctx, obj.ID, "Asset pass all the requirements.", "APPROVED", JSON.stringify(SC));
+		const SC: any = {
+			name: " Draft <Smart Contract>",
+		}
+
+		if(failedMsg.length === 0){
+			expense.Resolution = "Asset passes all the requirements. ";
+			expense.Inspector = JSON.stringify(SC);
+			expense.State = "APPROVED";
 		}else{
-			return await this.ResolveAsset(ctx, obj.ID, failedMsg.join("\n "), "REJECTED", JSON.stringify(SC));
+			expense.Resolution = failedMsg.join(". \n");
+			expense.Inspector = JSON.stringify(SC);
+			expense.State = "REJECTED";
 		}
 	}
 
@@ -276,6 +287,8 @@ export class Draft extends Contract {
 			return false;
 		}
 
+		this.balance -= obj.Amount;
+
 		return true;
 	}
 
@@ -284,10 +297,14 @@ export class Draft extends Contract {
 			if(expense.Amount > 2000){
 				failedMsg.push("Material expenses can't be greater than 2000");
 			}
-		}else if( expense.Type == "Equipment"){
+		}
+		if( expense.Type == "Equipment"){
 			if(expense.Amount > 5000){
 				failedMsg.push("Equipment expenses can't be greater than 5000");
 			}
+		}
+		if( expense.Type == "Service"){
+			throw new Error('Requesting to an inspector. Sent to oracle');
 		}
 		return true;
 	}

@@ -8,8 +8,9 @@ const ExpenseSolver = ({expense, setReload}) => {
 
     const { user} = useUser(); 
     console.log(expense);
-    const value = expense.Inspector.name ? expense.Inspector.name : `${expense.Inspector.firstName} ${expense.Inspector.lastName} <${expense.Inspector.email}>`
+    
     if(expense.Resolution && expense.Inspector){
+        const value = expense.Inspector.name ? expense.Inspector.name : `${expense.Inspector.firstName} ${expense.Inspector.lastName} <${expense.Inspector.email}>`
         return (
             <>
                 <h2>Resolution</h2>

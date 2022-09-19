@@ -59,7 +59,7 @@ const Form = () => {
         setProject("");
         setConcept("");
         setAmount("");
-        setCurrency("");
+        setCurrency("CREDUS");
     }
     
     const handleSubmit = async () => {
