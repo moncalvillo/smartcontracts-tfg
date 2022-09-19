@@ -12,22 +12,25 @@ const RequestsList = () => {
     const [error, setError] = useState(null);
     const [type, setType] = useState("");
     const [project, setProject] = useState("");
+    const [user, setUser] = useState("");
     const [requestState, setRequestState] = useState("");
     const [reload, setReload] = useState(false);
 
     useEffect(()=>{
         getRequests();
-    }, [type,project,requestState, reload]);
+    }, [type,project,requestState,user, reload]);
 
 
     const params = {
         type: type,
         project: project,
         state: requestState,
+        user: user,
     }
 
     async function getRequests(){
         setLoading(true);
+        console.log(params);
         axios.get("/fabric/expenses", {
             params: params,
         }).then((res)=>{
@@ -45,6 +48,7 @@ const RequestsList = () => {
         setProject,
         setRequestState,
         setError,
+        setUser
     }
 
     return (

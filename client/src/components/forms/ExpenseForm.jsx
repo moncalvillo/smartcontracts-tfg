@@ -9,7 +9,7 @@ const Form = () => {
     const [project, setProject] = useState("");
     const [concept, setConcept] = useState("");
     const [amount, setAmount] = useState("");
-    const [currency, setCurrency] = useState("");
+    const [currency, setCurrency] = useState("CREDUS");
 
     const [loader, setLoader] = useState(true);
     const [success, setSuccess] = useState(null);
@@ -51,6 +51,7 @@ const Form = () => {
         "EUR",
         "GBP",
         "CAD",
+        "CREDUS"
     ]
 
     const resetValues = () => {
@@ -166,7 +167,7 @@ const Form = () => {
                         className="select"
                         id="currency"
                         value={currency}
-                        onChange={(e) => {setCurrency(e.target.value);}}>
+                        onChange={(e) => {setCurrency(e.target.value);}} disabled>
                         <option />
                         {CURRENCIES.map((p) => (
                         <option key={p} value={p}>

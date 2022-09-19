@@ -8,6 +8,7 @@ import { Wallet, Identity } from "fabric-network";
 import { Expense } from "../types/Expense";
 import config from "../providers/Configuration";
 import { json } from "stream/consumers";
+import User from "../models/User";
 
 export class BlockchainService extends IBlockchainService{
 
@@ -69,12 +70,12 @@ export class BlockchainService extends IBlockchainService{
     async createExpense(body: any): Promise<Expense | null>{
         try {
             const { amount, expenseType, concept, project, currency, user } = body;
-            const {contract, userIdentity} = await connectToContract(user.wallet,'mychannel','draft');
+            const {contract} = await connectToContract(user.wallet,'mychannel','draft');
             const date: Date = new Date();
             const expenseId: string = uuid();
-            const { id, email, wallet, firstName, lastName, roleType } = user;
-            const userSTR: string = JSON.stringify({id, email, wallet, firstName, lastName, roleType})
-            console.log(JSON.stringify({id, email, wallet, firstName, lastName, roleType}));
+            const {  email, wallet, firstName, lastName, roleType } = user;
+            const userSTR: string = JSON.stringify({email, firstName, lastName, wallet, roleType})
+            console.log(userSTR);
             const result: Buffer = await contract.submitTransaction('CreateAsset', expenseId, amount.toString(), currency, expenseType, concept, project, userSTR, date.toISOString()) as any | null;
             if(result){
                 // contract.submitTransaction('CheckRequest', id);
@@ -100,6 +101,8 @@ export class BlockchainService extends IBlockchainService{
 
                 console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
                 const jsonObj = JSON.parse(result.toString());
+                jsonObj.Owner = JSON.parse(jsonObj.Owner);
+                jsonObj.Inspector = JSON.parse(jsonObj.Inspector);
                 return jsonObj;   
             }else{
                 return null;
@@ -130,7 +133,6 @@ export class BlockchainService extends IBlockchainService{
             const expenses: any = await contract.submitTransaction('GetAllAssets');
             const jsonObj = JSON.parse(expenses.toString());
             const list = jsonObj.map((x: { Record: any; }) => {
-                console.log(x.Record);
                 x.Record.Owner = JSON.parse(x.Record.Owner);
                 x.Record.Inspector = JSON.parse(x.Record.Inspector);
                 return x.Record;
@@ -144,16 +146,23 @@ export class BlockchainService extends IBlockchainService{
     }
 
 
-    async getExpenses(walletStr: string, params: any): Promise<any> {
+    async getExpenses(currentUser: User, params: any): Promise<any> {
         try {
-            const { type, project, state } = params;
-            console.log(walletStr);
-            const {contract} = await connectToContract(walletStr,'mychannel','draft');
-            const expenses: any = await contract.submitTransaction('QueryAssetsByParams', walletStr, type, project, state) as any | null;
+            const { type, project, state, user } = params;
+            const {  email, wallet, firstName, lastName, roleType } = currentUser;
+            const userSTR: string = JSON.stringify({email, firstName, lastName, wallet, roleType})
+            const {contract} = await connectToContract(currentUser.wallet,'mychannel','draft');
+            const searchBy: string = currentUser.roleType !== 'user' ? user : userSTR;
+            console.log("SEARCH BY: ", searchBy);
+            const expenses: any = await contract.submitTransaction('QueryAssetsByParams', searchBy, type, project, state) as any | null;
             if(expenses){
                 const jsonObj = JSON.parse(expenses.toString());
+                const list = jsonObj.map((x: { Record: any; }) => {
+                    x.Record.Owner = JSON.parse(x.Record.Owner);
+                    x.Record.Inspector = JSON.parse(x.Record.Inspector);
+                    return x.Record;
+                } );
                 console.log(`Transaction has been evaluated, result is: ${jsonObj}`);
-                const list = jsonObj.map((x: { Record: any; }) => x.Record);
                 const sorted = list.sort((objA: Expense, objB: Expense) => Number(new Date(objB.Date)) - Number(new Date(objA.Date)));
                 return sorted; 
             }else{

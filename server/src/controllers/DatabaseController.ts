@@ -53,8 +53,7 @@ class UserController {
     }
 
     getUsers = async (req:Request, res: Response) => {
-        const { user } = req.body;
-        const users = await this.databaseService.getUsers(user);
+        const users = await this.databaseService.getUsers();
         return res.status(200).json({
             result: users
         });

@@ -7,6 +7,8 @@
 'use strict';
 
 import { Contract, Context} from 'fabric-contract-api';
+import { stat } from 'fs';
+import { stringify } from 'querystring';
 import { Expense } from './asset';
 import { ASSETS_LIST } from './assetsData';
 
@@ -77,9 +79,13 @@ export class Draft extends Contract {
 		return assetState && assetState.length > 0;
 	}
 
+	async Json(json:string){
+		return JSON.parse(json);
+	}
+
 	// CreateAsset issues a new asset to the world state with given details.
-	async CreateAsset(ctx: Context, id: string, amount: string,type: string, concept: string,project: string, owner: string,   date: string) {
-		
+	async CreateAsset(ctx: Context, id: string, amount: string, currency: string, type: string, concept: string,project: string,
+		 owner: any, date: string, state: string = "PENDING", inspector: any = null, resolution: string = null): Promise<string | null> {
 		
 		const exists = await this.AssetExists(ctx, id);
 		if (exists) {
@@ -93,17 +99,19 @@ export class Draft extends Contract {
 			Type: type,
 			Project: project,
             Owner: owner,
-			Currency: "USD",
+			Currency: currency,
 			Date: new Date(date),
-			State: false,
+			State: state,
+			Resolution: resolution,
+			Inspector: inspector,
 		};
 		await savePrivateData(ctx, id);
 		const assetBuffer: Buffer = Buffer.from(JSON.stringify(expense));
 
 		await ctx.stub.setEvent('CreateAsset', assetBuffer);
-		// if(this.checkRequest(ctx, JSON.stringify(expense))){
-		// 	ctx.stub.putState(id, assetBuffer);
-		// }
+		if(state === "PENDING"){
+			this.validateRequest(ctx, JSON.stringify(expense));
+		}
 		await ctx.stub.putState(id, assetBuffer);
 		const indexName = "id~type~project~state";
 		const indexKey = await ctx.stub.createCompositeKey(indexName, [expense.Owner, expense.Type, expense.Project, expense.State.toString()]); 
@@ -131,19 +139,24 @@ export class Draft extends Contract {
 		return JSON.stringify(asset);
 	}
 
-	// UpdateAsset updates an existing asset in the world state with provided parameters.
-	// async UpdateAsset(ctx: Context, id: string, color: string, size: string, owner: string, appraisedValue: string) {
-	// 	const asset: any = await readState(ctx, id);
-	// 	asset.Color = color;
-	// 	asset.Size = size;
-	// 	asset.Owner = owner;
-	// 	asset.AppraisedValue = appraisedValue;
-	// 	const assetBuffer: Buffer = Buffer.from(JSON.stringify(asset));
-	// 	await savePrivateData(ctx, id);
 
-	// 	ctx.stub.setEvent('UpdateAsset', assetBuffer);
-	// 	return ctx.stub.putState(id, assetBuffer);
-	// }
+	//UpdateAsset updates an existing asset in the world state with provided parameters.
+	async ResolveAsset(ctx: Context, id: string, resolution: string, state: string, inspector: string): Promise<string| null>  {
+		
+		// if(roleType === "user"){
+		// 	return null;
+		// }
+		const asset: any = await readState(ctx, id);
+		asset.Resolution = resolution;
+		asset.State = state;
+		asset.Inspector = inspector;
+		const assetBuffer: Buffer = Buffer.from(JSON.stringify(asset));
+		await savePrivateData(ctx, id);
+
+		ctx.stub.setEvent('UpdateAsset', assetBuffer);
+		await ctx.stub.putState(id, assetBuffer);
+		return assetBuffer.toString();
+	}
 
 	// DeleteAsset deletes an given asset from the world state.
 	async DeleteAsset(ctx: Context, id: string) {
@@ -155,15 +168,24 @@ export class Draft extends Contract {
 		return ctx.stub.deleteState(id);
 	}
 
+
 	async QueryAssetsByParams(ctx: Context,owner: string, type: string, project: string, state: string) {
 
 		let queryString: any = {}
 		queryString.selector = {};
-		queryString.selector.Owner = owner;
+		if(owner) queryString.selector.Owner = owner;
 		if(type) queryString.selector.Type = type;
 		if(project) queryString.selector.Project = project;
-		if(state) queryString.selector.State = state==="true";
+		if(state) queryString.selector.State = state;
 		return await this.GetQueryResultForQueryString(ctx, JSON.stringify(queryString)); //shim.success(queryResults);
+	}
+
+	async CountPending(ctx: Context) {
+		let queryString: any = {}
+		queryString.selector = {};
+		queryString.selector.State = "PENDING";
+		const result: any = await this.GetQueryResultForQueryString(ctx, JSON.stringify(queryString)); //shim.success(queryResults);
+		return result.length;
 	}
 
 	async GetQueryResultForQueryString(ctx: Context, queryString: string) {
@@ -220,47 +242,59 @@ export class Draft extends Contract {
         return allResults;
 	}
 
-	checkRequest(ctx: Context, jsonObj: string): boolean {
+	async validateRequest(ctx: Context, jsonObj: string): Promise<string | null> {
 		const obj: Expense = JSON.parse(jsonObj);
-		if (!this.validateFields(obj)) {
-			return false;
-		}	
-		if(!this.validateBalance()){
-			return false
+		
+		const failedMsg: string[] = [];
+
+		const b: Boolean = this.validateFields(obj, failedMsg) && this.validateBalance(obj,failedMsg) && this.validateType(obj,failedMsg)
+		&& this.validateDate(obj,failedMsg);
+
+		const SC: any = {
+			inspector: "Smart Contract",
+			name: "Draft",
 		}
 
-		if(!this.validateType(obj)){
-			return false
+		if(b){
+			return await this.ResolveAsset(ctx, obj.ID, "Asset pass all the requirements.", "APPROVED", JSON.stringify(SC));
+		}else{
+			return await this.ResolveAsset(ctx, obj.ID, failedMsg.join("\n "), "REJECTED", JSON.stringify(SC));
 		}
-		return true;
 	}
 
-	validateFields(obj: Expense): boolean {
+	validateFields(obj: Expense, failedMsg: string[]): boolean {
 		if (!obj.Amount || !obj.Concept || !obj.Type || !obj.Project || !obj.Owner || !obj.Date) {
+			failedMsg.push("Missing fields");
 			return false;
 		}
 		return true;
 	}
 
-	validateBalance(): boolean {
+	validateBalance(obj: Expense, failedMsg: string[]): boolean {
+		if(obj.Amount > this.balance){
+			failedMsg.push("Insufficient balance");
+			return false;
+		}
+
 		return true;
 	}
 
-	validateType(expense: Expense): boolean {
+	validateType(expense: Expense, failedMsg: string[]): boolean {
 		if(expense.Type == "Material"){
 			if(expense.Amount > 2000){
-				return false;
+				failedMsg.push("Material expenses can't be greater than 2000");
 			}
 		}else if( expense.Type == "Equipment"){
 			if(expense.Amount > 5000){
-				return false;
+				failedMsg.push("Equipment expenses can't be greater than 5000");
 			}
 		}
 		return true;
 	}
 
-	validateDate(expense: Expense): boolean {
+	validateDate(expense: Expense,failedMsg: string[]): boolean {
 		if(expense.Date > new Date()){
+			failedMsg.push("Date can't be greater than today");
 			return false;
 		}
 		return true;
@@ -276,12 +310,17 @@ export class Draft extends Contract {
 				ctx,
 				asset.ID,
 				asset.Amount.toString(),
+				asset.Currency,
 				asset.Type,
 				asset.Concept,
 				asset.Project,
 				asset.Owner,
 				asset.Date.toISOString(),
+				asset.State,
+				asset.Inspector,
+				asset.Resolution
 			);
+			
 			expenses.push(JSON.parse(expense));
 		}
 		return expenses;

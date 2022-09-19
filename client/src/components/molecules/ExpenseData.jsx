@@ -15,7 +15,7 @@ const ExpenseData = ({ expense }) => {
             <div className="column">
                 <RowElement label="Concept" value={expense.Concept} />
                 <RowElement label="Project" value={expense.Project} />
-                <RowElement label="Date" value={expense.Date} />
+                <RowElement label="Owner" value={`${expense.Owner.firstName} ${expense.Owner.lastName} <${expense.Owner.email}>`} />
                 <RowElement label="State" value={expense.State} />
             </div>
         </div>

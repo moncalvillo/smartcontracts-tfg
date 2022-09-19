@@ -165,26 +165,30 @@ export const registerAndEnrollUser = async (caClient: FabricCAServices, wallet: 
 
 
 export const connectToContract = async (owner: string, channel: string, chaincode: string) => {
-	
-	const ccp: any = buildCCPOrg1();
-    const ccp2: any = buildCCPOrg2();
-	const walletPath: string = path.join(fabricSamplePath, networkPath, 'wallets');
-	const wallet: Wallet = await buildWallet(walletPath);
+	try {
+		const ccp: any = buildCCPOrg1();
+		const ccp2: any = buildCCPOrg2();
+		const walletPath: string = path.join(fabricSamplePath, networkPath, 'wallets');
+		const wallet: Wallet = await buildWallet(walletPath);
 
-	const userIdentity: Identity | undefined = await wallet.get(owner);
-	if (!userIdentity) {
-		throw new Error(`An identity for the user ${owner} does not exist in the wallet`);
+		const userIdentity: Identity | undefined = await wallet.get(owner);
+		if (!userIdentity) {
+			throw new Error(`An identity for the user ${owner} does not exist in the wallet`);
+		}
+		
+		const gateway: any = new Gateway();
+		await gateway.connect(ccp, { wallet,
+			identity: userIdentity,
+			discovery: { enabled: true, asLocalhost: true } 
+		});
+		const network: Network = await gateway.getNetwork(channel);
+
+		const contract: Contract = network.getContract(chaincode);
+
+		return {contract, userIdentity, network, gateway, wallet, ccp};
+	} catch(err:any){
+		console.log(err);
+		throw new Error(err.message);
 	}
-	
-	const gateway: any = new Gateway();
-	await gateway.connect(ccp, { wallet,
-		identity: userIdentity,
-		discovery: { enabled: true, asLocalhost: true } 
-	});
-	const network: Network = await gateway.getNetwork(channel);
-
-	const contract: Contract = network.getContract(chaincode);
-
-	return {contract, userIdentity, network, gateway, wallet, ccp};
 }
 

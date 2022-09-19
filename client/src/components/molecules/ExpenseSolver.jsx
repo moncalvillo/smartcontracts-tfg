@@ -7,13 +7,14 @@ const ExpenseSolver = ({expense, setReload}) => {
 
 
     const { user} = useUser(); 
-
+    console.log(expense);
+    const value = expense.Inspector.name ? expense.Inspector.name : `${expense.Inspector.firstName} ${expense.Inspector.lastName} <${expense.Inspector.email}>`
     if(expense.Resolution && expense.Inspector){
         return (
             <>
                 <h2>Resolution</h2>
                 <div className="expense-box">
-                    <RowElement label="Inspector" value={expense.Inspector} />
+                    <RowElement label="Inspector" value={value} />
                     <RowElement label="Reason" value={expense.Resolution} />
                 </div>
             </>

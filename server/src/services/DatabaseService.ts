@@ -155,12 +155,16 @@ export class DatabaseService extends IDatabaseService{
         return types;
     }
 
-    async getUsers(currentUser: User): Promise<any> {
+    async getUsers(): Promise<any> {
         const users: User[] = await User.findAll();
-        return users.filter((user: User) => user.id !== currentUser.id).map((user: User) => {
-            return { id: user.id, name: `${user.firstName} ${user.lastName}` };
+        const list =  users.filter((user: User) => user.roleType === 'user').map((user) =>{
+            const json = user.toJSON();
+            delete json.password;
+            delete json.id;
+            return json;
         });
-    }
+        return list;
+    }   
 
     async deleteProject(id: Identifier): Promise<void> {
         await Project.destroy({ where: { id } });

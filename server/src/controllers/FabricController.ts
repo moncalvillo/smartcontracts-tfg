@@ -169,7 +169,7 @@ class FabricController {
 
         try{
             const user = req.body.user;
-            const result: any = await this.blockchainService.getExpenses(user.wallet, req.query);
+            const result: any = await this.blockchainService.getExpenses(user, req.query);
     
             if(result){
                 res.status(200).json({

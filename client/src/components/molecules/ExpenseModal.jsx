@@ -38,7 +38,7 @@ const RequestModal =  ({request}) => {
                 <p><b>ID:  </b> {request.ID} </p>
                 <p> <b>Concept:  </b>{request.Concept}  </p> 
                 <p> <b>Date: </b> {request.Date} </p>
-                <p> <b>Owner: </b> {request.Owner} </p>
+                <p> <b>Owner: </b> {request.Owner.name ? request.Owner.name : `${request.Owner.firstName} ${request.Owner.lastName} <${request.Owner.email}>`} </p>
             </div> 
             {active && <> <ResolveButton id={request.ID}/> <IoIosArrowUp /></>}
         </div>

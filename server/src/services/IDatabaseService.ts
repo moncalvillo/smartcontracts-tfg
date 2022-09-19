@@ -12,7 +12,7 @@ export default abstract class IDatabaseService {
 
     abstract getProjects(): Promise<Project[]>;
     abstract getTypes(): Promise<Type[]>;
-    abstract getUsers(currentUser: User): Promise<any>;
+    abstract getUsers(): Promise<any>;
     abstract createProject(body: any): Promise<Project>;
     abstract createType(body: any): Promise<Type>;
     abstract deleteProject(id: Identifier): Promise<void>;
