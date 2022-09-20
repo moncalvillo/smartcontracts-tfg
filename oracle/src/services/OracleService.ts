@@ -15,15 +15,18 @@ export class OracleService extends IOracleService{
         return {message: 'Oracle test'};
     }
 
-    async resolve(id: string, inspector: string, resolution: string, state: string): Promise<any> {
+    async resolve(body: any): Promise<any> {
         try {
-            
-            const {contract, userIdentity} = await connectToContract(inspector,'mychannel','draft');
+            const { id, resolution, state, user } = body;
+            const {  email, wallet, firstName, lastName, roleType } = user;
+            const userSTR: string = JSON.stringify({email, firstName, lastName, wallet, roleType})
+
+            const {contract } = await connectToContract(user.wallet,'mychannel','draft');
             const result: Buffer = await contract.submitTransaction('ResolveAsset', 
                 id,
                 resolution,
                 state,
-                inspector) as any | null;
+                userSTR) as any | null;
 
             if(result){
                 console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
@@ -74,6 +77,8 @@ export class OracleService extends IOracleService{
             throw new Error(error.message)
         }    
     }
+
+    
 
 }
 

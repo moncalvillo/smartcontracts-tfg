@@ -21,7 +21,7 @@ const ExpenseSolver = ({expense, setReload}) => {
                     </> 
                     : <h2>Resolve</h2>}
                 <div className="expense-box">
-                    <ResolutionForm id={expense.ID} inspector={user.wallet} setReload={setReload} stateValue={expense.State} resolutionValue={expense.Resolution} />
+                    <ResolutionForm setReload={setReload} expense={expense} />
                 </div>
                 { update && <button onClick={() => setUpdate(false)}> Cancel update </button> }
             </>

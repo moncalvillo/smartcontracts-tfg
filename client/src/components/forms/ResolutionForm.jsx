@@ -5,10 +5,10 @@ import { TailSpin } from "react-loader-spinner";
 import RadioInput from "../atoms/inputs/RadioInput";
 import TextAreaInput from "../atoms/inputs/TextAreaInput"
 
-const ResolutionForm = ({id, inspector, setReload, stateValue = "", resolutionValue = ""}) => {
+const ResolutionForm = ({expense, setReload}) => {
 
-    const [state, setState] = useState(stateValue || "");
-    const [resolution, setResolution] = useState(resolutionValue || "");
+    const [state, setState] = useState(expense.State || "");
+    const [resolution, setResolution] = useState(expense.Resolution || "");
     const [loader, setLoader] = useState(false);
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(null);
@@ -16,13 +16,7 @@ const ResolutionForm = ({id, inspector, setReload, stateValue = "", resolutionVa
 
     const handleSubmit = () => {
         setLoader(true)
-        let endpoint;
-        if(stateValue && resolutionValue){
-            endpoint = "/oracle/update";
-        }else{
-            endpoint = "/oracle/resolve";
-        }
-        axios.post(endpoint, {id, state, resolution, inspector}).then((res) => {
+        axios.post("http://localhost:8081/oracle/resolve", {id: expense.ID, state, resolution}).then((res) => {
             setSuccess(true);
         }).catch((err) => {
             console.log(err.response);
@@ -34,10 +28,13 @@ const ResolutionForm = ({id, inspector, setReload, stateValue = "", resolutionVa
     }
 
     useEffect(()=>{
-        if(state === stateValue && resolution === resolutionValue){
+
+        if(state === expense.State && resolution === expense.Resolution){
             setDisabled(true);
+        }else{
+            setDisabled(false);
         }
-    }, [state, resolution, stateValue, resolutionValue]);
+    }, [state, resolution, expense.State,  expense.Resolution]);
 
 
     if(loader) return <TailSpin color="grey" height={40}/>;
@@ -54,9 +51,9 @@ const ResolutionForm = ({id, inspector, setReload, stateValue = "", resolutionVa
             </label>
             <label htmlFor="reason">
                 Reason
-                <TextAreaInput state={resolutionValue} placeholder="Describe the reason" setState={setResolution} />
+                <TextAreaInput state={expense.Resolution} placeholder="Describe the reason" setState={setResolution} />
             </label>
-            <button disabled={disabled}> Submit </button>
+            { !disabled && <button> Submit </button>}
         </form>
     );
 

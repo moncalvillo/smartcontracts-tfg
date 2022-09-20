@@ -14,9 +14,8 @@ class OracleController {
     }
 
     resolve = async (req: Request, res: Response) => {
-        const { id, resolution, inspector, state } = req.body;
         try{
-            const result: any = await this.oracleService.resolve(id, inspector, resolution, state);
+            const result: any = await this.oracleService.resolve(req.body);
             if(result){
                 res.status(200).json({
                     message: 'Query successful',
@@ -80,6 +79,7 @@ class OracleController {
             });
         }
     }
+
 
 }
 

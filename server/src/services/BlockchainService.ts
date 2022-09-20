@@ -75,7 +75,6 @@ export class BlockchainService extends IBlockchainService{
             const expenseId: string = uuid();
             const {  email, wallet, firstName, lastName, roleType } = user;
             const userSTR: string = JSON.stringify({email, firstName, lastName, wallet, roleType})
-            console.log(userSTR);
             const result: Buffer = await contract.submitTransaction('CreateAsset', expenseId, amount.toString(), currency, expenseType, concept, project, userSTR, date.toISOString()) as any | null;
             if(result){
                 // contract.submitTransaction('CheckRequest', id);
