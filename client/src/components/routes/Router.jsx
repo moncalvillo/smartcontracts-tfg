@@ -11,7 +11,7 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-import ResolveRequest from "./ResolveRequest";
+import ResolveRequest from "./Expense";
 import Oracle from "./Oracle";
 import WrongPage from "./WrongPage";
 

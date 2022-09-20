@@ -9,6 +9,7 @@
     margin-top: 50px;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
+
 .loading{
     display: flex;
     align-items: center;
@@ -58,7 +59,7 @@
     width: 100%;
 }
 
-.form button{
+button{
     width: 100%;
     height: 40px;
     border: 1px solid #ccc;

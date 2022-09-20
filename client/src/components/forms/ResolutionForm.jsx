@@ -1,22 +1,28 @@
 import { withSuccess } from "antd/lib/modal/confirm";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TailSpin } from "react-loader-spinner";
 import RadioInput from "../atoms/inputs/RadioInput";
 import TextAreaInput from "../atoms/inputs/TextAreaInput"
 
-const ResolutionForm = ({id, inspector, setReload}) => {
+const ResolutionForm = ({id, inspector, setReload, stateValue = "", resolutionValue = ""}) => {
 
-    const [state, setState] = useState("");
-    const [resolution, setResolution] = useState("");
+    const [state, setState] = useState(stateValue || "");
+    const [resolution, setResolution] = useState(resolutionValue || "");
     const [loader, setLoader] = useState(false);
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(null);
-
+    const [disabled, setDisabled] = useState(false);
 
     const handleSubmit = () => {
         setLoader(true)
-        axios.post("http://localhost:8081/oracle/resolve", {id, state, resolution, inspector}).then((res) => {
+        let endpoint;
+        if(stateValue && resolutionValue){
+            endpoint = "/oracle/update";
+        }else{
+            endpoint = "/oracle/resolve";
+        }
+        axios.post(endpoint, {id, state, resolution, inspector}).then((res) => {
             setSuccess(true);
         }).catch((err) => {
             console.log(err.response);
@@ -26,6 +32,12 @@ const ResolutionForm = ({id, inspector, setReload}) => {
             setReload(true);
         });
     }
+
+    useEffect(()=>{
+        if(state === stateValue && resolution === resolutionValue){
+            setDisabled(true);
+        }
+    }, [state, resolution, stateValue, resolutionValue]);
 
 
     if(loader) return <TailSpin color="grey" height={40}/>;
@@ -42,9 +54,9 @@ const ResolutionForm = ({id, inspector, setReload}) => {
             </label>
             <label htmlFor="reason">
                 Reason
-                <TextAreaInput placeholder="Describe the reason" setState={setResolution} />
+                <TextAreaInput state={resolutionValue} placeholder="Describe the reason" setState={setResolution} />
             </label>
-            <button> Submit </button>
+            <button disabled={disabled}> Submit </button>
         </form>
     );
 

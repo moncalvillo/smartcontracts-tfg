@@ -1,13 +1,14 @@
 import TextArea from "antd/lib/input/TextArea";
 
 
-const TextAreaInput = ({setState, placeholder }) => {
+const TextAreaInput = ({setState, state="", placeholder }) => {
 
     return (
         <TextArea
-        onBlur={e => setState(e.target.value)}
+        defaultValue={state}
+        onChange={e => setState(e.target.value)}
         placeholder={placeholder}
-        autoSize={{ minRows: 8, maxRows: 8 }}
+        autoSize={{ minRows: 7, maxRows: 7}}
       />
     );
 

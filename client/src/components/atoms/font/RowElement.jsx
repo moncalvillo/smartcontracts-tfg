@@ -1,10 +1,10 @@
 
 
-const RowElement = ({ label, value}) => {
+const RowElement = ({ label, value, style}) => {
 
     return (
         <div className="row-element">
-            <p>{label}: </p><b>{value}</b>
+            <p>{label}: </p><b style={style}>{value}</b>
         </div>
     );
 
