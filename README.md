@@ -1,11 +1,15 @@
 # Git repo
 
-Decentralized app to interact with a blockchain network using Truffle, React and Hyperledger Fabric.
+Decentralized app to interact with a blockchain network.
+Hyperledger Fabric Test Network should be already deployed in the local machine and should modify the variable 'fabricSamplesPath' on both servers (Server and Oracle) declared on the file 'src/providers/Configuration.ts'. 
+
+If required, aslo modify the 'network' variable declared in the same file corresponding to the folder name where the network is initialized. By default, it is 'test-network'.
+
 
 
 ## Installation
 
-Install all the dependencies:
+Install all npm the dependencies:
 ```
 $ cd server
 $ npm install
@@ -15,6 +19,26 @@ $ npm install
 $ cd client
 $ npm install
 ```
+
+```
+$ cd oracle
+$ npm install
+```
+
+## Deploy databases
+
+```
+$ cd server
+$ docker-compose up [ -d ] 
+```
+
+```
+$ cd oracle
+$ docker-compose up [ -d ]
+```
+-d backgorund
+
+## Start servers
 
 Start server:
 ```
@@ -32,12 +56,11 @@ $ npm start
   Starting the development server...
 ```
 
-## FAQ
+Another bash, start the oracle dev server:
+```
+$ cd client
+$ npm run dev
+  Starting the development server...
+```
 
-- __How do I use this with Ganache (or any other network)?__
 
-  The Truffle project is set to deploy to Ganache by default. If you'd like to change this, it's as easy as modifying the Truffle config file! [Check out our documentation on adding network configurations](https://trufflesuite.com/docs/truffle/reference/configuration/#networks). From there, you can run `truffle migrate` pointed to another network, restart the React dev server, and see the change take place.
-
-- __Where can I find more resources?__
-
-  This Box is a sweet combo of [Truffle](https://trufflesuite.com) and [Create React App](https://create-react-app.dev). Either one would be a great place to start!
