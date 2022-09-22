@@ -1,6 +1,7 @@
 # Git repo
 
 Decentralized app to interact with a blockchain network.
+
 Hyperledger Fabric Test Network should be already deployed in the local machine and should modify the variable 'fabricSamplesPath' on both servers (Server and Oracle) declared on the file 'src/providers/Configuration.ts'. 
 
 If required, aslo modify the 'network' variable declared in the same file corresponding to the folder name where the network is initialized. By default, it is 'test-network'.
