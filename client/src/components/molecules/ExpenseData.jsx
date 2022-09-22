@@ -2,7 +2,6 @@ import RowElement from "../atoms/font/RowElement";
 
 
 const ExpenseData = ({ expense }) => {
-
     return (
         <div className="expense-box">
             <div className="column">

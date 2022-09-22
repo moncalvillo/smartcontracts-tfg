@@ -14,19 +14,25 @@ const RequestModal =  ({request}) => {
 
     const iconState = (state) => {
         if(state ==="PENDING"){
+            // console.log(document.getElementById(request.ID).style)
+            // document.getElementById(request.ID).style.className = ("pending");
             return <FcAlarmClock size={"30px"}/>
         }
         if(state ==="APPROVED"){
+            // document.getElementById(request.ID).style.className = ("approved");
+            // console.log(document.getElementById(request.ID).style.)
             return <FcApproval size={"30px"}/>
         }
         if(state ==="REJECTED"){
+            // document.getElementById(request.ID).style.className. = ("rejected");
+            // console.log(document.getElementById(request.ID).style)
             return <FcCancel size={"30px"}/>
         }
 
     }
 
     return (
-        <div className="requestItem" onClick={handleOnClick}> 
+        <div className="requestItem" id={request.ID} onClick={handleOnClick}> 
             <div className="requestHeader">
                 <p>Project:  <b> {request.Project} </b> </p>
                 <p> Type:  <b> {request.Type} </b> </p>

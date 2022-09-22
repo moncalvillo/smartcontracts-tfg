@@ -50,7 +50,10 @@ export class OracleService extends IOracleService{
             if(result){
                 console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
                 const jsonObj = JSON.parse(result.toString());
-                return jsonObj.map((x: { Record: any; }) => x.Record);
+                return jsonObj.map((x: { Record: any; }) => {
+                    x.Record.Owner = JSON.parse(x.Record.Owner);
+                    return x.Record;
+                });
             }else {
                 return [];
             }

@@ -37,7 +37,7 @@ const ExpenseSolver = ({expense, setReload}) => {
                     <RowElement label="Inspector" value={value} />
                     <RowElement style={{ fontSize: "16px"}} label="Reason" value={expense.Resolution} />
                 </div>
-                { user.roleType !== user &&  <button onClick={() => setUpdate(true)}>Update</button>}
+                { user.roleType !== "user" &&  <button onClick={() => setUpdate(true)}>Update</button>}
             </>
         );
     }

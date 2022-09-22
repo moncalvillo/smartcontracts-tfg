@@ -32,8 +32,8 @@ const RegisterForm = ({onRegisterRedirect}) => {
         axios.post("/server/new", {email, firstName, password, lastName,roleType}).then((res) => {
             if(res.status === 201) {
                 console.log(res.data)
-                setAccessToken(res.data.user);
-                document.cookie = `accessToken=${res.data.accessToken}`;
+                setAccessToken(res.data.user.accessToken);
+                document.cookie = `accessToken=${res.data.user.accessToken}`;
             }
         }).catch((err) => {
             setError(err.response.data.message);
@@ -93,7 +93,7 @@ const RegisterForm = ({onRegisterRedirect}) => {
                     </label>
                     <label htmlFor="role">
                     Role
-                        <RadioInput opt1="user" opt2="manager" setState={setRoleType} state={roleType}/>
+                        <RadioInput label1="Responsible" label2="Inspector" opt1="user" opt2="manager" setState={setRoleType} state={roleType}/>
                     </label>
                     <label htmlFor="password">
                         Password

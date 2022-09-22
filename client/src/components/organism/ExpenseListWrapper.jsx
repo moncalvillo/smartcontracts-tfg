@@ -23,7 +23,7 @@ const RequestsListWrapper = (props) => {
                 </div>
             ) : (
                 props.requests.map((request) => (
-                    <ExpenseModal request={request}/> 
+                    <ExpenseModal key={request.ID} request={request}/> 
                 ))
             )
     )

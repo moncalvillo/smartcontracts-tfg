@@ -30,7 +30,6 @@ const RequestsList = () => {
 
     async function getRequests(){
         setLoading(true);
-        console.log(params);
         axios.get("/fabric/expenses", {
             params: params,
         }).then((res)=>{
