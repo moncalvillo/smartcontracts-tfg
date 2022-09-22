@@ -61,7 +61,9 @@ Another bash, start the oracle dev server:
 ```
 $ cd client
 $ npm run dev
-  Starting the development server...
+  Oracle starting
+  Enabling CORS...
+  Server listening to port 8081
 ```
 
 
