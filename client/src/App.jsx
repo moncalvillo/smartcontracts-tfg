@@ -4,6 +4,7 @@ import "./css/messages.css";
 import "./css/links.css";
 import "./css/requests.css";
 import axios from "axios";
+import './utils/i18n/i18next'
 
 import { UserProvider } from "./components/hooks/useUser";
 import Router from "./components/routes/Router";
