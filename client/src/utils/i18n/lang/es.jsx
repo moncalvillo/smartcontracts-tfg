@@ -68,7 +68,7 @@ const es = {
         expenseType: 'Tipo de gasto',
         project: 'Proyecto',
         type: 'Tipo',
-        cashBalance: 'Saldo en efectivo',
+        balance: 'Balance',
         concept: 'Concepto',
         amount: 'Cantidad',
         state: 'Estado',
