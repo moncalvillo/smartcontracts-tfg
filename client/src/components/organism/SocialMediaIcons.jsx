@@ -9,9 +9,7 @@ const SocialMediaIcons = () => {
     
     return (
         <div className="social-media-icons">
-            <GoogleSignIn />
-            {/* <AiFillGoogleCircle size={"48px"} onClick={googleSigIn} />  */}
-            
+            <GoogleSignIn />            
             <FacebookSignIn />
         </div>
     );

@@ -1,4 +1,5 @@
 
+import { useTranslation } from "react-i18next";
 import Selector from "../../atoms/inputs/Select";
 
 const StateFilter = ({setRequestState}) => {
@@ -18,8 +19,10 @@ const StateFilter = ({setRequestState}) => {
         },
     ];
 
+    const {t} = useTranslation();
+
     return (
-        <Selector label="State" setState={setRequestState} options={states}/>
+        <Selector label={t("Expense:state")} setState={setRequestState} options={states}/>
     );
 
 }

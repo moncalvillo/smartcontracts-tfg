@@ -1,6 +1,7 @@
 import { withSuccess } from "antd/lib/modal/confirm";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { TailSpin } from "react-loader-spinner";
 import RadioInput from "../atoms/inputs/RadioInput";
 import TextAreaInput from "../atoms/inputs/TextAreaInput"
@@ -36,9 +37,10 @@ const ResolutionForm = ({expense, setReload}) => {
         }
     }, [state, resolution, expense.State,  expense.Resolution]);
 
+    const {t} = useTranslation();
 
     if(loader) return <TailSpin color="grey" height={40}/>;
-    if(success) return <div>Success</div>;
+    if(success) return <div>{t("Common:success")}</div>;
     if(error) return <div className="error">{error}</div>;
 
     return (
@@ -47,13 +49,13 @@ const ResolutionForm = ({expense, setReload}) => {
             handleSubmit();
         }}>
             <label htmlFor="state">
-                <RadioInput label1="Approve" label2="Reject" opt1="APPROVED" opt2="REJECTED" setState={setState} state={state} />
+                <RadioInput label1={t("Common:approve")} label2={t("Common:reject")} opt1="APPROVED" opt2="REJECTED" setState={setState} state={state} />
             </label>
             <label htmlFor="reason">
-                Reason
-                <TextAreaInput state={expense.Resolution} placeholder="Describe the reason" setState={setResolution} />
+            {t("Common:reason")}
+                <TextAreaInput state={expense.Resolution} placeholder={t("Common:describeReason")} setState={setResolution} />
             </label>
-            { !disabled && <button> Submit </button>}
+            { !disabled && <button> {t("Common:submit")} </button>}
         </form>
     );
 

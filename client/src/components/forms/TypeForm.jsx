@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { TailSpin } from "react-loader-spinner";
 
 
@@ -30,6 +31,7 @@ const TypeForm = ({reload, setReload}) => {
         });
     }
 
+    const {t} = useTranslation();
     return (
         <div className="formDiv">
             
@@ -52,20 +54,20 @@ const TypeForm = ({reload, setReload}) => {
                 
 
                 <div className="box">
-                    <h2> New type of expense </h2>
-                    <label htmlFor="concept">
-                    Name
+                    <h2> {t("Type:new")} </h2>
+                    <label htmlFor="name">
+                    {t("Common:name")}
                         <input
                             className="input"
-                            id="concept"
-                            placeholder="Concept"
+                            id="name"
+                            placeholder={t("Common:name")}
                             value={name}
                             onChange={(e) => {setName(e.target.value);}}/>
                     </label>
                     
                     
                 </div>
-                <button>Submit</button>
+                <button>{t("Common:submit")}</button>
             </form>
         </div>
     );

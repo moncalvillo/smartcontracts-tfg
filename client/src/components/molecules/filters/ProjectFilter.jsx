@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import Selector from "../../atoms/inputs/Select";
 
 const ProjectFilter = ({setProject, setError}) => {
@@ -18,8 +19,10 @@ const ProjectFilter = ({setProject, setError}) => {
         })
     }
 
+    const {t} = useTranslation();
+
     return (
-        <Selector label="Project" setState={setProject} options={projects}/>
+        <Selector label={t("Expense:project")} setState={setProject} options={projects}/>
     );
 }
 

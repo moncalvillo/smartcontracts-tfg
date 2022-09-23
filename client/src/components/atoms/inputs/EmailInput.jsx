@@ -1,4 +1,5 @@
 import { Input } from "antd";
+import { useTranslation } from "react-i18next";
 
 
 
@@ -15,8 +16,11 @@ const EmailInput = (props) => {
         color:"#333",
         outline: "none",
     }
+
+    const {t} = useTranslation();
+
     return (
-        <Input className="input" placeholder={placeholder || "Email"} style={style} onBlur={(e)=>{
+        <Input className="input" placeholder={placeholder || t("Auth:email")} style={style} onBlur={(e)=>{
             setState(e.target.value);
         }}/>
     );

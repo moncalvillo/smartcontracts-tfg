@@ -4,6 +4,7 @@ import axios from "axios";
 import ExpenseListWrapper from "./organism/ExpenseListWrapper";
 import FiltersWrapper from "./organism/FiltersWrapper";
 import Refresh from "./atoms/icons/Refresh";
+import { useTranslation } from "react-i18next";
 
 const RequestsList = () => {
 
@@ -50,12 +51,14 @@ const RequestsList = () => {
         setUser
     }
 
+    const {t} = useTranslation();
+
     return (
         <div className="requestsDiv">
             <FiltersWrapper {...filterProps} />
             <div className="requestsList">
                 <div className="list-header"> 
-                    <h1> Requests </h1>
+                    <h1> {t("Common:expenses")} </h1>
                     <Refresh reload={reload} setReload={setReload} />
                 </div>
                 

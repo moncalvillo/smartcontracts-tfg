@@ -5,9 +5,10 @@ import LoadingPage from "./LoadingPage";
 import "../../css/expense.css";
 import ExpenseData from "../molecules/ExpenseData";
 import ExpenseSolver from "../molecules/ExpenseSolver";
+import { useTranslation } from "react-i18next";
 
 const Request = () => {
-
+    const {t} = useTranslation();
     const {id} = useParams();
     const [loader, setLoader] = useState(true);
     const [expense, setExpense] = useState(null);
@@ -35,7 +36,7 @@ const Request = () => {
         return (
             <div className="expense-div">
                 <div className="expenseData">
-                    <h2>Request </h2>
+                    <h2>{t("Common:expense")} </h2>
                     <h1> { expense.ID } </h1>
                     <ExpenseData expense={expense}/>
                 </div>
