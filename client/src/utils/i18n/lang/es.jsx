@@ -1,5 +1,6 @@
 const es = {
     Common: {
+        error: "Ha ocurrido un error",
         filters: 'Filtros',
         name: 'Nombre',
         request: 'Solicitud',

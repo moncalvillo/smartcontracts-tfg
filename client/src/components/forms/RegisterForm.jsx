@@ -19,7 +19,8 @@ const RegisterForm = ({onRegisterRedirect}) => {
 
     const [error, setError] = useState(null);
     const [disabled, setDisabled] = useState(false);
-
+    
+    const {t} = useTranslation();
     const {setAccessToken} = useUser();
 
 
@@ -34,10 +35,9 @@ const RegisterForm = ({onRegisterRedirect}) => {
             if(res.status === 201) {
                 console.log(res.data)
                 setAccessToken(res.data.user.accessToken);
-                document.cookie = `accessToken=${res.data.user.accessToken}`;
             }
         }).catch((err) => {
-            setError(err.response.data.message);
+            setError(err.response.data.message || t("Common:error"));
         }).finally(() => {
             setLoader(false);
         });
@@ -49,7 +49,7 @@ const RegisterForm = ({onRegisterRedirect}) => {
 
     useEffect(()=>{
         if(password !== confirmPassword){
-            setError("Passwords do not match");
+            setError(t("Auth:passwordsNotMatch"));
             setDisabled(true);   
         }else{
             setDisabled(false);
@@ -57,7 +57,6 @@ const RegisterForm = ({onRegisterRedirect}) => {
         }
     }, [confirmPassword,password])
 
-    const {t} = useTranslation();
     
     const radioProps = {
         label1: t("Common:responsible"),
