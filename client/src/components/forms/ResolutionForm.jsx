@@ -37,6 +37,16 @@ const ResolutionForm = ({expense, setReload}) => {
     }, [state, resolution, expense.State,  expense.Resolution]);
 
 
+    const radioProps = {
+        label1: "Responsible",
+        label2: "Inspector",
+        opt1: "user", 
+        opt2: "manager", 
+        setState: setState, 
+        state: state,
+        resolver: true
+    }
+
     if(loader) return <TailSpin color="grey" height={40}/>;
     if(success) return <div>Success</div>;
     if(error) return <div className="error">{error}</div>;
@@ -48,6 +58,7 @@ const ResolutionForm = ({expense, setReload}) => {
         }}>
             <label htmlFor="state">
                 <RadioInput label1="Approve" label2="Reject" opt1="APPROVED" opt2="REJECTED" setState={setState} state={state} />
+                <RadioInput {...radioProps} />
             </label>
             <label htmlFor="reason">
                 Reason

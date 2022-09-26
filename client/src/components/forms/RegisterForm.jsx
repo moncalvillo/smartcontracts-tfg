@@ -57,6 +57,14 @@ const RegisterForm = ({onRegisterRedirect}) => {
     }, [confirmPassword,password])
 
     
+    const radioProps = {
+        label1: "Responsible",
+        label2: "Inspector",
+        opt1: "user", 
+        opt2: "manager", 
+        setState: setRoleType, 
+        state: roleType,
+    }
 
     return (
         <div className="formDiv">
@@ -93,7 +101,7 @@ const RegisterForm = ({onRegisterRedirect}) => {
                     </label>
                     <label htmlFor="role">
                     Role
-                        <RadioInput label1="Responsible" label2="Inspector" opt1="user" opt2="manager" setState={setRoleType} state={roleType}/>
+                        <RadioInput {...radioProps}/>
                     </label>
                     <label htmlFor="password">
                         Password
