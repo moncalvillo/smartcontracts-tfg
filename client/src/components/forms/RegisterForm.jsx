@@ -59,6 +59,14 @@ const RegisterForm = ({onRegisterRedirect}) => {
 
     const {t} = useTranslation();
     
+    const radioProps = {
+        label1: t("Common:responsible"),
+        label2: t("Common:inspector"),
+        opt1: "user", 
+        opt2: "manager", 
+        setState: setRoleType, 
+        state: roleType,
+    }
 
     return (
         <div className="formDiv">
@@ -95,7 +103,7 @@ const RegisterForm = ({onRegisterRedirect}) => {
                     </label>
                     <label htmlFor="role">
                     {t("Auth:role")}
-                        <RadioInput label1={t("Common:responsible")} label2={t("Common:inspector")} opt1="user" opt2="manager" setState={setRoleType} state={roleType}/>
+                        <RadioInput {...radioProps}/>
                     </label>
                     <label htmlFor="password">
                     {t("Auth:password")}

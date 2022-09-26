@@ -56,12 +56,12 @@ const ProjectForm = ({reload, setReload}) => {
 
                 <div className="box">
                     <h2> {t("Project:new")} </h2>
-                    <label htmlFor="concept">
+                    <label htmlFor="name">
                     {t("Common:name")}
                         <input
                             className="input"
-                            id="concept"
-                            placeholder="Concept"
+                            id="name"
+                            placeholder={t("Common:name")}
                             value={name}
                             onChange={(e) => {setName(e.target.value);}}/>
                     </label>
