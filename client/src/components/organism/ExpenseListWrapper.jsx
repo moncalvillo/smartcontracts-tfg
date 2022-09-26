@@ -1,8 +1,10 @@
 
+import { useTranslation } from "react-i18next";
 import { TailSpin } from "react-loader-spinner";
 import ExpenseModal from "../molecules/ExpenseModal";
 
 const RequestsListWrapper = (props) => {
+    const {t} = useTranslation();
 
     if (props.error){
         return (
@@ -16,10 +18,11 @@ const RequestsListWrapper = (props) => {
         );
     }
 
+
     return (
         !props.requests.length  ? (
                 <div className="requestItem"> 
-                    <h2> No requests found </h2>
+                    <h2> {t("Common:noRequests")} </h2>
                 </div>
             ) : (
                 props.requests.map((request) => (

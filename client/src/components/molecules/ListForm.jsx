@@ -1,8 +1,9 @@
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 import {TiDeleteOutline} from 'react-icons/ti';
 
 const ListForm = ({ data, type, reload, setReload}) => {
-
+    const {t} = useTranslation();
     const handleDelete = (id) => {
         axios.delete(`/server/${type}/${id}`).then((res) => {
         }).catch((err) => {
@@ -20,7 +21,7 @@ const ListForm = ({ data, type, reload, setReload}) => {
                         <TiDeleteOutline className='itemIcon' onClick={() => handleDelete(item.id)} size={20} />
                     </div>
                 )
-            }): "No results"}
+            }): t("Common:noResults")}
         </div>
     );
 

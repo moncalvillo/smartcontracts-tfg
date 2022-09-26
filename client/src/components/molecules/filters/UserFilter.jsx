@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const UserFilter = ({setUser, setError}) => {
 
@@ -16,15 +17,15 @@ const UserFilter = ({setUser, setError}) => {
             setError(err)
         })
     }
-
+    const {t} = useTranslation();
     return (
         <label htmlFor="selector">
-            <h3>User</h3>
+            <h3>{t("Common:user")}</h3>
                 <select
                     className="select"
                     id="selector"
                     onChange={(e) => setUser(e.target.value)}>
-                    <option key="all" value=""> All </option>
+                    <option key="all" value=""> {t("Expense:expenses")} </option>
                     {users.map((option) => {
                         
                         const opt = JSON.stringify(option);

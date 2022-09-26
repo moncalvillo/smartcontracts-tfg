@@ -4,6 +4,7 @@ import { TailSpin } from "react-loader-spinner";
 import { useUser } from "../hooks/useUser";
 import SocialMediaIcons from "../organism/SocialMediaIcons";
 import RadioInput from "../atoms/inputs/RadioInput";
+import { useTranslation } from "react-i18next";
 
 const RegisterForm = ({onRegisterRedirect}) => {
 
@@ -56,10 +57,11 @@ const RegisterForm = ({onRegisterRedirect}) => {
         }
     }, [confirmPassword,password])
 
+    const {t} = useTranslation();
     
     const radioProps = {
-        label1: "Responsible",
-        label2: "Inspector",
+        label1: t("Common:responsible"),
+        label2: t("Common:inspector"),
         opt1: "user", 
         opt2: "manager", 
         setState: setRoleType, 
@@ -80,45 +82,45 @@ const RegisterForm = ({onRegisterRedirect}) => {
                     error && <div className="error"> {error} </div> 
                 }
                 <div className="box">
-                    <h2>Register</h2>
+                    <h2>{t("Auth:register")}</h2>
                     <label htmlFor="email">
-                        Email
-                        <input required className="input" type="email" name="email" placeholder="email" onBlur={(e)=>{
+                    {t("Auth:email")}
+                        <input required className="input" type="email" name="email" placeholder={t("Auth:email")} onBlur={(e)=>{
                             setEmail(e.target.value);
                         }}/>
                     </label>
                     <label htmlFor="firstName">
-                        First name
-                        <input required className="input" type="text" name="firstName" placeholder="first name" onBlur={(e)=>{
+                    {t("Auth:firstName")}
+                        <input required className="input" type="text" name="firstName" placeholder={t("Auth:firstName")} onBlur={(e)=>{
                             setFirstName(e.target.value);
                         }}/>
                     </label>
                     <label htmlFor="lastName">
-                        Last name
-                        <input required className="input" type="text" name="lastName" placeholder="last name" onBlur={(e)=>{
+                    {t("Auth:lastName")}
+                        <input required className="input" type="text" name="lastName" placeholder={t("Auth:lastName")} onBlur={(e)=>{
                             setLastName(e.target.value);
                         }}/>
                     </label>
                     <label htmlFor="role">
-                    Role
+                    {t("Auth:role")}
                         <RadioInput {...radioProps}/>
                     </label>
                     <label htmlFor="password">
-                        Password
-                        <input required className="input" type="password" name="password" placeholder="password" onBlur={(e)=>{
+                    {t("Auth:password")}
+                        <input required className="input" type="password" name="password" placeholder={t("Auht:password")} onBlur={(e)=>{
                             setPassword(e.target.value);
                         }}/>
                     </label>
                     <label htmlFor="rptPassword">
-                        Repeat password
-                        <input required className="input" type="password" name="rptPassword" placeholder="repeat password" onChange={(e) => {
+                    {t("Auth:repeatPassword")}
+                        <input required className="input" type="password" name="rptPassword" placeholder={t("Auth:repeatPassword")} onChange={(e) => {
                             setConfirmPassword(e.target.value);
                         }}/>
                     </label>
-                    Already have an account? <a onClick={onRegisterRedirect}>Login</a>
+                    {t("Auth:alreadyAccount")} <a onClick={onRegisterRedirect}>{t("Auth:login")}</a>
                 </div>
                 <button disabled={disabled}>
-                    Register
+                {t("Auth:register")}
                 </button>
                 <div className="social-media">
                     <SocialMediaIcons />

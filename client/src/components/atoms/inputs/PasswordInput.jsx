@@ -1,4 +1,5 @@
 import { Input } from "antd";
+import { useTranslation } from "react-i18next";
 import { AiFillLock } from "react-icons/ai";
 
 
@@ -14,8 +15,11 @@ const PasswordInput = (props) => {
         color:"#333",
         outline: "none",
     }
+
+    const {t} = useTranslation();
+
     return (
-        <Input.Password className="input" name="password" placeholder={props.placeholder || "Password"} style={style} onBlur={(e)=>{
+        <Input.Password className="input" name="password" placeholder={props.placeholder || t("Auth:password")} style={style} onBlur={(e)=>{
             props.setState(e.target.value);
         }}/>
     );

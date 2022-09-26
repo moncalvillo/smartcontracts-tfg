@@ -5,6 +5,7 @@ import { TailSpin  } from "react-loader-spinner";
 import PasswordInput from "../atoms/inputs/PasswordInput";
 import EmailInput from "../atoms/inputs/EmailInput";
 import SocialMediaIcons from "../organism/SocialMediaIcons";
+import { useTranslation } from "react-i18next";
 
 const LoginForm = ({onLoginRedirect}) => {
 
@@ -32,6 +33,8 @@ const LoginForm = ({onLoginRedirect}) => {
         
     };
 
+    const {t} = useTranslation();
+
     useEffect(()=>{
         setMsg(null);
     }, [password, email]);
@@ -50,21 +53,21 @@ const LoginForm = ({onLoginRedirect}) => {
                     msg  && <div className="error"> {msg} </div>
                 }
                 <div className="box">
-                    <h2>Login</h2>
+                    <h2>{t("Auth:login")}</h2>
                     <label htmlFor="email">
-                    Email
+                    {t("Auth:email")}
                     <EmailInput placeholder="Email" setState={setEmail} />
                     </label>
                         
                     <label htmlFor="password">
-                    Password
+                    {t("Auth:password")}
                     <PasswordInput placeholder="Password" setState={setPassword}/>
                     </label>
 
-                    Don`t have an account? <a onClick={onLoginRedirect}>Register</a>
+                    {t("Auth:noAccount")} <a onClick={onLoginRedirect}>{t("Auth:register")}</a>
                 </div>
                 <button>
-                    Login
+                {t("Auth:login")}
                 </button>
 
             </form>

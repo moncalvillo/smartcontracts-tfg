@@ -1,11 +1,12 @@
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 import { useUser } from "../../hooks/useUser";
 
 
 
 const FacebookSignIn = () => {
     const {setAccessToken} = useUser();
-
+  const {t} = useTranslation();
     const handleOnClick = () => {
         window.FB.login(function(response){
             console.log(response);
@@ -20,7 +21,7 @@ const FacebookSignIn = () => {
     return (
         // <FaFacebook size={"45px"}  onClick={handleOnClick}/>
         <button className="loginBtn--facebook" onClick={handleOnClick}>
-          Login with Facebook
+          {t("Auth:loginFacebook")}
         </button>
     );
 }

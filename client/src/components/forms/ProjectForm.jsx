@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { TailSpin } from "react-loader-spinner";
 
 
@@ -30,6 +31,8 @@ const ProjectForm = ({reload, setReload}) => {
         });
     }
 
+    const {t}  = useTranslation();
+
     return (
         <div className="formDiv">
             
@@ -52,9 +55,9 @@ const ProjectForm = ({reload, setReload}) => {
                 
 
                 <div className="box">
-                    <h2> New project </h2>
-                    <label htmlFor="name">
-                    Name
+                    <h2> {t("Project:new")} </h2>
+                    <label htmlFor="concept">
+                    {t("Common:name")}
                         <input
                             className="input"
                             id="name"
@@ -65,7 +68,7 @@ const ProjectForm = ({reload, setReload}) => {
                     
                     
                 </div>
-                <button>Submit</button>
+                <button>{t("Common:submit")}</button>
             </form>
 
             

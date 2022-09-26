@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 import {TailSpin} from 'react-loader-spinner';
+import { useTranslation } from "react-i18next";
 
 const Form = () => {
 
@@ -84,7 +85,7 @@ const Form = () => {
         });
     }
 
-  
+    const {t} = useTranslation();
 
     return (
         <div className="formDiv">
@@ -107,24 +108,24 @@ const Form = () => {
                 }
                 
                 <div className="box">
-                    <h2> Institution</h2> 
+                    <h2> {t("Expense:expense")}</h2> 
                     <label htmlFor="expenseType">
-                    Type of expense
+                    {t("Expense:expenseType")}
                     <select
                         className="select"
                         id="expenseType"
                         value={expenseType}
                         onChange={(e) => {setExpenseType(e.target.value);}}>
                         <option />
-                        {types.map((t) => (
-                            <option key={t.id} value={t.name}>
-                                {t.name}
+                        {types.map((type) => (
+                            <option key={type.id} value={type.name}>
+                                {t(`Common:${type.name}`)}
                             </option>
                         ))}
                     </select>
                     </label>
                     <label htmlFor="project">
-                    Project
+                    {t("Expense:project")}
                     <select
                         className="select"
                         id="project"
@@ -141,9 +142,9 @@ const Form = () => {
                 </div>
 
                 <div className="box">
-                    <h2> Cash balance </h2>
+                    <h2> {t("Expense:balance")} </h2>
                     <label htmlFor="concept">
-                    Concept
+                    {t("Expense:concept")}
                         <input
                             className="input"
                             id="concept"
@@ -152,7 +153,7 @@ const Form = () => {
                             onChange={(e) => {setConcept(e.target.value);}}/>
                     </label>
                     <label htmlFor="amount">
-                    Amount
+                    {t("Expense:amount")}
                         <input
                             className="input"
                             id="amount"
@@ -162,7 +163,7 @@ const Form = () => {
                             onChange={(e) => {setAmount(e.target.value);}}/>
                     </label>
                     <label htmlFor="currency">
-                    Currency
+                    {t("Expense:currency")}
                     <select
                         className="select"
                         id="currency"
@@ -177,7 +178,7 @@ const Form = () => {
                     </select>
                     </label>
                 </div>
-                <button>Submit</button>
+                <button>{t("Common:submit")}</button>
             </form>
         </div>
     );

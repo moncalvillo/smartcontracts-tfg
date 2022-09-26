@@ -2,6 +2,7 @@ import { useState } from "react";
 import {IoIosArrowDown, IoIosArrowUp} from "react-icons/io";
 import {FcApproval, FcCancel, FcAlarmClock} from "react-icons/fc";
 import ResolveButton from "../atoms/buttons/ResolveButton";
+import { useTranslation } from "react-i18next";
 
 
 
@@ -30,21 +31,21 @@ const RequestModal =  ({request}) => {
         }
 
     }
-
+    const {t} = useTranslation();
     return (
         <div className="requestItem" id={request.ID} onClick={handleOnClick}> 
             <div className="requestHeader">
-                <p>Project:  <b> {request.Project} </b> </p>
-                <p> Type:  <b> {request.Type} </b> </p>
-                <p> Amount:  <b>{request.Amount} {request.Currency} </b> </p>
+                <p>{t("Expense:project")}:  <b> {request.Project} </b> </p>
+                <p> {t("Expense:type")}:  <b> {request.Type} </b> </p>
+                <p> {t("Expense:amount")}:  <b>{request.Amount} {request.Currency} </b> </p>
                 <p className="reqIcon"> {iconState(request.State.toString())} </p>
             </div>
             {!active && <> <ResolveButton id={request.ID}/> <IoIosArrowDown /> </>}
             <div className={active ? 'toggleRequest': 'inactive'}>
                 <p><b>ID:  </b> {request.ID} </p>
-                <p> <b>Concept:  </b>{request.Concept}  </p> 
-                <p> <b>Date: </b> {request.Date} </p>
-                <p> <b>Owner: </b> {request.Owner.name ? request.Owner.name : `${request.Owner.firstName} ${request.Owner.lastName} <${request.Owner.email}>`} </p>
+                <p> <b>{t("Expense:concept")}:  </b>{request.Concept}  </p> 
+                <p> <b>{t("Expense:date")}: </b> {request.Date} </p>
+                <p> <b>{t("Expense:owner")}: </b> {request.Owner.name ? request.Owner.name : `${request.Owner.firstName} ${request.Owner.lastName} <${request.Owner.email}>`} </p>
             </div> 
             {active && <> <ResolveButton id={request.ID}/> <IoIosArrowUp /></>}
         </div>
