@@ -15,6 +15,7 @@ const LoginForm = ({onLoginRedirect}) => {
     const [password, setPassword] = useState("");
     const [msg, setMsg] = useState(null);
     const {setAccessToken} = useUser();
+    const {t} = useTranslation();
 
     useEffect(() => {
         setLoader(false);
@@ -26,14 +27,12 @@ const LoginForm = ({onLoginRedirect}) => {
             setAccessToken(res.data.user.accessToken);
         }).catch((err) => {
             console.log(err.response.data.message);
-            setMsg(err.response.data.message);
+            setMsg(err.response.data.message || t("Common:error"));
         }).finally(() => {                
             setLoader(false);
         });
         
     };
-
-    const {t} = useTranslation();
 
     useEffect(()=>{
         setMsg(null);
