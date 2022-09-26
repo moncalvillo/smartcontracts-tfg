@@ -39,16 +39,6 @@ const ResolutionForm = ({expense, setReload}) => {
 
     const {t} = useTranslation();
 
-    const radioProps = {
-        label1: t("Common:responsible"),
-        label2: t("Common:inspector"),
-        opt1: "user", 
-        opt2: "manager", 
-        setState: setState, 
-        state: state,
-        resolver: true
-    }
-
     if(loader) return <TailSpin color="grey" height={40}/>;
     if(success) return <div>{t("Common:success")}</div>;
     if(error) return <div className="error">{error}</div>;
@@ -59,7 +49,7 @@ const ResolutionForm = ({expense, setReload}) => {
             handleSubmit();
         }}>
             <label htmlFor="state">
-                <RadioInput {...radioProps} />
+                <RadioInput label1={t("Common:approve")} label2={t("Common:reject")} opt1="APPROVED" opt2="REJECTED" setState={setState} state={state} />
             </label>
             <label htmlFor="reason">
             {t("Common:reason")}
