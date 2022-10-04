@@ -75,14 +75,15 @@ export class BlockchainService extends IBlockchainService{
             const expenseId: string = uuid();
             const {  email, wallet, firstName, lastName, roleType } = user;
             const userSTR: string = JSON.stringify({email, firstName, lastName, wallet, roleType})
+            
+            
             const result: Buffer = await contract.submitTransaction('CreateAsset', expenseId, amount.toString(), currency, expenseType, concept, project, userSTR, date.toISOString()) as any | null;
+            console.log(result)
             if(result){
                 // contract.submitTransaction('CheckRequest', id);
                 console.log(`Expense request sent.`);
                 console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
-                const jsonObj = JSON.parse(result.toString());
-                jsonObj.Owner = JSON.parse(jsonObj.Owner);
-                return jsonObj;
+                return JSON.parse(result.toString());
             }else {
                 return null;
             }
@@ -99,10 +100,7 @@ export class BlockchainService extends IBlockchainService{
             if(result){
 
                 console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
-                const jsonObj = JSON.parse(result.toString());
-                jsonObj.Owner = JSON.parse(jsonObj.Owner);
-                jsonObj.Inspector = JSON.parse(jsonObj.Inspector);
-                return jsonObj;   
+                return JSON.parse(result.toString());   
             }else{
                 return null;
             }
@@ -118,8 +116,7 @@ export class BlockchainService extends IBlockchainService{
             const date = new Date();            
             const result: Buffer = await contract.submitTransaction('UpdateAsset', expense.id, expense.amount.toString(), expense.expenseType, expense.concept, expense.project, date.toISOString()) as any | null;
             console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
-            const jsonObj = JSON.parse(result.toString());
-            return jsonObj;   
+            return JSON.parse(result.toString());   
 
         }catch(error: any){
             throw new Error(error.message);
@@ -132,8 +129,6 @@ export class BlockchainService extends IBlockchainService{
             const expenses: any = await contract.submitTransaction('GetAllAssets');
             const jsonObj = JSON.parse(expenses.toString());
             const list = jsonObj.map((x: { Record: any; }) => {
-                x.Record.Owner = JSON.parse(x.Record.Owner);
-                x.Record.Inspector = JSON.parse(x.Record.Inspector);
                 return x.Record;
             });
             const sorted = list.sort((objA: Expense, objB: Expense) => Number(new Date(objB.Date)) - Number(new Date(objA.Date)));
@@ -153,11 +148,12 @@ export class BlockchainService extends IBlockchainService{
             const {contract} = await connectToContract(currentUser.wallet,'mychannel','draft');
             const searchBy: string = currentUser.roleType !== 'user' ? user : userSTR;
             const expenses: any = await contract.submitTransaction('QueryAssetsByParams', searchBy, type, project, state) as any | null;
+            
             if(expenses){
                 const jsonObj = JSON.parse(expenses.toString());
                 const list = jsonObj.map((x: { Record: any; }) => {
-                    x.Record.Owner = JSON.parse(x.Record.Owner);
-                    x.Record.Inspector = JSON.parse(x.Record.Inspector);
+                    // x.Record.Owner = JSON.parse(x.Record.Owner);
+                    // x.Record.Inspector = JSON.parse(x.Record.Inspector);
                     return x.Record;
                 } );
                 console.log(`Transaction has been evaluated, result is: ${jsonObj}`);

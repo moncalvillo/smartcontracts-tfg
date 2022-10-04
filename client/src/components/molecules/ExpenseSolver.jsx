@@ -36,6 +36,7 @@ const ExpenseSolver = ({expense, setReload}) => {
                 <h2>{t("Expense:resolution")}</h2>
                 <div className="expense-box">
                     <RowElement label={t("Common:inspector")} value={value} />
+                    <RowElement label={t("Common:resolvedAt")} value={!expense.updateAt ? `${new Date(expense.resolvedAt).toLocaleString()}` : `${new Date(expense.updateAt).toLocaleString()}`} />
                     <RowElement style={{ fontSize: "16px"}} label={t("Common:reason")} value={expense.Resolution} />
                 </div>
                 { user.roleType !== "user" &&  <button onClick={() => setUpdate(true)}>{t("Common:update")}</button>}

@@ -1,5 +1,6 @@
 const es = {
     Common: {
+        resolvedAt: "Fecha de resolución",
         error: "Ha ocurrido un error",
         filters: 'Filtros',
         name: 'Nombre',

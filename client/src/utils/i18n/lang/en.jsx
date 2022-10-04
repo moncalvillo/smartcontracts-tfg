@@ -1,5 +1,6 @@
 const en = {
     Common: {
+        resolvedAt: "Resolved date",
         error: "An error has occurred",
         filters: 'Filters',
         name: 'Name',

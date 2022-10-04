@@ -1,6 +1,9 @@
 // @/models.ts
+import { type } from "os";
 import { Table, Model, Column, DataType, BelongsToMany, HasMany, HasOne, ForeignKey } from "sequelize-typescript";
 
+
+type RoleType = "admin" | "user" |"manager";
 @Table({
   timestamps: false,
   tableName: "user",
@@ -51,7 +54,7 @@ export default class User extends Model {
     type: DataType.STRING,
     allowNull: false,
   })
-  roleType!: string;
+  roleType!: RoleType;
 
   // @BelongsToMany(() => Project, { as: 'projects', through: () => Membership })
   // projects!: Project[];

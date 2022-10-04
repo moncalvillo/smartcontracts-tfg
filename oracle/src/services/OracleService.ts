@@ -20,13 +20,14 @@ export class OracleService extends IOracleService{
             const { id, resolution, state, user } = body;
             const {  email, wallet, firstName, lastName, roleType } = user;
             const userSTR: string = JSON.stringify({email, firstName, lastName, wallet, roleType})
-
+            const date = new Date();
             const {contract } = await connectToContract(user.wallet,'mychannel','draft');
             const result: Buffer = await contract.submitTransaction('ResolveAsset', 
                 id,
                 resolution,
                 state,
-                userSTR) as any | null;
+                userSTR,
+                date.toISOString()) as any | null;
 
             if(result){
                 console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
@@ -51,7 +52,6 @@ export class OracleService extends IOracleService{
                 console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
                 const jsonObj = JSON.parse(result.toString());
                 return jsonObj.map((x: { Record: any; }) => {
-                    x.Record.Owner = JSON.parse(x.Record.Owner);
                     return x.Record;
                 });
             }else {
