@@ -4,6 +4,16 @@
 
 import {Object, Property} from 'fabric-contract-api';
 
+export interface User {
+  id?: number;
+  email?: string;
+  firstName?: string;
+  lastName?: string;
+  wallet?: string;
+  roleType?: string;
+  name?: string;
+}
+
 @Object()
 export class Expense {
 
@@ -29,7 +39,7 @@ export class Expense {
     public Date: Date;
 
     @Property()
-    public Owner: any;
+    public Owner: User;
 
     @Property()
     public State: string;
@@ -38,7 +48,15 @@ export class Expense {
     public Resolution: string;
 
     @Property()
-    public Inspector: any;
+    public Inspector: User;
+
+
+    @Property()
+    public createdAt: Date;
+    @Property()
+    public resolvedAt?: Date;
+    @Property()
+    public updatedAt?: Date;
 
 
 }
