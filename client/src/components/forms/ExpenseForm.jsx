@@ -148,7 +148,7 @@ const Form = () => {
                         <input
                             className="input"
                             id="concept"
-                            placeholder="Concept"
+                            placeholder={t("Expense:concept")}
                             value={concept}
                             onChange={(e) => {setConcept(e.target.value);}}/>
                     </label>

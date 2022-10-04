@@ -61,7 +61,7 @@ const ProjectForm = ({reload, setReload}) => {
                         <input
                             className="input"
                             id="name"
-                            placeholder="Name"
+                            placeholder={t("Common:name")}
                             value={name}
                             onChange={(e) => {setName(e.target.value);}}/>
                     </label>

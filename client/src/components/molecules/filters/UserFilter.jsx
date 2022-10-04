@@ -25,7 +25,7 @@ const UserFilter = ({setUser, setError}) => {
                     className="select"
                     id="selector"
                     onChange={(e) => setUser(e.target.value)}>
-                    <option key="all" value=""> {t("Expense:expenses")} </option>
+                    <option key="all" value=""> {t("Common:all")} </option>
                     {users.map((option) => {
                         
                         const opt = JSON.stringify(option);
