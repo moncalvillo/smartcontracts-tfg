@@ -9,7 +9,7 @@
 import { Contract, Context} from 'fabric-contract-api';
 import { stat } from 'fs';
 import { stringify } from 'querystring';
-import { Expense } from './asset';
+import { Expense, User } from './asset';
 import { ASSETS_LIST, ExpenseType } from './assetsData';
 
 async function savePrivateData(ctx: Context , assetKey: string) {
@@ -85,7 +85,7 @@ export class Draft extends Contract {
 
 	// CreateAsset issues a new asset to the world state with given details.
 	async CreateAsset(ctx: Context, id: string, amount: string, currency: string, type: string, concept: string,project: string,
-		 owner: any, date: string, state: string = "PENDING", inspector: any = null, resolution: string = null): Promise<string | null> {
+		 owner: string, date: string, state: string = "PENDING", inspector: string = null, resolution: string = null): Promise<string | null> {
 		
 		const exists = await this.AssetExists(ctx, id);
 		if (exists) {
@@ -98,12 +98,13 @@ export class Draft extends Contract {
 			Concept: concept,
 			Type: type,
 			Project: project,
-            Owner: owner,
+            Owner: JSON.parse(owner),
 			Currency: currency,
 			Date: new Date(date),
 			State: state,
 			Resolution: resolution,
-			Inspector: inspector,
+			Inspector: JSON.parse(inspector),
+			createdAt: new Date(date),
 		};
 		await savePrivateData(ctx, id);
 		
@@ -116,7 +117,7 @@ export class Draft extends Contract {
 		
 		await ctx.stub.putState(id, assetBuffer);
 		const indexName = "id~type~project~state";
-		const indexKey = await ctx.stub.createCompositeKey(indexName, [expense.Owner, expense.Type, expense.Project, expense.State.toString(), expense.Currency]); 
+		const indexKey = await ctx.stub.createCompositeKey(indexName, [JSON.stringify(expense.Owner), expense.Type, expense.Project, expense.State.toString(), expense.Currency]); 
 		await ctx.stub.putState(indexKey, Buffer.from('\u0000'));
 		return assetBuffer.toString();
 	}
@@ -124,8 +125,8 @@ export class Draft extends Contract {
 	// TransferAsset updates the owner field of an asset with the given id in
 	// the world state.
 	async TransferAsset(ctx: Context, id: string, newOwner: string) {
-		const asset: any = await readState(ctx, id);
-		asset.Owner = newOwner;
+		const asset: Expense = await readState(ctx, id);
+		asset.Owner = JSON.parse(newOwner);
 		const assetBuffer: Buffer = Buffer.from(JSON.stringify(asset));
 		await savePrivateData(ctx, id);
 
@@ -143,15 +144,20 @@ export class Draft extends Contract {
 
 
 	//UpdateAsset updates an existing asset in the world state with provided parameters.
-	async ResolveAsset(ctx: Context, id: string, resolution: string, state: string, inspector: string): Promise<string| null>  {
+	async ResolveAsset(ctx: Context, id: string, resolution: string, state: string, inspector: string, date: string): Promise<string| null>  {
 		
 		// if(roleType === "user"){
 		// 	return null;
 		// }
-		const asset: any = await readState(ctx, id);
+		const asset: Expense = await readState(ctx, id);
 		asset.Resolution = resolution;
 		asset.State = state;
-		asset.Inspector = inspector;
+		asset.Inspector = JSON.parse(inspector);
+		if(asset.resolvedAt !== null){
+			asset.updatedAt = new Date(date);
+		}else{
+			asset.resolvedAt = new Date(date);
+		}
 		const assetBuffer: Buffer = Buffer.from(JSON.stringify(asset));
 		await savePrivateData(ctx, id);
 
@@ -162,7 +168,7 @@ export class Draft extends Contract {
 
 	// DeleteAsset deletes an given asset from the world state.
 	async DeleteAsset(ctx: Context, id: string) {
-		const asset: any = await readState(ctx, id);
+		const asset: Expense = await readState(ctx, id);
 		const assetBuffer: Buffer = Buffer.from(JSON.stringify(asset));
 		await removePrivateData(ctx, id);
 
@@ -176,7 +182,7 @@ export class Draft extends Contract {
 		let queryString: any = {}
 		queryString.selector = {};
 		queryString.selector.Currency = "CREDUS";
-		if(owner) queryString.selector.Owner = owner;
+		if(owner) queryString.selector.Owner = JSON.parse(owner);
 		if(type) queryString.selector.Type = type;
 		if(project) queryString.selector.Project = project;
 		if(state) queryString.selector.State = state;
@@ -245,7 +251,7 @@ export class Draft extends Contract {
         return allResults;
 	}
 
-	validateRequest(expense: any): void {
+	validateRequest(expense: Expense): void {
 		
 		const failedMsg: string[] = [];
 		try{
@@ -254,21 +260,19 @@ export class Draft extends Contract {
 			this.validateType(expense,failedMsg)
 			this.validateDate(expense,failedMsg);
 
-		}catch(err: any){
+		}catch(err){
 			return;
 		}
 
-		const SC: any = {
+		const SC: User = {
 			name: " Draft <Smart Contract>",
 		}
-
+		expense.Inspector = SC;
 		if(failedMsg.length === 0){
 			expense.Resolution = "Asset passes all the requirements. ";
-			expense.Inspector = JSON.stringify(SC);
 			expense.State = "APPROVED";
 		}else{
 			expense.Resolution = failedMsg.join(". \n");
-			expense.Inspector = JSON.stringify(SC);
 			expense.State = "REJECTED";
 		}
 	}
