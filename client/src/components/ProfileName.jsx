@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { useUser } from "./hooks/useUser";
+import LanguageButton from "./LanguageButton";
 
 const ProfileName = () => {
 
@@ -12,6 +13,7 @@ const ProfileName = () => {
             {t("Auth:email")}: <h3> {user.email}</h3>
             {t("Auth:wallet")}: <h3> {user.wallet}</h3>
             {t("Auth:role")}: <h3> {user.roleType}</h3>
+            <LanguageButton />
         </div>
     );
 }
