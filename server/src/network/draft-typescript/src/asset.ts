@@ -36,27 +36,24 @@ export class Expense {
     public Project: string;
 
     @Property()
-    public Date: Date;
-
-    @Property()
     public Owner: User;
 
     @Property()
     public State: string;
 
     @Property()
-    public Resolution: string;
+    public Resolution: string | null;
 
     @Property()
-    public Inspector: User;
+    public Inspector: User | null;
 
 
     @Property()
     public createdAt: Date;
     @Property()
-    public resolvedAt?: Date;
+    public resolvedAt: Date | null;
     @Property()
-    public updatedAt?: Date;
+    public updatedAt: Date | null;
 
 
 }

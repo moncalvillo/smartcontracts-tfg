@@ -24,7 +24,7 @@ export class BlockchainService extends IBlockchainService{
             console.log(`Ledger initialized`);
             return ;
         }catch(error: any){
-            throw new Error(error.message);
+            console.error(error.message);
         }
     }
 
@@ -78,7 +78,6 @@ export class BlockchainService extends IBlockchainService{
             
             
             const result: Buffer = await contract.submitTransaction('CreateAsset', expenseId, amount.toString(), currency, expenseType, concept, project, userSTR, date.toISOString()) as any | null;
-            console.log(result)
             if(result){
                 // contract.submitTransaction('CheckRequest', id);
                 console.log(`Expense request sent.`);

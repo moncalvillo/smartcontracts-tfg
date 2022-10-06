@@ -1,3 +1,4 @@
+import { User } from "./asset";
 
 export interface ExpenseType {
     ID: string;
@@ -5,13 +6,15 @@ export interface ExpenseType {
     Type: string;
     Concept: string;
     Project: string;
-    Owner: string;
+    Owner: User;
     Currency: string;
-    Date: Date;
     State: State;
-    Resolution: string;
-    Inspector: string;
-}
+    Resolution: string | null;
+    Inspector: User | null;
+    resolvedAt: Date;
+    createdAt: Date | null;
+    updatedAt: Date | null;
+};
 
 type State = "PENDING" | "APPROVED" | "REJECTED";
 
@@ -22,24 +25,26 @@ const assets: ExpenseType[] = [
             Concept: "Material for Helheim",
             Type: "Material",
             Project: "Helheim",
-            Owner: JSON.stringify({
+            Owner: {
                     email: "userTest@gmail.com",
                     firstName: "User",
                     lastName: "Test",
                     wallet: "as8a5f6b-1975-4d66-b085-c6fc910ee6df",
                     roleType: "user",
-                }),
+                },
             Currency: "CREDUS",
-            Date: new Date(2022, 7, 20, 15,0,0),
             State: "APPROVED",
             Resolution: "Lorem ipsum dolor sit amet. Vel accusantium rerum aut voluptas consequatur eum dicta internos qui voluptas maiores ea pariatur laborum aut quasi consequatur. Cum enim pariatur eum voluptas beatae aut iste porro ut nemo accusamus et perferendis fugit et provident rerum. Aut ratione harum ad ullam optio qui rerum nihil et dolore voluptatibus. Ea perspiciatis omnis aut atque quia sed dicta voluptates ut necessitatibus perspiciatis et animi amet cum galisum molestias. Id debitis officia qui voluptas voluptate sed cumque vitae sit voluptatibus accusantium est quaerat officiis aut dolore sint aut consequatur porro.",
-            Inspector: JSON.stringify({
+            Inspector: {
                     email: "managerTest@gmail.com",
                     firstName: "Manager",
                     lastName: "Test",
                     wallet: "a4355f6b-1975-4d66-b085-c6fc910ee6ss",
                     roleType: "manager",
-                }),
+                },
+            createdAt: new Date(2021, 7, 20, 15,0,0),
+            resolvedAt: new Date(2022, 7, 21, 15,0,0),
+            updatedAt: new Date(2022, 7, 23, 12,0,0),
         },
         {
             ID: 'dda875a3-6f47-4dcc-81fb-10563370a437',
@@ -47,18 +52,20 @@ const assets: ExpenseType[] = [
             Concept: "Material for Helheim",
             Type: "Material",
             Project: "Helheim",
-            Owner: JSON.stringify({
+            Owner: {
                     email: "userTest@gmail.com",
                     firstName: "User",
                     lastName: "Test",
                     wallet: "as8a5f6b-1975-4d66-b085-c6fc910ee6df",
                     roleType: "user",
-                }),
+                },
             Currency: "CREDUS",
-            Date: new Date(2022, 7, 10, 15,0,0),
             State: "PENDING",
             Resolution: null,
             Inspector: null,
+            createdAt: new Date(2021, 7, 10, 15,0,0),
+            resolvedAt: null,
+            updatedAt: null,
         },
         {
             ID: '15501c28-d518-4696-839e-091f65ffeea8',
@@ -66,24 +73,26 @@ const assets: ExpenseType[] = [
             Concept: "Equipment for Helheim",
             Type: "Equipment",
             Project: "Helheim",
-            Owner: JSON.stringify({
+            Owner: {
                     email: "secondUser@gmail.com",
                     firstName: "Second",
                     lastName: "User",
                     wallet: "r48a5f6b-1975-4d66-b085-c6fc910ee6aa",
                     roleType: "user",
-                }),
+                },
             Currency: "CREDUS",
-            Date: new Date(2022, 7, 8, 15,0,0),
             State: "APPROVED",
             Resolution: "Lorem ipsum dolor sit amet. Vel accusantium rerum aut voluptas consequatur eum dicta internos qui voluptas maiores ea pariatur laborum aut quasi consequatur. Cum enim pariatur eum voluptas beatae aut iste porro ut nemo accusamus et perferendis fugit et provident rerum. Aut ratione harum ad ullam optio qui rerum nihil et dolore voluptatibus. Ea perspiciatis omnis aut atque quia sed dicta voluptates ut necessitatibus perspiciatis et animi amet cum galisum molestias. Id debitis officia qui voluptas voluptate sed cumque vitae sit voluptatibus accusantium est quaerat officiis aut dolore sint aut consequatur porro.",
-            Inspector: JSON.stringify({
+            Inspector: {
                     email: "managerTest@gmail.com",
                     firstName: "Manager",
                     lastName: "Test",
                     wallet: "a4355f6b-1975-4d66-b085-c6fc910ee6ss",
                     roleType: "manager",
-                }),
+                },
+            createdAt: new Date(2021, 7, 8, 15,0,0),
+            resolvedAt: new Date(2022, 7, 9, 15,0,0),
+            updatedAt: null,
         },
         {
             ID: 'cd9aebf0-8efd-40ca-9097-d31294ea339e',
@@ -91,24 +100,26 @@ const assets: ExpenseType[] = [
             Concept: "Material for Niflheim",
             Type: "Equipment",
             Project: "Niflheim",
-            Owner: JSON.stringify({
+            Owner: {
                     email: "userTest@gmail.com",
                     firstName: "User",
                     lastName: "Test",
                     wallet: "as8a5f6b-1975-4d66-b085-c6fc910ee6df",
                     roleType: "user",
-                }),
+                },
             Currency: "CREDUS",
-            Date: new Date(2022, 6, 27, 15,0,0),
             State: "REJECTED",
             Resolution: "Example test for resolution",
-            Inspector: JSON.stringify({
+            Inspector: {
                     email: "managerTest@gmail.com",
                     firstName: "Manager",
                     lastName: "Test",
                     wallet: "a4355f6b-1975-4d66-b085-c6fc910ee6ss",
                     roleType: "manager",
-                }),
+                },
+            createdAt: new Date(2021, 6, 27, 15,0,0),
+            resolvedAt: new Date(2022, 6, 28, 15,0,0),
+            updatedAt: null,
         },
         {
             ID: '1ab592a8-75b3-4ae8-a7a0-bff7f8944348',
@@ -116,24 +127,26 @@ const assets: ExpenseType[] = [
             Concept: "Material for Niflheim",
             Type: "Material",
             Project: "Niflheim",
-            Owner: JSON.stringify({
+            Owner: {
                     email: "userTest@gmail.com",
                     firstName: "User",
                     lastName: "Test",
                     wallet: "as8a5f6b-1975-4d66-b085-c6fc910ee6df",
                     roleType: "user",
-                }),
+                },
             Currency: "CREDUS",
-            Date: new Date(2022, 6, 20, 15,0,0),
             State: "APPROVED",
             Resolution: "Example test for resolution",
-            Inspector: JSON.stringify({
+            Inspector: {
                     email: "managerTest@gmail.com",
                     firstName: "Manager",
                     lastName: "Test",
                     wallet: "a4355f6b-1975-4d66-b085-c6fc910ee6ss",
                     roleType: "manager",
-                }),
+                },
+            createdAt: new Date(2021, 6, 20, 15,0,0),
+            resolvedAt: new Date(2022, 6, 21, 15,0,0),
+            updatedAt: null,
         },
         {
             ID: 'dec4ad95-fa7e-44cb-b4da-3265858817a4',
@@ -141,25 +154,26 @@ const assets: ExpenseType[] = [
             Concept: "Equipment for Niflheim",
             Type: "Equipment",
             Project: "Niflheim",
-            Owner: JSON.stringify({
+            Owner: {
                     email: "secondUser@gmail.com",
                     firstName: "Second",
                     lastName: "User",
                     wallet: "r48a5f6b-1975-4d66-b085-c6fc910ee6aa",
                     roleType: "user",
-                }),
+                },
             Currency: "CREDUS",
-            Date: new Date(2022, 6, 3, 15,0,0),
             State: "REJECTED",
             Resolution: "Example test for resolution",
-            Inspector: JSON.stringify({
-        email: "managerTest@gmail.com",
-        password: "managerTest",
-        roleType: "manager",
-        firstName: "Manager",
-        lastName: "Test",
-        wallet: "a4355f6b-1975-4d66-b085-c6fc910ee6ss"
-    }),
+            Inspector: {
+                email: "managerTest@gmail.com",
+                roleType: "manager",
+                firstName: "Manager",
+                lastName: "Test",
+                wallet: "a4355f6b-1975-4d66-b085-c6fc910ee6ss"
+            },
+            createdAt: new Date(2021, 6, 3, 15,0,0),
+            resolvedAt: new Date(2022, 6, 4, 15,0,0),
+            updatedAt: null,
         },
         {
             ID: 'bffd138d-c96d-4ab3-a4d6-09b6024f7aac',
@@ -167,18 +181,20 @@ const assets: ExpenseType[] = [
             Concept: "Material for Asgard",
             Type: "Material",
             Project: "Asgard",
-            Owner: JSON.stringify({
+            Owner: {
                     email: "userTest@gmail.com",
                     firstName: "User",
                     lastName: "Test",
                     wallet: "as8a5f6b-1975-4d66-b085-c6fc910ee6df",
                     roleType: "user",
-                }),
+                },
             Currency: "CREDUS",
-            Date: new Date(2022, 5, 29, 15,0,0),
             State: "PENDING",
             Resolution: null,
             Inspector: null,
+            createdAt: new Date(2021, 5, 29, 15,0,0),
+            resolvedAt: null,
+            updatedAt: null,
         },
         {
             ID: 'cee61d5a-36e1-408b-8ba7-10af32d64b32',
@@ -186,24 +202,27 @@ const assets: ExpenseType[] = [
             Concept: "Material for Asgard",
             Type: "Material",
             Project: "Asgard",
-            Owner: JSON.stringify({
+            Owner: {
                     email: "userTest@gmail.com",
                     firstName: "User",
                     lastName: "Test",
                     wallet: "as8a5f6b-1975-4d66-b085-c6fc910ee6df",
                     roleType: "user",
-                }),
+                },
             Currency: "CREDUS",
-            Date: new Date(2022, 5, 27, 15,0,0),
             State: "REJECTED",
             Resolution: "Example test for resolution",
-            Inspector: JSON.stringify({
+            Inspector: {
                     email: "managerTest@gmail.com",
                     firstName: "Manager",
                     lastName: "Test",
                     wallet: "a4355f6b-1975-4d66-b085-c6fc910ee6ss",
                     roleType: "manager",
-                }),
+                },
+            createdAt: new Date(2021, 5, 27, 15,0,0),
+            resolvedAt: new Date(2022, 5, 28, 15,0,0),
+            updatedAt: null,
+
         },
         {
             ID: '07ea0d55-6775-4561-b8cd-21e56c3807c3',
@@ -211,24 +230,26 @@ const assets: ExpenseType[] = [
             Concept: "Equipment for Asgard",
             Type: "Equipment",
             Project: "Asgard",
-            Owner: JSON.stringify({
+            Owner: {
                     email: "secondUser@gmail.com",
                     firstName: "Second",
                     lastName: "User",
                     wallet: "r48a5f6b-1975-4d66-b085-c6fc910ee6aa",
                     roleType: "user",
-                }),
+                },
             Currency: "CREDUS",
-            Date: new Date(2022, 5, 20, 15,0,0),
             State: "APPROVED",
             Resolution: "Example test for resolution",
-            Inspector: JSON.stringify({
+            Inspector: {
                     email: "managerTest@gmail.com",
                     firstName: "Manager",
                     lastName: "Test",
                     wallet: "a4355f6b-1975-4d66-b085-c6fc910ee6ss",
                     roleType: "manager",
-                }),
+                },
+            createdAt: new Date(2021, 5, 20, 15,0,0),
+            resolvedAt: new Date(2022, 5, 21, 15,0,0),
+            updatedAt: new Date(2022, 5, 21, 20,0,0),
         },
         {
             ID: '4e2cb045-9541-4808-b8aa-9d4dd00f738a',
@@ -236,24 +257,26 @@ const assets: ExpenseType[] = [
             Concept: "Material for Midgard",
             Type: "Material",
             Project: "Midgard",
-            Owner: JSON.stringify({
+            Owner: {
                     email: "userTest@gmail.com",
                     firstName: "User",
                     lastName: "Test",
                     wallet: "as8a5f6b-1975-4d66-b085-c6fc910ee6df",
                     roleType: "user",
-                }),
+                },
             Currency: "CREDUS",
-            Date: new Date(2022, 5, 14, 15,0,0),
             State: "REJECTED",
             Resolution: "Example test for resolution",
-            Inspector: JSON.stringify({
+            Inspector: {
                     email: "managerTest@gmail.com",
                     firstName: "Manager",
                     lastName: "Test",
                     wallet: "a4355f6b-1975-4d66-b085-c6fc910ee6ss",
                     roleType: "manager",
-                }),
+                },
+            createdAt: new Date(2021, 5, 14, 15,0,0),
+            resolvedAt: new Date(2022, 5, 15, 15,0,0),
+            updatedAt: new Date(2022, 5, 15, 20,0,0),
         },
         {
             ID: 'f0e10219-27c1-42e0-9417-69dc2f3a4878',
@@ -261,24 +284,26 @@ const assets: ExpenseType[] = [
             Concept: "Material for Midgard",
             Type: "Material",
             Project: "Midgard",
-            Owner: JSON.stringify({
+            Owner: {
                     email: "userTest@gmail.com",
                     firstName: "User",
                     lastName: "Test",
                     wallet: "as8a5f6b-1975-4d66-b085-c6fc910ee6df",
                     roleType: "user",
-                }),
+                },
             Currency: "CREDUS",
-            Date: new Date(2022, 5, 3, 15,0,0),
             State: "APPROVED",
             Resolution: "Example test for resolution",
-            Inspector: JSON.stringify({
+            Inspector: {
                     email: "managerTest@gmail.com",
                     firstName: "Manager",
                     lastName: "Test",
                     wallet: "a4355f6b-1975-4d66-b085-c6fc910ee6ss",
                     roleType: "manager",
-                }),
+                },
+            createdAt: new Date(2021, 5, 3, 15,0,0),
+            resolvedAt: new Date(2022, 5, 4, 15,0,0),
+            updatedAt: null,
         },
         {
             ID: 'b4b2351f-61e4-43fb-ad24-af3a2ffd9eb2',
@@ -286,24 +311,26 @@ const assets: ExpenseType[] = [
             Concept: "Equipment for Midgard",
             Type: "Equipment",
             Project: "Midgard",
-            Owner: JSON.stringify({
+            Owner: {
                     email: "secondUser@gmail.com",
                     firstName: "Second",
                     wallet: "r48a5f6b-1975-4d66-b085-c6fc910ee6aa",
                     lastName: "User",
                     roleType: "user",
-                }),
+                },
             Currency: "CREDUS",
-            Date: new Date(2022, 5, 2, 15,0,0),
             State: "APPROVED",
             Resolution: "Example test for resolution",
-            Inspector: JSON.stringify({
+            Inspector: {
                     email: "managerTest@gmail.com",
                     firstName: "Manager",
                     lastName: "Test",
                     wallet: "a4355f6b-1975-4d66-b085-c6fc910ee6ss",
                     roleType: "manager",
-                }),
+                },
+            createdAt: new Date(2021, 5, 2, 15,0,0),
+            resolvedAt: new Date(2022, 5, 3, 15,0,0),
+            updatedAt: null,
         },
         {
             ID: 'cj52551f-61e4-a3fb-adc4-af3a2ff45at4',
@@ -311,24 +338,26 @@ const assets: ExpenseType[] = [
             Concept: "Material for Vanaheim",
             Type: "Material",
             Project: "Vanaheim",
-            Owner: JSON.stringify({
+            Owner: {
                     email: "userTest@gmail.com",
                     firstName: "User",
                     lastName: "Test",
                     wallet: "as8a5f6b-1975-4d66-b085-c6fc910ee6df",
                     roleType: "user",
-                }),
+                },
             Currency: "CREDUS",
-            Date: new Date(2022, 5, 1, 15,0,0),
             State: "APPROVED",
             Resolution: "Example test for resolution",
-            Inspector: JSON.stringify({
+            Inspector: {
                     email: "managerTest@gmail.com",
                     firstName: "Manager",
                     lastName: "Test",
                     wallet: "a4355f6b-1975-4d66-b085-c6fc910ee6ss",
                     roleType: "manager",
-                }),
+                },
+            createdAt: new Date(2021, 5, 1, 15,0,0),
+            resolvedAt: new Date(2022, 5, 2, 15,0,0),
+            updatedAt: null,
         },
         {
             ID: 'asd2551f-61e4-a3fb-adc4-af3a2ff45at4',
@@ -336,18 +365,20 @@ const assets: ExpenseType[] = [
             Concept: "Service for Vanaheim",
             Type: "Service",
             Project: "Asgard",
-            Owner: JSON.stringify({
+            Owner: {
                     email: "userTest@gmail.com",
                     firstName: "User",
                     lastName: "Test",
                     wallet: "as8a5f6b-1975-4d66-b085-c6fc910ee6df",
                     roleType: "user",
-                }),
+                },
             Currency: "CREDUS",
-            Date: new Date(2022, 5, 1, 15,0,0),
             State: "PENDING",
             Resolution: null,
             Inspector: null,
+            createdAt: new Date(2021, 5, 1, 15,0,0),
+            resolvedAt: null,
+            updatedAt: null,
         },
         {
             ID: 'cj52551f-61e4-a3fb-adc4-af3a2ff45asd',
@@ -355,20 +386,23 @@ const assets: ExpenseType[] = [
             Concept: "Material for Asgard",
             Type: "Service",
             Project: "Asgard",
-            Owner: JSON.stringify({
+            Owner: {
                     email: "secondUser@gmail.com",
                     firstName: "Second",
                     wallet: "r48a5f6b-1975-4d66-b085-c6fc910ee6aa",
                     lastName: "User",
                     roleType: "user",
-                }),
+                },
             Currency: "CREDUS",
-            Date: new Date(2022, 5, 1, 15,0,0),
             State: "PENDING",
             Resolution: null,
             Inspector: null,
+            createdAt: new Date(2021, 5, 1, 15,0,0),
+            resolvedAt: null,
+            updatedAt: null,
         },
     ];
 
 export const ASSETS_LIST = assets;
 export const ASSETS_LIST_ID = assets.map(asset => asset.ID);
+
