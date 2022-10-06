@@ -85,7 +85,8 @@ export class Draft extends Contract {
 
 	// CreateAsset issues a new asset to the world state with given details.
 	async CreateAsset(ctx: Context, id: string, amount: string, currency: string, type: string, concept: string,project: string,
-		 owner: string, date: string, state: string = "PENDING", inspector: string = null, resolution: string = null): Promise<string | null> {
+		 owner: string, state: string = "PENDING", inspector: string = null, resolution: string = null, 
+		 createdAt: string, resolvedAt: string = null, updatedAt: string = null): Promise<string | null> {
 		
 		const exists = await this.AssetExists(ctx, id);
 		if (exists) {
@@ -100,16 +101,17 @@ export class Draft extends Contract {
 			Project: project,
             Owner: JSON.parse(owner),
 			Currency: currency,
-			Date: new Date(date),
 			State: state,
 			Resolution: resolution,
 			Inspector: JSON.parse(inspector),
-			createdAt: new Date(date),
+			createdAt: new Date(createdAt),
+			resolvedAt: resolvedAt ? new Date(resolvedAt): null,
+			updatedAt: updatedAt ? new Date(updatedAt) : null,
 		};
 		await savePrivateData(ctx, id);
 		
 		if(state === "PENDING"){
-			this.validateRequest(expense);
+			this.validateRequest(expense, createdAt);
 		}
 		
 		const assetBuffer: Buffer = Buffer.from(JSON.stringify(expense));
@@ -251,7 +253,7 @@ export class Draft extends Contract {
         return allResults;
 	}
 
-	validateRequest(expense: Expense): void {
+	validateRequest(expense: Expense, currentDate): void {
 		
 		const failedMsg: string[] = [];
 		try{
@@ -268,6 +270,11 @@ export class Draft extends Contract {
 			name: " Draft <Smart Contract>",
 		}
 		expense.Inspector = SC;
+		if(expense.resolvedAt !== null){
+			expense.updatedAt = new Date(currentDate);
+		}else{
+			expense.resolvedAt = new Date(currentDate);
+		}
 		if(failedMsg.length === 0){
 			expense.Resolution = "Asset passes all the requirements. ";
 			expense.State = "APPROVED";
@@ -278,7 +285,7 @@ export class Draft extends Contract {
 	}
 
 	validateFields(obj: Expense, failedMsg: string[]): boolean {
-		if (!obj.Amount || !obj.Concept || !obj.Type || !obj.Project || !obj.Owner || !obj.Date) {
+		if (!obj.Amount || !obj.Concept || !obj.Type || !obj.Project || !obj.Owner || !obj.createdAt) {
 			failedMsg.push("Missing fields");
 			return false;
 		}
@@ -314,7 +321,7 @@ export class Draft extends Contract {
 	}
 
 	validateDate(expense: Expense,failedMsg: string[]): boolean {
-		if(expense.Date > new Date()){
+		if(expense.createdAt > new Date()){
 			failedMsg.push("Date can't be greater than today");
 			return false;
 		}
@@ -335,11 +342,13 @@ export class Draft extends Contract {
 				asset.Type,
 				asset.Concept,
 				asset.Project,
-				asset.Owner,
-				asset.Date.toISOString(),
+				JSON.stringify(asset.Owner),
 				asset.State,
-				asset.Inspector,
-				asset.Resolution
+				JSON.stringify(asset.Inspector),
+				asset.Resolution ? asset.Resolution : null,
+				asset.createdAt.toISOString(),
+				asset.resolvedAt ? asset.resolvedAt.toISOString() : null,
+				asset.updatedAt ? asset.updatedAt.toISOString(): null
 			);
 			
 			expenses.push(JSON.parse(expense));
