@@ -11,10 +11,10 @@ const LanguageButton = () => {
 
     return (
         
-                <div class="button r" id="button-1">
-                    <input type="checkbox" class="checkbox" onClick={changeLanguage}/>
-                    <div class="knobs"></div>
-                    <div class="layer"></div>
+                <div className="button r" id="button-1">
+                    <input type="checkbox" className="checkbox" onClick={changeLanguage}/>
+                    <div className="knobs"></div>
+                    <div className="layer"></div>
                 </div>
     );
 

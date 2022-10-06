@@ -36,7 +36,7 @@ const RequestModal =  ({request}) => {
         <div className="requestItem" id={request.ID} onClick={handleOnClick}> 
             <div className="requestHeader">
                 <p>{t("Expense:project")}:  <b> {request.Project} </b> </p>
-                <p> {t("Expense:type")}:  <b> {request.Type} </b> </p>
+                <p> {t("Expense:type")}:  <b> {t(`Common:${request.Type}`)} </b> </p>
                 <p> {t("Expense:amount")}:  <b>{request.Amount} {request.Currency} </b> </p>
                 <p className="reqIcon"> {iconState(request.State.toString())} </p>
             </div>
@@ -44,7 +44,7 @@ const RequestModal =  ({request}) => {
             <div className={active ? 'toggleRequest': 'inactive'}>
                 <p><b>ID:  </b> {request.ID} </p>
                 <p> <b>{t("Expense:concept")}:  </b>{request.Concept}  </p> 
-                <p> <b>{t("Expense:date")}: </b> {request.Date} </p>
+                <p> <b>{t("Expense:date")}: </b> {`${new Date(request.createdAt).toLocaleString()}`} </p>
                 <p> <b>{t("Expense:owner")}: </b> {request.Owner.name ? request.Owner.name : `${request.Owner.firstName} ${request.Owner.lastName} <${request.Owner.email}>`} </p>
             </div> 
             {active && <> <ResolveButton id={request.ID}/> <IoIosArrowUp /></>}

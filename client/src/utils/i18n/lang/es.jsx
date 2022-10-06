@@ -1,5 +1,15 @@
 const es = {
     Common: {
+        pending: "Pendiente",
+        resolvedBy: 'Resuelto por',
+        resolved: 'Resuelto',
+        created: 'Creado',
+        sentSC: 'Enviado a Smart Contract',
+        sentOracle: 'Enviado a oráculo',
+        notResolvedSC: 'Smart Contract no pudo resolver',
+        resolvedSC: 'Resuelto por Smart Contract',
+        resolvedInspector: 'Resuelto por inspector',
+        updatedBy: 'Actualizado por',
         resolvedAt: "Fecha de resolución",
         error: "Ha ocurrido un error",
         filters: 'Filtros',
