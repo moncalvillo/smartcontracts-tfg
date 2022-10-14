@@ -6,12 +6,13 @@ class CORS {
   public static init(app: Application): Application {
     console.log('Enabling CORS...');
 
-    const options = {
-      origin: ['http://localhost:3000', 'https://localhost:3000'],
-      optionsSuccessStatus: 200,
-    };
+    // const options = {
+    //   origin: '*',
+    //   optionsSuccessStatus: 200,
 
-    app.use(cors(options));
+    // };
+
+    app.use(cors());
 
     return app;
   }

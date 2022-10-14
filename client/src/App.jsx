@@ -12,7 +12,12 @@ import Router from "./components/routes/Router";
 
 const App = () => {
 
-  axios.defaults.baseURL = 'http://localhost:8080/api';
+  const API_URL = process.env.REACT_APP_API_BASE_URL ?? "http://localhost:8080";
+  // axios.defaults.headers = {
+  //   "Content-Type": "application/json",
+  //   Accept: "application/json",
+  // }
+  axios.defaults.baseURL = API_URL;
   return (
 
       
