@@ -1,0 +1,10 @@
+version: '3.7'
+
+services:
+  hyperledger: 
+    build: 
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
+    volumes: 
+      - /var/run/docker.sock:/var/run/docker.sock

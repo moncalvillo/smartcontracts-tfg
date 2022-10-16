@@ -11,6 +11,7 @@ services:
     restart: always
     depends_on: 
       - database 
+      - hyperledger
     environment: 
       DATABASE_USER: root
       DATABASE_PASSWORD: root
@@ -30,6 +31,8 @@ services:
     ports:
       - "${ORACLE_APP_PORT}:8080" 
     restart: always
+    depends_on: 
+      - hyperledger
     networks: 
       - backend
       - frontend
@@ -69,7 +72,17 @@ services:
     restart: always
     networks:
       - backend
-
+      
+  hyperledger: 
+    container_name: hyperledger
+    build: 
+      context: ../network
+      dockerfile: Dockerfile
+    ports:
+      - "${HYPERLEDGER_NETWORK_PORT}:8082"
+    restart: always
+    networks:
+      - backend
 networks:
   backend:
   frontend:    
