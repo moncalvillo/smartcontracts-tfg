@@ -7,6 +7,12 @@ type RoleType = "admin" | "user" |"manager";
 @Table({
   timestamps: false,
   tableName: "user",
+  indexes: [
+    {
+      unique: false,
+      fields: ['id'],
+    },
+  ],
 })
 export default class User extends Model {
  

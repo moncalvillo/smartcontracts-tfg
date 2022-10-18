@@ -5,6 +5,12 @@ import Project from "./Project";
 @Table({
   timestamps: false,
   tableName: "type",
+  indexes: [
+    {
+      unique: false,
+      fields: ['name'],
+    },
+  ],
 })
 export default class Type extends Model {
 

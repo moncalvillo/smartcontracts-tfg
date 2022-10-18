@@ -25,9 +25,9 @@ COPY ./Chaincodes/ ./fabric-samples/Chaincodes
 ## Install chaincode dependencies
 
 
-WORKDIR /usr/network/fabric-samples/test-network
-RUN ls -a
-RUN chmod +x network.sh
+# WORKDIR /usr/network/fabric-samples/test-network
+# RUN ls -a
+# RUN chmod +x network.sh
 
 WORKDIR /usr/network
 COPY init-network.sh ./init-network.sh

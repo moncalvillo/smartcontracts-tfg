@@ -1,15 +1,16 @@
 import dotenv from 'dotenv';
 import path from "path";
+dotenv.config();
 
 const url = 'http://localhost:8080';
 const port = 8080;
-const fabricSamplePath = path.join('\\\\wsl.localhost', 'Ubuntu', 'home','pablo', 'tfg','fabric-samples');
+
+const fabricSamplePath = process.env.FABRIC_SAMPLES_PATH || path.join('\\\\wsl.localhost', 'Ubuntu', 'home','pablo', 'tfg','fabric-samples');
 const apiPrefix = '/api';
 const network = 'test-network';
 
-dotenv.config();
 const database_options = {
-    host: process.env.DATABASE_HOST || "locahost",
+    host: process.env.DATABASE_HOST || "localhost",
     port: Number(process.env.DATABASE_PORT) || 3306,
     user: process.env.DATABASE_USER || "root",
     password: process.env.DATABASE_PASSWORD || "root",

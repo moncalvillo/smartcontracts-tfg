@@ -37,11 +37,11 @@ export class BlockchainService extends IBlockchainService{
             const wallet: Wallet = await buildWallet(walletPath);
             const adminWallet: Identity | undefined = await enrollAdmin(ca, wallet, 'Org1MSP');
             if(!adminWallet){
-                throw new Error('Could not create aadmin identity');
+                throw new Error('Could not create admin identity');
             }
             return adminWallet;
         }catch(error){
-            console.log(error);
+            console.error(error);
             return undefined;
         }
         

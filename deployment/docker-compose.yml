@@ -11,8 +11,11 @@ services:
     restart: always
     depends_on: 
       - database 
-      - hyperledger
+      # - hyperledger
+    volumes:
+      - ${FABRIC_SAMPLES_PATH}:/fabric-samples
     environment: 
+      FABRIC_SAMPLES_PATH: /fabric-samples
       DATABASE_USER: root
       DATABASE_PASSWORD: root
       DATABASE_HOST: database
@@ -31,8 +34,8 @@ services:
     ports:
       - "${ORACLE_APP_PORT}:8080" 
     restart: always
-    depends_on: 
-      - hyperledger
+    # depends_on: 
+    #   - hyperledger
     networks: 
       - backend
       - frontend
@@ -56,7 +59,7 @@ services:
 
   database:
     image: mysql:latest
-    container_name: db
+    container_name: database
     ports:
         - 3306:3306
     command: --init-file /data/application/init.sql
@@ -73,16 +76,16 @@ services:
     networks:
       - backend
       
-  hyperledger: 
-    container_name: hyperledger
-    build: 
-      context: ../network
-      dockerfile: Dockerfile
-    ports:
-      - "${HYPERLEDGER_NETWORK_PORT}:8082"
-    restart: always
-    networks:
-      - backend
+  # hyperledger: 
+  #   container_name: hyperledger
+  #   build: 
+  #     context: ../network
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "${HYPERLEDGER_NETWORK_PORT}:8082"
+  #   restart: always
+  #   networks:
+  #     - backend
 networks:
   backend:
   frontend:    

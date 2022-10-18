@@ -1,16 +1,16 @@
 #!/bin/sh
 
-./install-fabric.sh --fabric-version 2.4.6 --ca-version 1.5.5
+# ./install-fabric.sh --fabric-version 2.4.6 --ca-version 1.5.5
 
-docker images
 
 cd fabric-samples
 cd Chaincodes/draft-typescript
 npm install
 
 cd ../../test-network
-export PATH=${PWD}/../bin:$PATH
-export FABRIC_CFG_PATH=$PWD/../config/
+chmod +x network.sh
+export PATH=/usr/network/fabric-samples/bin:$PATH
+export FABRIC_CFG_PATH=/usr/network/fabric-samples/config/
 
 ./network.sh down
 ./network.sh up createChannel -ca -s couchdb

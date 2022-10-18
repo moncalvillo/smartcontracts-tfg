@@ -27,13 +27,14 @@ async function populate() {
     }
     });
 
-
-    await User.destroy({where: {}, truncate: true});
-    await Project.destroy({where: {}, truncate: true});
-    await Type.destroy({where: {}, truncate: true});
+    if(await User.count() !== 0 || await Project.count() !== 0 || await Type.count() !== 0){    
+        await User.destroy({where: {}, truncate: true});
+        await Project.destroy({where: {}, truncate: true});
+        await Type.destroy({where: {}, truncate: true});
+    }
 
     await BlockchainService.enrollAdmin();
-
+    console.log("ADMIN ENROLLED \n\n")
 
     for(const user of users){
         await DatabaseService.createUser(user);

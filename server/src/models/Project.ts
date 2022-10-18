@@ -6,6 +6,12 @@ import User from "./User";
 @Table({
   timestamps: false,
   tableName: "project",
+  indexes: [
+    {
+      unique: false,
+      fields: ['name'],
+    },
+  ],
 })
 export default class Project extends Model {
 
