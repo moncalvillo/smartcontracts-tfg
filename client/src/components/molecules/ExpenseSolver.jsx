@@ -5,7 +5,7 @@ import ResolutionForm from "../forms/ResolutionForm";
 import { useUser } from "../hooks/useUser";
 
 
-const ExpenseSolver = ({expense, setReload}) => {
+const ExpenseSolver = ({expense,reload, setReload}) => {
 
 
     const { user} = useUser(); 
@@ -22,7 +22,7 @@ const ExpenseSolver = ({expense, setReload}) => {
                     </> 
                     : <h2>{t("Common:resolve")}</h2>}
                 <div className="expense-box">
-                    <ResolutionForm setReload={setReload} expense={expense} />
+                    <ResolutionForm setReload={setReload} reload={reload} expense={expense} />
                 </div>
                 { update && <button onClick={() => setUpdate(false)}> {t("Common:cancelUpdate")} </button> }
             </>

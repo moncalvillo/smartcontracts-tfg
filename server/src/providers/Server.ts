@@ -35,7 +35,7 @@ class Server {
             console.log(`Server listening to port ${port}`);
         });
         
-        await populate();
+        // await populate();
     }
 }
 

@@ -9,7 +9,6 @@ import config from './Configuration';
 
 const {database_options} = config;
 const {host, port, user, password, database, dialect} = database_options;
-console.log(database_options);
 const connection: any  = new Sequelize(database, user,password,{
   dialect: dialect as Dialect,
   host: host,

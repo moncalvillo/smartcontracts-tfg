@@ -14,6 +14,8 @@ services:
       # - hyperledger
     volumes:
       - ${FABRIC_SAMPLES_PATH}:/fabric-samples
+    extra_hosts:
+      - host.docker.internal:host-gateway
     environment: 
       FABRIC_SAMPLES_PATH: /fabric-samples
       DATABASE_USER: root

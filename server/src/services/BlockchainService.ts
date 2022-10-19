@@ -130,7 +130,7 @@ export class BlockchainService extends IBlockchainService{
             const list = jsonObj.map((x: { Record: any; }) => {
                 return x.Record;
             });
-            const sorted = list.sort((objA: Expense, objB: Expense) => Number(new Date(objB.Date)) - Number(new Date(objA.Date)));
+            const sorted = list.sort((objA: Expense, objB: Expense) => Number(new Date(objB.createdAt)) - Number(new Date(objA.createdAt)));
             return sorted; 
 
         }catch(error: any){
@@ -156,7 +156,7 @@ export class BlockchainService extends IBlockchainService{
                     return x.Record;
                 } );
                 console.log(`Transaction has been evaluated, result is: ${jsonObj}`);
-                const sorted = list.sort((objA: Expense, objB: Expense) => Number(new Date(objB.Date)) - Number(new Date(objA.Date)));
+                const sorted = list.sort((objA: Expense, objB: Expense) => Number(new Date(objB.createdAt)) - Number(new Date(objA.createdAt)));
                 return sorted; 
             }else{
                 return null;
