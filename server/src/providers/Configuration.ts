@@ -5,9 +5,9 @@ dotenv.config();
 const url = 'http://localhost:8080';
 const port = 8080;
 
-const fabricSamplePath = process.env.FABRIC_SAMPLES_PATH;
+const fabricSamplePath = process.env.FABRIC_SAMPLES_PATH || path.join('fabric-samples');
 const apiPrefix = '/api';
-const network = process.env.NETWORK_PATH;
+const network = process.env.NETWORK_PATH || 'test-network';
 
 const database_options = {
     host: process.env.DATABASE_HOST || "localhost",
