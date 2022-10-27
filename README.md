@@ -57,18 +57,14 @@ $ npm start
   Starting the development server...
 ```
 If you want to launch the react application with HTTPS to enable OAuth:
-cmd.exe
 ```
+(cmd.exe)
 $ set HTTPS=true&&npm start
   Starting the development server...
-```
-Powershell: 
-```
+(Powershell)
 $ ($env:HTTPS = "true") -and (npm start)
   Starting the development server...
-```
-Bash: 
-```
+(Bash)
 $ HTTPS=true npm start
   Starting the development server...
 ```
@@ -82,6 +78,6 @@ $ npm run dev
   Server listening to port 8081
 ```
 
-The application will be launched at 
+The application will be opened when react app is launched. This url should: http(s)://localhost:3000/
 
 
