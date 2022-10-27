@@ -7,6 +7,3 @@
 *.id
 
 .env
-network/cpps/
-network/wallets/
-server/src/network/ccps/
