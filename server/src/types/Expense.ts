@@ -8,10 +8,12 @@ export interface Expense {
     Project: string;
     Owner: User;
     Currency: string;
-    Date: Date;
     State: State;
     Resolution: string;
     Inspector: User;
+    createdAt: Date;
+    updatedAt?: Date;
+    resolvedAt?:Date;
 }
 
 type State = "PENDING" | "APPROVED" | "REJECTED";

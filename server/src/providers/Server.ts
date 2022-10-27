@@ -6,6 +6,7 @@ import Routes from './Routes';
 import connection from './Connection';
 import "reflect-metadata";
 import Passport from '../middlewares/Passport';
+import populate from '../utils/populate';
 
 class Server {
 
@@ -33,6 +34,8 @@ class Server {
         this.app.listen(port, () => {
             console.log(`Server listening to port ${port}`);
         });
+        
+        await populate();
     }
 }
 

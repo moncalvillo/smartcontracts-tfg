@@ -6,7 +6,7 @@ import { TailSpin } from "react-loader-spinner";
 import RadioInput from "../atoms/inputs/RadioInput";
 import TextAreaInput from "../atoms/inputs/TextAreaInput"
 
-const ResolutionForm = ({expense, setReload}) => {
+const ResolutionForm = ({expense, reload, setReload}) => {
 
     const [state, setState] = useState(expense.State || "");
     const [resolution, setResolution] = useState(expense.Resolution || "");
@@ -24,7 +24,7 @@ const ResolutionForm = ({expense, setReload}) => {
             setError(err.response.data.message);
         }).finally(() => {                
             setLoader(false);
-            setReload(true);
+            setReload(reload+1);
         });
     }
 

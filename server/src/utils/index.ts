@@ -14,6 +14,7 @@ import path from 'path';
 import config from "../providers/Configuration";
 const fabricSamplePath = config.fabricSamplePath;
 const networkPath = config.network
+const contractName = config.contractName;
 
 export const buildCCPOrg1 = () => {
 	// load the common connection configuration file
@@ -164,7 +165,7 @@ export const registerAndEnrollUser = async (caClient: FabricCAServices, wallet: 
 };
 
 
-export const connectToContract = async (owner: string, channel: string, chaincode: string) => {
+export const connectToContract = async (owner: string, channel: string) => {
 	try {
 		const ccp: any = buildCCPOrg1();
 		const ccp2: any = buildCCPOrg2();
@@ -183,7 +184,7 @@ export const connectToContract = async (owner: string, channel: string, chaincod
 		});
 		const network: Network = await gateway.getNetwork(channel);
 
-		const contract: Contract = network.getContract(chaincode);
+		const contract: Contract = network.getContract(contractName);
 
 		return {contract, userIdentity, network, gateway, wallet, ccp};
 	} catch(err:any){

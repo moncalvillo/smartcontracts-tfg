@@ -5,7 +5,7 @@ import ResolutionForm from "../forms/ResolutionForm";
 import { useUser } from "../hooks/useUser";
 
 
-const ExpenseSolver = ({expense, setReload}) => {
+const ExpenseSolver = ({expense,reload, setReload}) => {
 
 
     const { user} = useUser(); 
@@ -18,11 +18,11 @@ const ExpenseSolver = ({expense, setReload}) => {
             <>
                 {update ? <> 
                         <h2> {t("Common:update")} </h2> 
-                        <h3> {t("Common:expenses")}: {`${expense.Inspector.firstName} ${expense.Inspector.lastName} <${expense.Inspector.email}>`} </h3> 
+                        <h3> {t("Common:expenses")}: {`${expense.Inspector.firstName} ${expense.Inspector.lastName} (${expense.Inspector.email})`} </h3> 
                     </> 
                     : <h2>{t("Common:resolve")}</h2>}
                 <div className="expense-box">
-                    <ResolutionForm setReload={setReload} expense={expense} />
+                    <ResolutionForm setReload={setReload} reload={reload} expense={expense} />
                 </div>
                 { update && <button onClick={() => setUpdate(false)}> {t("Common:cancelUpdate")} </button> }
             </>
@@ -30,7 +30,7 @@ const ExpenseSolver = ({expense, setReload}) => {
     }
 
     if(expense.Resolution && expense.Inspector){
-        const value = expense.Inspector.name ? expense.Inspector.name : `${expense.Inspector.firstName} ${expense.Inspector.lastName} <${expense.Inspector.email}>`
+        const value = expense.Inspector.name ? expense.Inspector.name : `${expense.Inspector.firstName} ${expense.Inspector.lastName} (${expense.Inspector.email})`
         return (
             <>
                 <h2>{t("Expense:resolution")}</h2>

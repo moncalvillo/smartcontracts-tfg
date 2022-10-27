@@ -12,7 +12,7 @@ const Request = () => {
     const {id} = useParams();
     const [loader, setLoader] = useState(true);
     const [expense, setExpense] = useState(null);
-    const [reload, setReload] = useState(false);
+    const [reload, setReload] = useState(0);
     useEffect(() => {
         setLoader(true);
         getExpense();
@@ -41,7 +41,7 @@ const Request = () => {
                     <ExpenseData expense={expense}/>
                 </div>
                 <div className="expenseSolver"> 
-                    <ExpenseSolver expense={expense} setReload={setReload}/>
+                    <ExpenseSolver expense={expense} reload={reload} setReload={setReload}/>
                 </div>
             </div>
         );
