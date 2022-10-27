@@ -21,7 +21,7 @@ export class OracleService extends IOracleService{
             const {  email, wallet, firstName, lastName, roleType } = user;
             const userSTR: string = JSON.stringify({email, firstName, lastName, wallet, roleType})
             const date = new Date();
-            const {contract } = await connectToContract(user.wallet,'mychannel','draft');
+            const {contract } = await connectToContract(user.wallet,'mychannel');
             const result: Buffer = await contract.submitTransaction('ResolveAsset', 
                 id,
                 resolution,
@@ -45,7 +45,7 @@ export class OracleService extends IOracleService{
     async getPending(inspector: string, params: any): Promise<ExpenseResolution[]> {
         try {
             const { type, project, user } = params;
-            const {contract} = await connectToContract(inspector,'mychannel','draft');
+            const {contract} = await connectToContract(inspector,'mychannel');
             const result: any = await contract.submitTransaction('QueryAssetsByParams', user, type, project, "PENDING") as any | null;
 
             if(result){
@@ -66,7 +66,7 @@ export class OracleService extends IOracleService{
     async countPending(inspector: string): Promise<any> {
         try {
             
-            const {contract} = await connectToContract(inspector,'mychannel','draft');
+            const {contract} = await connectToContract(inspector,'mychannel');
             const result: any = await contract.submitTransaction('CountPending') as any | null;
             if(result){
                 console.log(`Transaction has been evaluated, result is: ${result.toString()}`);

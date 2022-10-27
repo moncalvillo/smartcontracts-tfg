@@ -8,7 +8,8 @@ const port = 8080;
 const fabricSamplePath = process.env.FABRIC_SAMPLES_PATH || path.join('fabric-samples');
 const apiPrefix = '/api';
 const network = process.env.NETWORK_PATH || 'test-network';
-
+const contractName = process.env.CONTRACT_NAME || 'smart-contract';
+const populate = Boolean(process.env.POPULATE) || false;
 const database_options = {
     host: process.env.DATABASE_HOST || "localhost",
     port: Number(process.env.DATABASE_PORT) || 3306,
@@ -27,6 +28,8 @@ const config = {
     apiPrefix,
     fabricSamplePath,
     network,
+    contractName,
+    populate
 };
 
 export default config;

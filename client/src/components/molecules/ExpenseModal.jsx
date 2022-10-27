@@ -45,7 +45,7 @@ const RequestModal =  ({request}) => {
                 <p><b>ID:  </b> {request.ID} </p>
                 <p> <b>{t("Expense:concept")}:  </b>{request.Concept}  </p> 
                 <p> <b>{t("Expense:date")}: </b> {`${new Date(request.createdAt).toLocaleString()}`} </p>
-                <p> <b>{t("Expense:owner")}: </b> {request.Owner.name ? request.Owner.name : `${request.Owner.firstName} ${request.Owner.lastName} <${request.Owner.email}>`} </p>
+                <p> <b>{t("Expense:owner")}: </b> {request.Owner.name ? request.Owner.name : `${request.Owner.firstName} ${request.Owner.lastName} (${request.Owner.email})`} </p>
             </div> 
             {active && <> <ResolveButton id={request.ID}/> <IoIosArrowUp /></>}
         </div>

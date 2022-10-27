@@ -19,7 +19,7 @@ export class BlockchainService extends IBlockchainService{
 
     async initLedger(wallet: string): Promise<any> {
         try {
-            const {contract} = await connectToContract(wallet,'mychannel','draft');
+            const {contract} = await connectToContract(wallet,'mychannel');
             await contract.submitTransaction('InitLedger');
             console.log(`Ledger initialized`);
             return ;
@@ -70,7 +70,7 @@ export class BlockchainService extends IBlockchainService{
     async createExpense(body: any): Promise<Expense | null>{
         try {
             const { amount, expenseType, concept, project, currency, user } = body;
-            const {contract} = await connectToContract(user.wallet,'mychannel','draft');
+            const {contract} = await connectToContract(user.wallet,'mychannel');
             const date: Date = new Date();
             const expenseId: string = uuid();
             const {  email, wallet, firstName, lastName, roleType } = user;
@@ -79,7 +79,6 @@ export class BlockchainService extends IBlockchainService{
             
             const result: Buffer = await contract.submitTransaction('CreateAsset', expenseId, amount.toString(), currency, expenseType, concept, project, userSTR, date.toISOString()) as any | null;
             if(result){
-                // contract.submitTransaction('CheckRequest', id);
                 console.log(`Expense request sent.`);
                 console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
                 return JSON.parse(result.toString());
@@ -94,7 +93,7 @@ export class BlockchainService extends IBlockchainService{
     
     async readExpense(id: string, walletStr: string): Promise<any> {
         try {
-            const {contract} = await connectToContract(walletStr,'mychannel','draft');
+            const {contract} = await connectToContract(walletStr,'mychannel');
             const result: Buffer = await contract.evaluateTransaction('ReadAsset', id) as any | null;
             if(result){
 
@@ -111,7 +110,7 @@ export class BlockchainService extends IBlockchainService{
 
     async updateExpense(walletStr: string, expense: any) {
         try {
-            const {contract} = await connectToContract(walletStr,'mychannel','draft');
+            const {contract} = await connectToContract(walletStr,'mychannel');
             const date = new Date();            
             const result: Buffer = await contract.submitTransaction('UpdateAsset', expense.id, expense.amount.toString(), expense.expenseType, expense.concept, expense.project, date.toISOString()) as any | null;
             console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
@@ -124,7 +123,7 @@ export class BlockchainService extends IBlockchainService{
 
     async getAllExpenses(walletStr: string): Promise<any> {
         try {
-            const {contract} = await connectToContract(walletStr,'mychannel','draft');
+            const {contract} = await connectToContract(walletStr,'mychannel');
             const expenses: any = await contract.submitTransaction('GetAllAssets');
             const jsonObj = JSON.parse(expenses.toString());
             const list = jsonObj.map((x: { Record: any; }) => {
@@ -144,15 +143,13 @@ export class BlockchainService extends IBlockchainService{
             const { type, project, state, user } = params;
             const {  email, wallet, firstName, lastName, roleType } = currentUser;
             const userSTR: string = JSON.stringify({email, firstName, lastName, wallet, roleType});
-            const {contract} = await connectToContract(currentUser.wallet,'mychannel','draft');
+            const {contract} = await connectToContract(currentUser.wallet,'mychannel');
             const searchBy: string = currentUser.roleType !== 'user' ? user : userSTR;
             const expenses: any = await contract.submitTransaction('QueryAssetsByParams', searchBy, type, project, state) as any | null;
             
             if(expenses){
                 const jsonObj = JSON.parse(expenses.toString());
                 const list = jsonObj.map((x: { Record: any; }) => {
-                    // x.Record.Owner = JSON.parse(x.Record.Owner);
-                    // x.Record.Inspector = JSON.parse(x.Record.Inspector);
                     return x.Record;
                 } );
                 console.log(`Transaction has been evaluated, result is: ${jsonObj}`);

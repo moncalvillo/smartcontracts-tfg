@@ -66,7 +66,7 @@ async function readState(ctx: Context, id: string) {
 	return asset;
 }
 
-export class Draft extends Contract {
+export class SmartContract extends Contract {
 	balance: number = 10000;
 
     constructor() {
@@ -267,7 +267,7 @@ export class Draft extends Contract {
 		}
 
 		const SC: User = {
-			name: " Draft <Smart Contract>",
+			name: " Draft (Smart Contract)",
 		}
 		expense.Inspector = SC;
 		if(expense.resolvedAt !== null){

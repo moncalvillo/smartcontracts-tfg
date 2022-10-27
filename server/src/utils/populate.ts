@@ -15,44 +15,45 @@ async function populate() {
     if (!fs.existsSync(directory)){
         fs.mkdirSync(directory);
         console.log('Folder Created Successfully.');
-    }
-    
-    fs.readdir(directory, (err, files) => {
-    if (err) throw err;
-
-    for (const file of files) {
-        fs.unlink(path.join(directory, file), err => {
+    }else {
+        fs.readdir(directory, (err, files) => {
             if (err) throw err;
+    
+            for (const file of files) {
+                fs.unlink(path.join(directory, file), err => {
+                    if (err) throw err;
+                });
+            }
         });
     }
-    });
 
-    if(await User.count() !== 0 || await Project.count() !== 0 || await Type.count() !== 0){    
-        await User.destroy({where: {}, truncate: true});
-        await Project.destroy({where: {}, truncate: true});
-        await Type.destroy({where: {}, truncate: true});
-    }
+    if(await User.count() !== 0) await User.destroy({where: {}, truncate: true});
+    if(await Type.count() !== 0) await Type.destroy({where: {}, truncate: true});
+    if(await Project.count() !== 0) await Project.destroy({where: {}, truncate: true});
+
 
     await BlockchainService.enrollAdmin();
-    console.log("ADMIN ENROLLED \n\n")
 
-    for(const user of users){
-        await DatabaseService.createUser(user);
+    if(config.populate){
+        for(const user of users){
+            await DatabaseService.createUser(user);
+        }
+    
+        for(const project of projectNames){
+            await Project.create({
+                name: project
+            })
+        }
+        for(const type of typeNames){
+            await Type.create({
+                name: type
+            })
+        }
+    
+        BlockchainService.initLedger('as8a5f6b-1975-4d66-b085-c6fc910ee6df');    
     }
 
-    for(const project of projectNames){
-        await Project.create({
-            name: project
-        })
-    }
-    for(const type of typeNames){
-        await Type.create({
-            name: type
-        })
-    }
-
-    BlockchainService.initLedger('as8a5f6b-1975-4d66-b085-c6fc910ee6df');
-
+    
 
     return;
 

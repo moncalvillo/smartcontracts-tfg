@@ -16,7 +16,8 @@ services:
       - ${FABRIC_SAMPLES_PATH}:/fabric-samples
     extra_hosts:
       - host.docker.internal:host-gateway
-    environment: 
+    environment:
+      
       FABRIC_SAMPLES_PATH: /fabric-samples
       NETWORK_PATH: test-network
       DATABASE_USER: root
@@ -85,7 +86,9 @@ services:
       - backend
 networks:
   backend:
+    name: fabric_test
   frontend:    
+
 
 volumes:
   data:

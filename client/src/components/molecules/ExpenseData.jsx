@@ -15,7 +15,7 @@ const ExpenseData = ({ expense }) => {
                     <RowElement label={t("Expense:amount")} value={`${expense.Amount} ${expense.Currency}`} />
                     <RowElement label={t("Expense:concept")} value={expense.Concept} />
                     <RowElement label={t("Expense:project")} value={expense.Project} />
-                    <RowElement label={t("Expense:owner")} value={`${expense.Owner.firstName} ${expense.Owner.lastName} <${expense.Owner.email}>`} />
+                    <RowElement label={t("Expense:owner")} value={`${expense.Owner.firstName} ${expense.Owner.lastName} (${expense.Owner.email}>)`} />
                     {/* <RowElement label={t("Expense:date")} value={`${new Date(expense.Date).toLocaleString()}`} /> */}
                     
                 </div>

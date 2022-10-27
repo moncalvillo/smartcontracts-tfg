@@ -18,7 +18,7 @@ const ExpenseSolver = ({expense,reload, setReload}) => {
             <>
                 {update ? <> 
                         <h2> {t("Common:update")} </h2> 
-                        <h3> {t("Common:expenses")}: {`${expense.Inspector.firstName} ${expense.Inspector.lastName} <${expense.Inspector.email}>`} </h3> 
+                        <h3> {t("Common:expenses")}: {`${expense.Inspector.firstName} ${expense.Inspector.lastName} (${expense.Inspector.email})`} </h3> 
                     </> 
                     : <h2>{t("Common:resolve")}</h2>}
                 <div className="expense-box">
@@ -30,7 +30,7 @@ const ExpenseSolver = ({expense,reload, setReload}) => {
     }
 
     if(expense.Resolution && expense.Inspector){
-        const value = expense.Inspector.name ? expense.Inspector.name : `${expense.Inspector.firstName} ${expense.Inspector.lastName} <${expense.Inspector.email}>`
+        const value = expense.Inspector.name ? expense.Inspector.name : `${expense.Inspector.firstName} ${expense.Inspector.lastName} (${expense.Inspector.email})`
         return (
             <>
                 <h2>{t("Expense:resolution")}</h2>

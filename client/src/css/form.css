@@ -139,12 +139,12 @@ input[type="radio"]{
     background: #818181;
 }
 .resolver>#firstOpt:checked:checked ~ .firstOpt{
-    border-color: #9e2626;
-    background: #e65e5e;
-}
-.resolver>#secondOpt:checked:checked ~ .secondOpt{
     border-color: #116d2d;
     background: #2aad51;
+}
+.resolver>#secondOpt:checked:checked ~ .secondOpt{
+    border-color: #9e2626;
+    background: #e65e5e;
 }
 #firstOpt:checked:checked ~ .firstOpt .dot,
 #secondOpt:checked:checked ~ .secondOpt .dot{
