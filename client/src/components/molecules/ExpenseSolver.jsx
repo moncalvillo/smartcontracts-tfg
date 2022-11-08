@@ -13,12 +13,14 @@ const ExpenseSolver = ({expense,reload, setReload}) => {
     const [update, setUpdate] = useState(false);
     const {t} = useTranslation();
     
+
     if(((expense.State === "PENDING" && !expense.Resolution) || update) && user.roleType !== 'user'){
+
         return (
             <>
                 {update ? <> 
                         <h2> {t("Common:update")} </h2> 
-                        <h3> {t("Common:expenses")}: {`${expense.Inspector.firstName} ${expense.Inspector.lastName} (${expense.Inspector.email})`} </h3> 
+                        <h3> {t("Common:inspector")}: {expense.Inspector.name ? expense.Inspector.name : `${expense.Inspector.firstName} ${expense.Inspector.lastName} (${expense.Inspector.email})`} </h3> 
                     </> 
                     : <h2>{t("Common:resolve")}</h2>}
                 <div className="expense-box">

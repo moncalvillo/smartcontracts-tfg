@@ -35,6 +35,19 @@
     min-height: 25vh;
 }
 
+@media screen and (max-height: 750px) {
+    .expenseSolver{
+        max-height: 40vh;
+    }
+    #resolution-form{
+        max-height: 32vh;
+    }
+    .expenseSolver h2,h3{
+        font-size: 1.4rem;
+    }
+
+}
+
 .table{
     width: 100%;
     display: flex;

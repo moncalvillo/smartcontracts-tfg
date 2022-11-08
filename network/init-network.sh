@@ -7,7 +7,7 @@ docker pull --platform linux/x86_64 hyperledger/fabric-nodeenv:2.4
 cp -r Chaincodes/ ./fabric-samples/Chaincodes/
 
 cd fabric-samples
-cd Chaincodes/draft-typescript
+cd Chaincodes/chaincode-typescript
 npm install
 
 cd ../../test-network
@@ -15,4 +15,4 @@ chmod +x network.sh
 
 ./network.sh down
 ./network.sh up createChannel -ca -s couchdb
-./network.sh deployCC -ccn draft -ccp ../Chaincodes/draft-typescript/ -ccl typescript
+./network.sh deployCC -ccn chaincode -ccp ../Chaincodes/chaincode-typescript/ -ccl typescript

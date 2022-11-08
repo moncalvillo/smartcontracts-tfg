@@ -8,7 +8,7 @@ const TextAreaInput = ({setState, state="", placeholder }) => {
         defaultValue={state}
         onChange={e => setState(e.target.value)}
         placeholder={placeholder}
-        autoSize={{ minRows: 7, maxRows: 7}}
+        autoSize={{ minRows: 4, maxRows: 7}}
       />
     );
 

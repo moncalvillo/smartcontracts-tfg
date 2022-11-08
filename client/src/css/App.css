@@ -93,6 +93,12 @@ body{
   min-height: 24vh;
   width: 20%;
 }
+@media only screen and (max-height: 750px) {
+  .profile-name {
+    font-size: smaller;
+    max-height: 31vh;
+  }
+}
 /* .profile-name h1{
   font-weight: bold;
 }

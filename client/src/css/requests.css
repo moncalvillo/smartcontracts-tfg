@@ -15,7 +15,6 @@
     padding: 1%;
     margin-top: 10px;
     display: flex;
-    
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -28,6 +27,19 @@
     padding: 5% 1% 5% 5%;
 }
 
+@media screen and (max-height: 750px) {
+    .filters{
+        padding: 1% 1% 5% 3%;
+    }
+    .filters h1{
+        display: none;
+    }
+    .filters>*{
+        margin: 0px 0px;
+        padding: 0px;
+    }
+
+}
 
 .inactive{
     display: none;
